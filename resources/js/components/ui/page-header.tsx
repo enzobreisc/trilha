@@ -1,5 +1,6 @@
 import { Head } from '@inertiajs/react';
 import type { ReactNode } from 'react';
+import { SectionLabel } from '@/components/ui/section-label';
 
 export function PageHeader({
     title,
@@ -15,13 +16,11 @@ export function PageHeader({
             <Head title={title} />
             <div className="flex flex-wrap items-end justify-between gap-4">
                 <div className="flex flex-col gap-1.5">
-                    <h1 className="font-display text-[40px] leading-none font-bold tracking-tighter">
+                    <h1 className="font-display text-[34px] leading-[42px] font-semibold tracking-[-0.03em]">
                         {title}
                     </h1>
                     {description && (
-                        <p className="text-[15px] font-medium text-muted">
-                            {description}
-                        </p>
+                        <p className="text-sm text-secondary">{description}</p>
                     )}
                 </div>
                 {actions}
@@ -31,9 +30,5 @@ export function PageHeader({
 }
 
 export function SectionTitle({ children }: { children: string }) {
-    return (
-        <h2 className="text-xs font-extrabold tracking-widest text-muted uppercase">
-            {children}
-        </h2>
-    );
+    return <SectionLabel>{children}</SectionLabel>;
 }

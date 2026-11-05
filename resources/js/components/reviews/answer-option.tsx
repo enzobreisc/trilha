@@ -5,8 +5,8 @@ import { cn } from '@/lib/utils';
 type AnswerTone = 'green' | 'amber';
 
 const SELECTED_CLASSES: Record<AnswerTone, string> = {
-    green: 'bg-accent text-bg',
-    amber: 'bg-warn-fill text-warn inset-ring inset-ring-warn-line',
+    green: 'border-accent bg-accent text-bg',
+    amber: 'border-warn-line bg-warn-fill text-warn',
 };
 
 export function AnswerOption({
@@ -29,10 +29,10 @@ export function AnswerOption({
             aria-checked={isSelected}
             onClick={onSelect}
             className={cn(
-                'h-11 min-w-20 rounded-full px-5 text-sm font-bold transition-colors',
+                'h-9 min-w-20 rounded-sm border px-4 font-mono text-[13px] font-medium transition-colors',
                 isSelected
                     ? SELECTED_CLASSES[tone]
-                    : 'text-secondary inset-ring inset-ring-strong hover:bg-active hover:text-text',
+                    : 'border-leader text-text hover:bg-active',
             )}
         >
             {t(label)}

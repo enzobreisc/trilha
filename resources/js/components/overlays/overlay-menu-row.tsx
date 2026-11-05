@@ -1,53 +1,51 @@
 import { Link } from '@inertiajs/react';
 import type { ReactNode } from 'react';
-import { CheckIcon } from '@/components/overlays/overlay-icons';
 import { cn } from '@/lib/utils';
 
 type OverlayMenuRowProps = {
     label: ReactNode;
     href?: string;
     onSelect?: () => void;
-    icon?: ReactNode;
+    marker?: ReactNode;
     detail?: ReactNode;
     isCurrent?: boolean;
+    isHighlighted?: boolean;
     role?: 'menuitem' | 'menuitemradio';
 };
 
 const ROW_CLASSES =
-    'flex min-h-10 w-full items-center gap-3 rounded-sm px-3 text-left text-sm font-semibold transition-colors hover:bg-active hover:text-text';
+    'flex min-h-8.5 w-full items-center gap-3 rounded-sm px-3 py-1.5 text-left text-[13px] font-medium transition-colors hover:bg-active hover:text-text';
+
+export const OVERLAY_CAPTION_CLASSES =
+    'font-mono text-[11px] tracking-[0.08em] text-muted uppercase';
 
 export function OverlayMenuRow({
     label,
     href,
     onSelect,
-    icon,
+    marker,
     detail,
     isCurrent = false,
+    isHighlighted = false,
     role = 'menuitem',
 }: OverlayMenuRowProps) {
     const className = cn(
         ROW_CLASSES,
-        isCurrent ? 'bg-active text-white' : 'text-secondary',
+        isHighlighted ? 'bg-primary/25 font-bold text-text' : 'text-secondary',
     );
     const content = (
         <>
-            {icon && (
-                <span aria-hidden="true" className="flex shrink-0 text-muted">
-                    {icon}
-                </span>
-            )}
+            <span
+                aria-hidden="true"
+                className="flex w-3.5 shrink-0 justify-center font-mono text-accent"
+            >
+                {marker}
+            </span>
             <span className="min-w-0 flex-1 truncate">{label}</span>
             {detail && (
-                <span className="font-mono text-xs font-normal text-faint">
+                <span className="font-mono text-[11px] text-muted">
                     {detail}
                 </span>
-            )}
-            {isCurrent && (
-                <CheckIcon
-                    width={16}
-                    height={16}
-                    className="shrink-0 text-accent"
-                />
             )}
         </>
     );
@@ -81,17 +79,12 @@ export function OverlayMenuRow({
 
 export function OverlayMenuCaption({ children }: { children: ReactNode }) {
     return (
-        <p className="px-3 pt-2 pb-1 text-xs font-extrabold tracking-widest text-muted uppercase">
+        <p className={cn('px-3 pt-2 pb-1', OVERLAY_CAPTION_CLASSES)}>
             {children}
         </p>
     );
 }
 
 export function OverlayMenuDivider() {
-    return (
-        <div
-            aria-hidden="true"
-            className="mx-2 my-1.5 border-t border-border"
-        />
-    );
+    return <div aria-hidden="true" className="my-1.5 border-t border-border" />;
 }

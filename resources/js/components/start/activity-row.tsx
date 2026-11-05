@@ -25,22 +25,22 @@ export function ActivityRow({
     const when = [dayLabel, entry.time].filter(Boolean).join(' ');
 
     return (
-        <li className="flex min-h-10 items-center gap-3 border-b border-border text-sm last:border-b-0">
+        <li className="flex items-start gap-3 border-b border-border py-2.5 text-sm last:border-b-0">
             <span
                 aria-hidden="true"
                 className={cn(
-                    'size-2 shrink-0 rounded-full',
+                    'mt-1.5 size-2 shrink-0 rounded-full',
                     TONE_CLASSES[entry.tone],
                 )}
             />
-            <span className="w-28 shrink-0 text-xs whitespace-nowrap text-muted">
+            <span className="w-20 shrink-0 font-mono text-xs whitespace-nowrap text-muted">
                 {when}
             </span>
-            <span className="w-52 shrink-0 truncate font-medium text-text">
-                {entry.roadmapSlug}
-            </span>
-            <span className="min-w-0 flex-1 truncate text-secondary">
-                {entry.detail}
+            <span className="flex min-w-0 flex-1 flex-col gap-0.5">
+                <span className="truncate font-mono text-xs text-accent">
+                    {entry.roadmapSlug}
+                </span>
+                <span className="truncate text-secondary">{entry.detail}</span>
             </span>
         </li>
     );

@@ -45,11 +45,6 @@ export default function Sessions({
                     'Tudo o que você registrou, em todos os roadmaps.',
                 )}
             />
-            <SessionsSummary
-                weekMinutes={stats.weekMinutes}
-                totalSessions={stats.totalSessions}
-                streakDays={stats.streakDays}
-            />
             <SessionFilters
                 roadmaps={roadmaps}
                 roadmapFilter={roadmapFilter}
@@ -57,14 +52,21 @@ export default function Sessions({
                 period={period}
                 onPeriodChange={setPeriod}
             />
-            <div className="grid items-start gap-4 lg:grid-cols-3">
+            <div className="grid items-start gap-6 lg:grid-cols-3">
                 <SessionsListPanel
                     className="lg:col-span-2"
                     groups={groupSessionsByDay(sessions)}
                     selectedId={selectedSessionId}
                     onSelect={setSelectedSessionId}
                 />
-                <ContributionsPanel days={contributionDays} />
+                <aside className="flex flex-col gap-6">
+                    <SessionsSummary
+                        weekMinutes={stats.weekMinutes}
+                        totalSessions={stats.totalSessions}
+                        streakDays={stats.streakDays}
+                    />
+                    <ContributionsPanel days={contributionDays} />
+                </aside>
             </div>
         </div>
     );

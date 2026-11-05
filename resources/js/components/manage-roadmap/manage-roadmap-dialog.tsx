@@ -10,13 +10,10 @@ import { DeleteRoadmapZone } from '@/components/manage-roadmap/delete-roadmap-zo
 import { RoadmapIdentityFields } from '@/components/manage-roadmap/roadmap-identity-fields';
 import { sampleManagedRoadmap } from '@/components/manage-roadmap/sample-managed-roadmap';
 import type { ManagedRoadmap } from '@/components/manage-roadmap/types';
-import {
-    DIALOG_ELEMENT_CLASSES,
-    DIALOG_SURFACE_CLASSES,
-} from '@/components/session/dialog-classes';
-import { DialogHeader } from '@/components/session/dialog-header';
+import { DIALOG_ELEMENT_CLASSES } from '@/components/session/dialog-classes';
 import { useModalDialog } from '@/components/session/use-modal-dialog';
 import { Button } from '@/components/ui/button';
+import { Kbd } from '@/components/ui/kbd';
 import { useTranslation } from '@/hooks/use-translation';
 import { cn } from '@/lib/utils';
 
@@ -70,13 +67,27 @@ function ManageRoadmapModal({
             onMouseDown={handleBackdropMouseDown}
             className={cn(DIALOG_ELEMENT_CLASSES, 'max-w-175')}
         >
-            <form onSubmit={handleSubmit} className={DIALOG_SURFACE_CLASSES}>
-                <DialogHeader
-                    titleId={titleId}
-                    title={t('Gerenciar roadmap')}
-                    onClose={onClose}
-                />
-                <div className="flex flex-col gap-6 px-6 py-4">
+            <form
+                onSubmit={handleSubmit}
+                className="flex flex-col overflow-hidden rounded-sm bg-bg inset-ring inset-ring-strong"
+            >
+                <header className="flex items-center justify-between gap-3 border-b border-border bg-chrome px-5 py-3">
+                    <h2
+                        id={titleId}
+                        className="font-mono text-[11px] tracking-[0.08em] text-muted uppercase"
+                    >
+                        {t('Gerenciar roadmap')}
+                    </h2>
+                    <button
+                        type="button"
+                        onClick={onClose}
+                        className="flex items-center gap-2 font-mono text-xs text-muted hover:text-text"
+                    >
+                        {t('Fechar')}
+                        <Kbd>esc</Kbd>
+                    </button>
+                </header>
+                <div className="flex flex-col gap-6 px-6 py-5">
                     <RoadmapIdentityFields
                         roadmap={roadmap}
                         name={name}
@@ -86,7 +97,7 @@ function ManageRoadmapModal({
                     <ArchiveRoadmapRow />
                     <DeleteRoadmapZone roadmap={roadmap} />
                 </div>
-                <footer className="flex flex-wrap items-center justify-between gap-3 border-t border-border px-6 py-4">
+                <footer className="flex flex-wrap items-center justify-between gap-3 border-t border-border bg-chrome px-6 py-4">
                     <span className="text-xs text-faint">
                         {t('alterações no nome só valem ao salvar')}
                     </span>

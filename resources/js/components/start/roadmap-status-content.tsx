@@ -36,7 +36,7 @@ export function RoadmapStatusContent({
         <>
             {t('parou em')}{' '}
             <span className="text-text">{currentTopic.title}</span>{' '}
-            <span className="text-faint">· {currentTopic.section}</span>
+            <span className="text-muted">· {currentTopic.section}</span>
         </>
     );
 }

@@ -3,6 +3,14 @@ import type { RoadmapTopic } from '@/components/roadmap/types';
 import { StatusIcon, TOPIC_STATUS_LABEL_KEYS } from '@/components/status-icon';
 import { useTranslation } from '@/hooks/use-translation';
 import { cn } from '@/lib/utils';
+import type { TopicStatus } from '@/types/topic';
+
+const TITLE_CLASS_BY_STATUS: Record<TopicStatus, string> = {
+    todo: 'text-text',
+    studying: 'font-bold text-text',
+    review: 'text-text',
+    done: 'text-muted line-through',
+};
 
 export function RoadmapTopicRow({
     topic,
@@ -27,23 +35,25 @@ export function RoadmapTopicRow({
         <Link
             href={topic.href}
             className={cn(
-                'flex h-10 items-center gap-3 rounded-sm px-3 text-sm transition-colors hover:bg-active/60',
-                isStudying && 'bg-active',
+                'flex h-10 items-center gap-3 border-l-[3px] px-3 font-mono text-[13px] transition-colors hover:bg-active/60',
+                isStudying
+                    ? 'border-accent bg-accent/10'
+                    : 'border-transparent',
             )}
         >
             <StatusIcon status={topic.status} size={14} />
             <span
                 className={cn(
-                    'min-w-0 flex-1 truncate font-medium',
-                    isStudying ? 'font-semibold text-text' : 'text-secondary',
+                    'min-w-0 flex-1 truncate',
+                    TITLE_CLASS_BY_STATUS[topic.status],
                 )}
             >
                 {topic.title}
             </span>
-            <span className="w-24 shrink-0 text-xs font-medium text-muted">
+            <span className="w-24 shrink-0 text-xs text-muted">
                 {t(TOPIC_STATUS_LABEL_KEYS[topic.status])}
             </span>
-            <span className="w-16 shrink-0 text-right font-mono text-xs text-faint">
+            <span className="w-16 shrink-0 text-right text-[11px] text-faint">
                 {formatStatusDate()}
             </span>
         </Link>

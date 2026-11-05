@@ -15,9 +15,9 @@ export function SessionDaySection({
 
     return (
         <div className="flex flex-col gap-1">
-            <div className="flex justify-between px-3 text-xs font-semibold text-muted">
-                <span>{weekdayAndDay(group.date)}</span>
-                <span>
+            <div className="flex justify-between rounded-xs bg-chrome px-3 py-2 font-mono text-xs">
+                <span className="text-text">{weekdayAndDay(group.date)}</span>
+                <span className="text-muted">
                     {plural(group.sessions.length, 'sessão', 'sessões')}
                 </span>
             </div>

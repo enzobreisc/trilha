@@ -9,6 +9,7 @@ import type {
     StartReview,
     StartStats,
 } from '@/components/start/types';
+import { WelcomeEmptyState } from '@/components/welcome/welcome-empty-state';
 import { sampleAppChrome, sampleContributionDays } from '@/lib/sample-data';
 import {
     sampleRoadmaps,
@@ -35,26 +36,35 @@ export default function Start({
     contributionDays = sampleContributionDays,
     stats = sampleStartStats,
 }: StartPageProps) {
+    if (roadmaps.length === 0) {
+        return <WelcomeEmptyState />;
+    }
+
     const lastStudied = findLastStudiedRoadmap(roadmaps);
 
     return (
-        <div className="mx-auto flex w-full max-w-4xl flex-col gap-7">
+        <div className="@container mx-auto flex w-full max-w-6xl flex-col gap-7">
             <StartHeading
                 today={sampleStartToday}
                 profileName={sampleAppChrome.profileName}
             />
-            <RoadmapsSection
-                roadmaps={roadmaps}
-                lastStudiedId={lastStudied?.id}
-            />
-            <div className="grid items-start gap-4 md:grid-cols-2">
-                <ReviewsSection reviews={reviews} />
-                <ContributionsSection
-                    levels={contributionDays.map((day) => day.level)}
-                    stats={stats}
+            <div className="grid items-start gap-7 @4xl:grid-cols-[minmax(0,1fr)_20rem]">
+                <RoadmapsSection
+                    roadmaps={roadmaps}
+                    lastStudiedId={lastStudied?.id}
                 />
+                <aside className="flex min-w-0 flex-col gap-6">
+                    <ActivitySection
+                        entries={activity}
+                        today={sampleStartToday}
+                    />
+                    <ReviewsSection reviews={reviews} />
+                    <ContributionsSection
+                        levels={contributionDays.map((day) => day.level)}
+                        stats={stats}
+                    />
+                </aside>
             </div>
-            <ActivitySection entries={activity} today={sampleStartToday} />
         </div>
     );
 }

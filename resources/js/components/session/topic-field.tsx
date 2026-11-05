@@ -25,7 +25,7 @@ export function TopicField({
             <label htmlFor={selectId} className={FIELD_CAPTION_CLASSES}>
                 {t('tópico')}
             </label>
-            <div className="relative flex h-11 items-center rounded-full bg-surface px-4 text-sm inset-ring inset-ring-border has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-accent">
+            <div className="relative flex h-10 items-center rounded-sm px-3 text-sm inset-ring inset-ring-strong has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-accent">
                 <div
                     aria-hidden="true"
                     className="pointer-events-none flex min-w-0 flex-1 items-center gap-2.5"
@@ -36,7 +36,7 @@ export function TopicField({
                     <span className="min-w-0 flex-1 truncate font-semibold text-text">
                         {selectedTopic?.title}
                     </span>
-                    <span className="shrink-0 text-xs text-muted">
+                    <span className="shrink-0 font-mono text-xs text-muted">
                         {selectedTopic?.path}
                     </span>
                 </div>

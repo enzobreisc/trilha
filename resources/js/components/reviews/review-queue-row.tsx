@@ -19,27 +19,35 @@ export function ReviewQueueRow({
             aria-pressed={isSelected}
             onClick={onSelect}
             className={cn(
-                'flex w-full items-center gap-3 rounded-sm px-3 py-3 text-left transition-colors hover:bg-active/60',
-                isSelected && 'bg-active hover:bg-active',
+                'flex w-full items-baseline gap-3 border-l-3 px-3 py-2 text-left transition-colors hover:bg-active',
+                isSelected
+                    ? 'border-l-accent bg-primary/25'
+                    : 'border-l-transparent',
             )}
         >
+            <span
+                aria-hidden="true"
+                className="w-3 shrink-0 font-mono text-accent"
+            >
+                {isSelected ? '❯' : ''}
+            </span>
             <ReviewStatusIcon outcome={outcome} />
             <span className="flex min-w-0 flex-1 flex-col gap-0.5">
                 <span
                     className={cn(
                         'truncate font-semibold',
-                        isSelected && 'text-white',
-                        !isSelected && outcome === 'ok' && 'text-faint',
-                        !isSelected && outcome !== 'ok' && 'text-text',
+                        outcome === 'ok' && !isSelected
+                            ? 'text-faint'
+                            : 'text-text',
                     )}
                 >
                     {item.title}
                 </span>
-                <span className="text-xs font-medium text-faint">
+                <span className="font-mono text-xs text-muted">
                     {item.roadmapId}
                 </span>
             </span>
-            <span className="rounded-full bg-elevated px-2.5 py-1 font-mono text-xs text-accent">
+            <span className="font-mono text-xs text-review">
                 {item.interval}
             </span>
         </button>

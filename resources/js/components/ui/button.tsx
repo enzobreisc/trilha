@@ -5,10 +5,10 @@ import { cn } from '@/lib/utils';
 type ButtonVariant = 'primary' | 'secondary' | 'ghost';
 
 const BASE_CLASSES =
-    'inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-full px-5 text-sm font-bold whitespace-nowrap transition-colors';
+    'inline-flex h-9 shrink-0 items-center justify-center gap-2.5 rounded-sm px-4 text-[13px] font-semibold whitespace-nowrap transition-colors';
 
 const VARIANT_CLASSES: Record<ButtonVariant, string> = {
-    primary: 'bg-text text-bg hover:bg-secondary',
+    primary: 'bg-accent text-bg hover:bg-accent/90',
     secondary:
         'bg-elevated text-text inset-ring inset-ring-strong hover:bg-active',
     ghost: 'text-secondary hover:bg-active hover:text-text',

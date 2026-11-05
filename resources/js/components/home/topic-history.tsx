@@ -1,5 +1,5 @@
 import type { TopicLogEntry, TopicLogKind } from '@/components/home/types';
-import { SectionTitle } from '@/components/ui/page-header';
+import { Section } from '@/components/start/section';
 import { useTranslation } from '@/hooks/use-translation';
 import type { TranslationKey } from '@/lib/i18n';
 
@@ -13,28 +13,27 @@ export function TopicHistory({ entries }: { entries: TopicLogEntry[] }) {
     const { t } = useTranslation();
 
     return (
-        <section className="flex flex-col gap-2">
-            <SectionTitle>{t('histórico do tópico')}</SectionTitle>
+        <Section title={t('histórico do tópico')}>
             <ol className="flex flex-col">
                 {entries.map((entry, index) => (
                     <li
                         key={`${entry.when}-${index}`}
-                        className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 border-b border-border py-3 last:border-b-0"
+                        className="flex items-baseline gap-4 border-b border-border py-2.5 text-sm last:border-b-0"
                     >
+                        <span className="w-20 shrink-0 font-mono text-xs text-muted">
+                            {entry.when}
+                        </span>
                         <span className="flex min-w-0 items-baseline gap-3">
-                            <span className="text-sm font-semibold text-accent">
+                            <span className="font-semibold text-accent">
                                 {t(KIND_LABEL_KEYS[entry.kind])}
                             </span>
-                            <span className="truncate text-sm font-medium text-secondary">
+                            <span className="truncate text-secondary">
                                 {entry.detail}
                             </span>
-                        </span>
-                        <span className="text-xs font-medium text-faint">
-                            {entry.when}
                         </span>
                     </li>
                 ))}
             </ol>
-        </section>
+        </Section>
     );
 }

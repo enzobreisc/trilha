@@ -13,14 +13,14 @@ export function ReviewUpcoming({ reviews }: { reviews: UpcomingReview[] }) {
                     key={`${review.date}-${review.title}`}
                     label={
                         <span className="flex items-center gap-3">
-                            <span className="w-24 text-faint">
+                            <span className="w-14 shrink-0 font-mono text-xs text-muted">
                                 {weekdayAndDay(review.date)}
                             </span>
                             {review.title}
                         </span>
                     }
                     value={
-                        <span className="font-mono text-xs text-accent">
+                        <span className="font-mono text-xs text-review">
                             {review.interval}
                         </span>
                     }

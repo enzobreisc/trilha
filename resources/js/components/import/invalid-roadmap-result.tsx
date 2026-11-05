@@ -33,16 +33,20 @@ export function InvalidRoadmapResult({
             actions={
                 <>
                     {validation.updateTargetName && (
-                        <Button
-                            variant="secondary"
-                            onClick={() => onSelectMode('update')}
-                        >
+                        <Button onClick={() => onSelectMode('update')}>
                             {t('Atualizar :name', {
                                 name: validation.updateTargetName,
                             })}
                         </Button>
                     )}
-                    <Button onClick={onChooseFile}>
+                    <Button
+                        variant={
+                            validation.updateTargetName
+                                ? 'secondary'
+                                : 'primary'
+                        }
+                        onClick={onChooseFile}
+                    >
                         {t('Escolher outro arquivo')}
                     </Button>
                 </>

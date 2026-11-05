@@ -93,21 +93,23 @@ export default function Reviews({
                         pendingCount={pendingCount}
                         dueNextWeek={dueNextWeek}
                     />
-                    {session.selectedItem && (
-                        <ReviewPanel
-                            item={session.selectedItem}
-                            answer={session.selectedAnswer}
-                            onAnswer={session.answerQuestion}
-                            onMark={session.markReview}
-                        />
-                    )}
-                    <ReviewQueue
-                        items={visibleItems}
-                        results={session.results}
-                        selectedId={session.selectedItem?.id}
-                        onSelect={session.selectItem}
-                    />
                     <ReviewCalendar days={days} todayCount={pendingCount} />
+                    <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)]">
+                        <ReviewQueue
+                            items={visibleItems}
+                            results={session.results}
+                            selectedId={session.selectedItem?.id}
+                            onSelect={session.selectItem}
+                        />
+                        {session.selectedItem && (
+                            <ReviewPanel
+                                item={session.selectedItem}
+                                answer={session.selectedAnswer}
+                                onAnswer={session.answerQuestion}
+                                onMark={session.markReview}
+                            />
+                        )}
+                    </div>
                 </>
             )}
             {view === 'finished' && (

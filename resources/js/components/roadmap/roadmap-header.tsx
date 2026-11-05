@@ -30,7 +30,7 @@ export function RoadmapHeader({ data }: { data: RoadmapData }) {
                     </ButtonLink>
                 }
             />
-            <p className="text-xs font-medium text-faint">
+            <p className="font-mono text-xs text-muted">
                 {data.sourceLabel} · {data.sourceFile} ·{' '}
                 {t('importado em :date', {
                     date: shortDate(data.importedOn),

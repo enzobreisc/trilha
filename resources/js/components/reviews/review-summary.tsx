@@ -2,7 +2,6 @@ import { Button, ButtonLink } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { DataRow } from '@/components/ui/data-row';
 import { useTranslation } from '@/hooks/use-translation';
-import { CheckCircleIcon } from './review-icons';
 import { ReviewStatusIcon } from './review-status-icon';
 import { useReviewDateLabel } from './use-review-date-label';
 
@@ -23,19 +22,12 @@ export function ReviewSummary({
     const formatDate = useReviewDateLabel();
 
     return (
-        <Card
-            title={t('resumo')}
-            aside={todayDate && formatDate(todayDate)}
-            className="items-center py-12 text-center"
-        >
-            <span className="flex size-14 items-center justify-center rounded-full bg-accent text-bg">
-                <CheckCircleIcon width={26} height={26} />
-            </span>
+        <Card title={t('resumo')} aside={todayDate && formatDate(todayDate)}>
             <div className="flex flex-col gap-2">
-                <span className="text-xs font-extrabold tracking-widest text-muted uppercase">
+                <span className="font-mono text-xs text-muted">
                     {t('fila de hoje concluída')}
                 </span>
-                <h3 className="font-display text-3xl leading-tight font-bold tracking-tight">
+                <h3 className="text-[28px] leading-tight font-semibold tracking-tight">
                     {plural(answeredCount, 'revisão feita', 'revisões feitas')}
                 </h3>
                 <p className="text-secondary">
@@ -46,7 +38,7 @@ export function ReviewSummary({
                         : t('Todas as revisões voltam em 30 dias.')}
                 </p>
             </div>
-            <div className="flex w-full max-w-sm flex-col">
+            <div className="flex max-w-sm flex-col">
                 <DataRow
                     label={
                         <span className="flex items-center gap-2.5">
@@ -66,7 +58,7 @@ export function ReviewSummary({
                     value={againCount}
                 />
             </div>
-            <div className="flex flex-wrap justify-center gap-3">
+            <div className="flex flex-wrap gap-3">
                 <ButtonLink href="/">{t('Ir para o painel')}</ButtonLink>
                 <Button variant="secondary" onClick={onUndo}>
                     {t('Desfazer a última')}

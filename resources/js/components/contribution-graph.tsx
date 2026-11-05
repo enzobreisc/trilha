@@ -72,7 +72,7 @@ export function ContributionGraph({
     days: ContributionDay[];
     className?: string;
 }) {
-    const { longDate, monthShort, weekdayShort } = useTranslation();
+    const { t, longDate, monthShort, weekdayShort } = useTranslation();
     const weeks = toWeeks(days);
     const monthLabels = monthLabelsOf(weeks, monthShort);
 
@@ -81,7 +81,7 @@ export function ContributionGraph({
             <div className="overflow-x-auto">
                 <div
                     role="img"
-                    aria-label="Gráfico de contribuições: dias estudados"
+                    aria-label={t('Gráfico de contribuições: dias estudados')}
                     className="grid min-w-160 gap-1"
                     style={{
                         gridTemplateColumns: `auto repeat(${weeks.length}, minmax(0, 1fr))`,
@@ -91,7 +91,7 @@ export function ContributionGraph({
                     {monthLabels.map((label, weekIndex) => (
                         <span
                             key={weekIndex}
-                            className="relative h-3 text-xs leading-none font-medium text-faint"
+                            className="relative h-3 font-mono text-[11px] leading-none text-faint"
                         >
                             {label && (
                                 <span className="absolute left-0 whitespace-nowrap">
@@ -102,7 +102,7 @@ export function ContributionGraph({
                     ))}
                     {Array.from({ length: DAYS_PER_WEEK }, (_, row) => (
                         <Fragment key={row}>
-                            <span className="flex items-center pr-2 text-xs leading-none text-faint">
+                            <span className="flex items-center pr-2 font-mono text-[11px] leading-none text-faint">
                                 {LABELED_WEEK_ROWS.includes(row)
                                     ? weekdayShort((row + 1) % DAYS_PER_WEEK)
                                     : ''}
@@ -122,7 +122,7 @@ export function ContributionGraph({
                                         key={day.date}
                                         title={longDate(day.date)}
                                         className={cn(
-                                            'aspect-square rounded',
+                                            'aspect-square rounded-xs',
                                             HEAT_CLASSES[day.level],
                                         )}
                                     />
@@ -132,15 +132,15 @@ export function ContributionGraph({
                     ))}
                 </div>
             </div>
-            <div className="flex items-center justify-end gap-1 text-xs text-muted">
-                <span className="mr-1.5">menos</span>
+            <div className="flex items-center justify-end gap-1 font-mono text-[11px] text-muted">
+                <span className="mr-1.5">{t('menos')}</span>
                 {LEGEND_LEVELS.map((level) => (
                     <span
                         key={level}
-                        className={cn('size-3 rounded', HEAT_CLASSES[level])}
+                        className={cn('size-3 rounded-xs', HEAT_CLASSES[level])}
                     />
                 ))}
-                <span className="ml-1.5">mais</span>
+                <span className="ml-1.5">{t('mais')}</span>
             </div>
         </div>
     );

@@ -6,7 +6,7 @@ import { RoadmapTitleLine } from '@/components/start/roadmap-title-line';
 import { cn } from '@/lib/utils';
 import type { RoadmapSummary } from '@/types/roadmap';
 
-export function RoadmapCard({
+export function RoadmapRow({
     roadmap,
     isLastStudied,
 }: {
@@ -18,13 +18,13 @@ export function RoadmapCard({
     return (
         <article
             className={cn(
-                'flex flex-col gap-4 rounded-md p-5',
+                'flex flex-wrap items-center gap-x-6 gap-y-3 border-b border-l-3 border-border px-5 py-4 last:border-b-0',
                 isLastStudied
-                    ? 'bg-elevated inset-ring inset-ring-strong'
-                    : 'bg-surface inset-ring inset-ring-border',
+                    ? 'border-l-accent bg-primary/15'
+                    : 'border-l-transparent',
             )}
         >
-            <RoadmapTitleLine roadmap={roadmap} />
+            <RoadmapTitleLine roadmap={roadmap} isLastStudied={isLastStudied} />
             <RoadmapProgressBar roadmap={roadmap} />
             <RoadmapStatusLine roadmap={roadmap} state={state} />
             <RoadmapCardFooter roadmap={roadmap} state={state} />

@@ -1,5 +1,6 @@
 import { useTranslation } from '@/hooks/use-translation';
 import type { TopicSignal } from '@/lib/sample/topic';
+import { cn } from '@/lib/utils';
 
 export function SignalCode({
     label,
@@ -13,16 +14,21 @@ export function SignalCode({
     const { t } = useTranslation();
 
     return (
-        <div className="flex min-w-0 flex-col gap-2">
-            <div className="flex items-center justify-between text-sm font-semibold">
+        <div className="flex min-w-0 flex-col border border-strong">
+            <div
+                className={cn(
+                    'flex items-center justify-between px-3 py-1 font-mono text-xs',
+                    isGood ? 'bg-accent/15' : 'bg-elevated',
+                )}
+            >
                 <span className={isGood ? 'text-accent' : 'text-danger'}>
                     {label}
                 </span>
-                <span className="font-mono text-xs text-secondary">
+                <span className="text-secondary">
                     {t(':count queries', { count: signal.queries })}
                 </span>
             </div>
-            <pre className="m-0 overflow-x-auto rounded-md bg-elevated p-4 font-mono text-sm leading-6 text-secondary">
+            <pre className="m-0 overflow-x-auto bg-surface p-3 font-mono text-[13px] leading-6 text-secondary">
                 {signal.code}
             </pre>
         </div>

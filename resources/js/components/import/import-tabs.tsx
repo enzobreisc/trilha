@@ -3,7 +3,7 @@ import type { TranslationKey } from '@/lib/i18n';
 import type { ImportMode } from '@/lib/sample/import';
 import { cn } from '@/lib/utils';
 
-export const IMPORT_MODE_LABELS: Record<ImportMode, TranslationKey> = {
+const IMPORT_MODE_LABELS: Record<ImportMode, TranslationKey> = {
     new: 'novo roadmap',
     update: 'atualizar existente',
 };
@@ -23,7 +23,7 @@ export function ImportTabs({
         <div
             role="tablist"
             aria-label={t('Tipo de importação')}
-            className="inline-flex w-fit gap-1 rounded-full bg-elevated p-1 inset-ring inset-ring-border"
+            className="flex flex-wrap gap-x-5 gap-y-2 font-mono text-xs"
         >
             {IMPORT_MODES.map((tabMode) => {
                 const isSelected = tabMode === mode;
@@ -35,12 +35,15 @@ export function ImportTabs({
                         aria-selected={isSelected}
                         onClick={() => onSelect(tabMode)}
                         className={cn(
-                            'h-9 rounded-full px-4 text-sm font-semibold transition-colors',
+                            'transition-colors',
                             isSelected
-                                ? 'bg-active text-white'
+                                ? 'font-bold text-text'
                                 : 'text-muted hover:text-secondary',
                         )}
                     >
+                        <span aria-hidden="true">
+                            {isSelected ? '(•)' : '( )'}
+                        </span>{' '}
                         {t(IMPORT_MODE_LABELS[tabMode])}
                     </button>
                 );

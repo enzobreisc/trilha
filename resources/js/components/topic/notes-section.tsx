@@ -1,4 +1,4 @@
-import { Card } from '@/components/ui/card';
+import { TopicSection } from '@/components/topic/topic-section';
 import { useTranslation } from '@/hooks/use-translation';
 
 export function NotesSection({
@@ -11,7 +11,7 @@ export function NotesSection({
     const { t } = useTranslation();
 
     return (
-        <Card
+        <TopicSection
             title={t('anotações')}
             aside={<span className="text-accent">{t('salvo agora')}</span>}
         >
@@ -20,8 +20,8 @@ export function NotesSection({
                 rows={8}
                 value={notes}
                 onChange={(event) => onNotesChange(event.target.value)}
-                className="box-border w-full resize-y rounded-md bg-surface p-4 text-sm leading-6 text-secondary inset-ring inset-ring-border focus:inset-ring-accent focus:outline-none"
+                className="box-border w-full resize-y border border-strong bg-surface p-3 font-mono text-xs leading-[22px] text-secondary focus:border-accent focus:outline-none"
             />
-        </Card>
+        </TopicSection>
     );
 }

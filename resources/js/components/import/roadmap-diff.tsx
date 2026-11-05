@@ -7,22 +7,16 @@ import type {
 } from '@/lib/sample/import';
 import { cn } from '@/lib/utils';
 
-const CHANGE_DOT_CLASSES: Record<RoadmapDiffChange, string> = {
-    added: 'bg-accent',
-    changed: 'bg-secondary',
-    removed: 'bg-faint',
+const CHANGE_GLYPHS: Record<RoadmapDiffChange, string> = {
+    added: '+',
+    changed: '~',
+    removed: '−',
 };
 
 const CHANGE_TONES: Record<RoadmapDiffChange, string> = {
     added: 'text-accent',
-    changed: 'text-secondary',
-    removed: 'text-muted',
-};
-
-const CHANGE_PILL_CLASSES: Record<RoadmapDiffChange, string> = {
-    added: 'bg-active text-accent',
-    changed: 'bg-elevated text-secondary inset-ring inset-ring-strong',
-    removed: 'bg-elevated text-muted inset-ring inset-ring-border',
+    changed: 'text-link',
+    removed: 'text-secondary',
 };
 
 export function RoadmapDiffView({ diff }: { diff: RoadmapDiff }) {
@@ -33,38 +27,26 @@ export function RoadmapDiffView({ diff }: { diff: RoadmapDiff }) {
 
     return (
         <div className="flex flex-col gap-3">
-            <div className="flex flex-wrap gap-2 text-xs font-semibold">
-                <span
-                    className={cn(
-                        'rounded-full px-3 py-1',
-                        CHANGE_PILL_CLASSES.added,
-                    )}
-                >
+            <div className="flex flex-wrap gap-x-6 gap-y-1 font-mono text-xs">
+                <span className={CHANGE_TONES.added}>
+                    {CHANGE_GLYPHS.added}
                     {plural(countOf('added'), 'novo', 'novos')}
                 </span>
-                <span
-                    className={cn(
-                        'rounded-full px-3 py-1',
-                        CHANGE_PILL_CLASSES.changed,
-                    )}
-                >
+                <span className={CHANGE_TONES.changed}>
+                    {CHANGE_GLYPHS.changed}
                     {plural(countOf('changed'), 'alterado', 'alterados')}
                 </span>
-                <span
-                    className={cn(
-                        'rounded-full px-3 py-1',
-                        CHANGE_PILL_CLASSES.removed,
-                    )}
-                >
+                <span className={CHANGE_TONES.removed}>
+                    {CHANGE_GLYPHS.removed}
                     {plural(countOf('removed'), 'arquivado', 'arquivados')}
                 </span>
-                <span className="rounded-full bg-elevated px-3 py-1 text-faint inset-ring inset-ring-border">
+                <span className="text-muted">
                     {t(':count sem mudança', {
                         count: diff.unchangedCount,
                     })}
                 </span>
             </div>
-            <ul className="flex flex-col overflow-x-auto rounded-sm bg-elevated px-4 font-mono text-sm inset-ring inset-ring-border">
+            <ul className="flex flex-col overflow-x-auto font-mono text-sm">
                 {diff.entries.map((entry) => (
                     <DiffRow
                         key={`${entry.change}-${entry.location}-${entry.topicKey}`}
@@ -86,17 +68,16 @@ function DiffRow({
     noteText: string | undefined;
 }) {
     return (
-        <li className="flex min-h-10 items-center gap-3 border-b border-border whitespace-nowrap last:border-b-0">
+        <li className="flex min-h-7 items-center gap-2.5 whitespace-nowrap">
             <span
                 aria-hidden="true"
-                className={cn(
-                    'size-2 shrink-0 rounded-full',
-                    CHANGE_DOT_CLASSES[entry.change],
-                )}
-            />
-            <span className="text-faint">{entry.location}</span>
-            <span className={CHANGE_TONES[entry.change]}>{entry.topicKey}</span>
-            {noteText && <span className="text-faint">· {noteText}</span>}
+                className={cn('w-3 shrink-0', CHANGE_TONES[entry.change])}
+            >
+                {CHANGE_GLYPHS[entry.change]}
+            </span>
+            <span className="text-muted">{entry.location}</span>
+            <span className="text-text">{entry.topicKey}</span>
+            {noteText && <span className="text-muted">· {noteText}</span>}
         </li>
     );
 }

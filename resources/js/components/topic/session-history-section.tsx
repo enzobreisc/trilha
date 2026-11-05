@@ -3,8 +3,8 @@ import {
     formatDuration,
     getTotalMinutes,
 } from '@/components/topic/session-time';
+import { TopicSection } from '@/components/topic/topic-section';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
 import { useTranslation } from '@/hooks/use-translation';
 import type { TopicSession } from '@/lib/sample/topic';
 
@@ -20,40 +20,36 @@ export function SessionHistorySection({
     const { t, plural } = useTranslation();
 
     return (
-        <Card
+        <TopicSection
             title={t('sessões')}
             aside={`${formatDuration(getTotalMinutes(sessions))} · ${plural(sessions.length, 'sessão', 'sessões')}`}
         >
-            <ul className="m-0 flex list-none flex-col gap-1 p-0">
+            <ul className="m-0 flex list-none flex-col p-0">
                 {sessions.map((session) => (
-                    <li key={session.id}>
+                    <li key={session.id} className="border-t border-border">
                         <Link
                             href={SESSIONS_ROUTE}
-                            className="flex items-center justify-between gap-4 rounded-sm px-3 py-3 transition-colors hover:bg-active/60"
+                            className="flex flex-wrap items-baseline gap-x-3.5 gap-y-1 py-2 transition-colors hover:bg-active/60"
                         >
-                            <span className="flex min-w-0 flex-col gap-0.5">
-                                <span className="truncate text-sm font-semibold text-text">
-                                    {session.title}
-                                </span>
-                                <span className="text-xs font-medium text-muted">
-                                    {session.day} {session.time} ·{' '}
-                                    {session.activity}
-                                </span>
+                            <span className="w-28 shrink-0 font-mono text-xs text-muted">
+                                {session.day} {session.time}
                             </span>
-                            <span className="font-mono text-sm font-semibold text-text">
+                            <span className="w-10 shrink-0 font-mono text-[13px] text-text">
                                 {formatDuration(session.minutes)}
+                            </span>
+                            <span className="min-w-0 flex-1 truncate text-sm text-secondary">
+                                {session.title}
+                            </span>
+                            <span className="font-mono text-[11px] text-muted">
+                                {session.activity}
                             </span>
                         </Link>
                     </li>
                 ))}
             </ul>
-            <Button
-                variant="secondary"
-                className="self-start"
-                onClick={onRegister}
-            >
+            <Button className="self-start" onClick={onRegister}>
                 {t('Registrar sessão')}
             </Button>
-        </Card>
+        </TopicSection>
     );
 }

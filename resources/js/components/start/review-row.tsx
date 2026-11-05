@@ -6,17 +6,19 @@ export function ReviewRow({ review }: { review: StartReview }) {
         <li>
             <Link
                 href="/reviews"
-                className="flex min-h-9 items-center gap-3 text-sm font-medium text-secondary hover:text-text"
+                className="flex items-baseline gap-2.5 py-1 text-sm font-medium text-secondary hover:text-text"
             >
-                <span
-                    aria-hidden="true"
-                    className="size-2 shrink-0 rounded-full bg-warn"
-                />
+                <span aria-hidden="true" className="text-xs text-review">
+                    ◆
+                </span>
                 <span className="min-w-0 flex-1 truncate">
                     {review.title}
-                    <span className="text-faint"> {review.roadmapTag}</span>
+                    <span className="font-mono text-xs text-muted">
+                        {' '}
+                        {review.roadmapTag}
+                    </span>
                 </span>
-                <span className="font-mono text-xs text-faint">
+                <span className="font-mono text-xs text-review">
                     {review.intervalLabel}
                 </span>
             </Link>

@@ -5,17 +5,15 @@ export function RoadmapMatchBanner({ match }: { match: RoadmapMatch }) {
     const { t } = useTranslation();
 
     return (
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 rounded-sm bg-active px-4 py-3 text-sm">
-            <span className="font-medium text-muted">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs">
+            <span className="text-muted">
                 {t('reconhecido pela chave')}{' '}
-                <span className="font-mono text-text">{match.fileKey}</span>
+                <span className="text-accent">{match.fileKey}</span>
             </span>
-            <span aria-hidden="true" className="text-faint">
+            <span aria-hidden="true" className="text-muted">
                 →
             </span>
-            <span className="font-semibold text-accent">
-                {match.roadmapName}
-            </span>
+            <span className="font-bold text-text">{match.roadmapName}</span>
         </div>
     );
 }

@@ -22,7 +22,7 @@ export function NoteField({
                 rows={3}
                 value={value}
                 onChange={(event) => onChange(event.target.value)}
-                className="box-border min-h-18 w-full resize-none rounded-md bg-surface px-4 py-3 text-sm leading-6 text-text inset-ring inset-ring-border focus:inset-ring-accent"
+                className="box-border min-h-18 w-full resize-none rounded-sm bg-surface px-3.5 py-2.5 text-sm leading-6 text-secondary inset-ring inset-ring-strong focus:inset-ring-accent"
             />
         </div>
     );

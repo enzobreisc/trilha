@@ -1,25 +1,27 @@
-import { Card } from '@/components/ui/card';
-import { DataRow } from '@/components/ui/data-row';
+import { SettingsDetailRow } from '@/components/settings/settings-detail-row';
+import { SettingsSection } from '@/components/settings/settings-section';
 import { useTranslation } from '@/hooks/use-translation';
 
 export function AboutSection({
+    index,
     appVersion,
     roadmapFormat,
 }: {
+    index: number;
     appVersion: string;
     roadmapFormat: string;
 }) {
     const { t } = useTranslation();
 
     return (
-        <Card title={t('sobre')}>
-            <div className="flex flex-col">
-                <DataRow label={t('versão')} value={appVersion} />
-                <DataRow
+        <SettingsSection title={t('sobre')} index={index}>
+            <div className="flex flex-col gap-1.5">
+                <SettingsDetailRow label={t('versão')} value={appVersion} />
+                <SettingsDetailRow
                     label={t('formato de roadmap')}
                     value={roadmapFormat}
                 />
             </div>
-        </Card>
+        </SettingsSection>
     );
 }

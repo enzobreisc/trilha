@@ -2,7 +2,7 @@ import { sampleActiveTopicId, sampleTopicTree } from '@/lib/sample-data';
 import { sampleRoadmaps } from '@/lib/sample/start';
 import type { SearchAction, SearchTopic } from '@/types/overlay';
 
-const SAMPLE_ROADMAP_NAME = sampleRoadmaps[0].name;
+const SAMPLE_ROADMAP_NAME = sampleRoadmaps[0]?.name ?? '';
 
 export const sampleSearchTopics: SearchTopic[] = sampleTopicTree.flatMap(
     (section) =>

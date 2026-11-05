@@ -7,64 +7,7 @@ import type { RoadmapSummary } from '@/types/roadmap';
 
 export const sampleStartToday = '2026-11-03';
 
-export const sampleRoadmaps: RoadmapSummary[] = [
-    {
-        id: 'laravel-por-dentro',
-        name: 'laravel-por-dentro',
-        subtitle: 'parte 1',
-        totalTopics: 56,
-        doneTopics: 23,
-        currentTopic: {
-            title: 'Problema N+1',
-            section: '05 banco-de-dados/performance/',
-            href: '/topics/problema-n-mais-1',
-        },
-        reviewsDue: 3,
-        lastStudiedDaysAgo: 0,
-    },
-    {
-        id: 'postgres-e-concorrencia',
-        name: 'postgres-e-concorrencia',
-        subtitle: 'semana 1',
-        totalTopics: 34,
-        doneTopics: 8,
-        currentTopic: {
-            title: 'Níveis de isolamento',
-            section: '02 transacoes/isolamento/',
-            href: '/',
-        },
-        reviewsDue: 1,
-        lastStudiedDaysAgo: 1,
-    },
-    {
-        id: 'docker-e-deploy',
-        name: 'docker-e-deploy',
-        subtitle: 'parte 1',
-        totalTopics: 28,
-        doneTopics: 0,
-        currentTopic: {
-            title: 'Imagens e camadas',
-            section: '01 containers/',
-            href: '/',
-        },
-        reviewsDue: 0,
-        lastStudiedDaysAgo: null,
-    },
-    {
-        id: 'ingles-tecnico',
-        name: 'ingles-tecnico',
-        subtitle: 'completo',
-        totalTopics: 40,
-        doneTopics: 40,
-        currentTopic: {
-            title: 'Blocos de transação',
-            section: '05 banco-de-dados/transacoes/',
-            href: '/',
-        },
-        reviewsDue: 0,
-        lastStudiedDaysAgo: 6,
-    },
-];
+export const sampleRoadmaps: RoadmapSummary[] = [];
 
 export const sampleStartReviews: StartReview[] = [
     {

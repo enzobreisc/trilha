@@ -1,6 +1,10 @@
 import { useState, type KeyboardEvent } from 'react';
+import {
+    DANGER_FIELD_CONTROL_CLASSES,
+    SECTION_CLASSES,
+    SECTION_LABEL_CLASSES,
+} from '@/components/manage-roadmap/dialog-styles';
 import type { ManagedRoadmap } from '@/components/manage-roadmap/types';
-import { FIELD_CAPTION_CLASSES } from '@/components/session/field-caption';
 import { Button } from '@/components/ui/button';
 import { useTranslation } from '@/hooks/use-translation';
 
@@ -16,36 +20,37 @@ export function DeleteRoadmapZone({ roadmap }: { roadmap: ManagedRoadmap }) {
     }
 
     return (
-        <div className="flex flex-col gap-4 rounded-md p-5 inset-ring inset-ring-danger-line">
-            <div className="flex flex-col gap-1">
-                <span className="text-sm font-semibold text-danger">
-                    {t('Excluir roadmap')}
-                </span>
-                <span className="text-xs leading-5 text-muted">
-                    {t(
-                        'Apaga :topics, :sessions, :notes e as revisões agendadas. Não dá para desfazer. Considere exportar um backup antes.',
-                        {
-                            topics: plural(
-                                roadmap.totalTopics,
-                                'tópico',
-                                'tópicos',
-                            ),
-                            sessions: plural(
-                                roadmap.sessionCount,
-                                'sessão',
-                                'sessões',
-                            ),
-                            notes: plural(
-                                roadmap.noteCount,
-                                'anotação',
-                                'anotações',
-                            ),
-                        },
-                    )}
-                </span>
-            </div>
+        <section className={SECTION_CLASSES}>
+            <span className={SECTION_LABEL_CLASSES}>
+                {t('Excluir roadmap')}
+            </span>
+            <p className="text-sm leading-6 text-secondary">
+                <span aria-hidden="true" className="text-danger">
+                    !
+                </span>{' '}
+                {t(
+                    'Apaga :topics, :sessions, :notes e as revisões agendadas. Não dá para desfazer. Considere exportar um backup antes.',
+                    {
+                        topics: plural(
+                            roadmap.totalTopics,
+                            'tópico',
+                            'tópicos',
+                        ),
+                        sessions: plural(
+                            roadmap.sessionCount,
+                            'sessão',
+                            'sessões',
+                        ),
+                        notes: plural(
+                            roadmap.noteCount,
+                            'anotação',
+                            'anotações',
+                        ),
+                    },
+                )}
+            </p>
             <label className="flex flex-col gap-2">
-                <span className={FIELD_CAPTION_CLASSES}>
+                <span className={SECTION_LABEL_CLASSES}>
                     {t('digite o nome para confirmar')}
                 </span>
                 <input
@@ -53,7 +58,7 @@ export function DeleteRoadmapZone({ roadmap }: { roadmap: ManagedRoadmap }) {
                     placeholder={roadmap.slug}
                     onChange={(event) => setConfirmation(event.target.value)}
                     onKeyDown={preventFormSubmitOnEnter}
-                    className="h-11 w-full rounded-full bg-surface px-4 text-sm font-semibold text-text inset-ring inset-ring-border placeholder:text-faint focus:inset-ring-accent"
+                    className={DANGER_FIELD_CONTROL_CLASSES}
                 />
             </label>
             <div>
@@ -65,6 +70,6 @@ export function DeleteRoadmapZone({ roadmap }: { roadmap: ManagedRoadmap }) {
                     {t('Excluir para sempre')}
                 </Button>
             </div>
-        </div>
+        </section>
     );
 }

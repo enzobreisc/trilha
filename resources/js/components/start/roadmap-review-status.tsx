@@ -12,18 +12,15 @@ export function RoadmapReviewStatus({
     return (
         <>
             {reviewsDue > 0 ? (
-                <span className="inline-flex items-center gap-2 font-semibold text-warn">
-                    <span
-                        aria-hidden="true"
-                        className="size-2 rounded-full bg-warn"
-                    />
+                <span className="inline-flex items-center gap-1.5 font-semibold text-review">
+                    <span aria-hidden="true">◆</span>
                     {plural(reviewsDue, 'revisão', 'revisões')}
                 </span>
             ) : (
-                <span className="text-faint">{t('em dia')}</span>
+                <span className="text-muted">{t('em dia')}</span>
             )}
             {lastStudiedDaysAgo !== null && (
-                <span className="text-faint">
+                <span className="text-muted">
                     {relativeDay(lastStudiedDaysAgo)}
                 </span>
             )}

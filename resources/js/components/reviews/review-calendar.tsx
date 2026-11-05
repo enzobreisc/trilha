@@ -11,6 +11,9 @@ export function ReviewCalendar({
     todayCount: number;
 }) {
     const { t } = useTranslation();
+    const getDayCount = (day: ReviewDay) =>
+        day.isToday ? todayCount : day.count;
+    const maxCount = Math.max(1, ...days.map(getDayCount));
 
     return (
         <Card title={t('Revisões agendadas nos próximos 14 dias')}>
@@ -19,7 +22,8 @@ export function ReviewCalendar({
                     <ReviewCalendarDay
                         key={day.date}
                         day={day}
-                        count={day.isToday ? todayCount : day.count}
+                        count={getDayCount(day)}
+                        maxCount={maxCount}
                     />
                 ))}
             </div>

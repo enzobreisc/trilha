@@ -1,29 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
 @import 'tailwindcss';
 
 @source '../views';
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 
 @theme {
-    --font-sans: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
-    --font-display: 'Space Grotesk', 'Manrope', sans-serif;
-    --font-mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    --font-sans:
+        'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-display:
+        'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono:
+        'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
 
     --color-bg: #070a08;
-    --color-sidebar: #050806;
+    --color-chrome: #050806;
     --color-surface: #0d120f;
     --color-elevated: #121915;
     --color-active: #17201a;
     --color-border: #1a231d;
     --color-strong: #26322a;
+    --color-leader: #3f5246;
 
     --color-text: #eaf1ec;
     --color-secondary: #adb9b0;
     --color-muted: #8e9b92;
-    --color-faint: #7b887f;
+    --color-faint: #6b7c70;
 
-    --color-primary: #1f9d55;
-    --color-accent: #34c46a;
+    --color-primary: #1e8a4a;
+    --color-footer: #12512d;
+    --color-accent: #5be08d;
+    --color-success: #34c46a;
     --color-link: #8be9ae;
+    --color-review: #8be9ae;
 
     --color-heat-0: #131b15;
     --color-heat-1: #12381f;
@@ -38,9 +46,10 @@
     --color-danger-fill: #a8323a;
     --color-danger-line: #5a2a30;
 
-    --radius-sm: 12px;
-    --radius-md: 18px;
-    --radius-lg: 22px;
+    --radius-xs: 2px;
+    --radius-sm: 3px;
+    --radius-md: 3px;
+    --radius-lg: 3px;
 
     --shadow-float:
         inset 0 0 0 1px var(--color-strong), 0 24px 48px -16px rgb(0 0 0 / 0.9);
@@ -49,6 +58,11 @@
 @layer base {
     html {
         color-scheme: dark;
+    }
+
+    body {
+        background-color: var(--color-bg);
+        color: var(--color-text);
     }
 
     *,

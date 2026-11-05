@@ -2,13 +2,11 @@ import { router } from '@inertiajs/react';
 import { useId, useState } from 'react';
 import type { ChangeEvent, KeyboardEvent } from 'react';
 import { OverlayContainer } from '@/components/overlays/overlay-container';
-import { OverlayKbd } from '@/components/overlays/overlay-kbd';
 import { SearchResultList } from '@/components/overlays/search-result-list';
 import {
     cycleIndex,
     findSearchResults,
 } from '@/components/overlays/search-results';
-import { SearchIcon } from '@/components/ui/icons';
 import { useTranslation } from '@/hooks/use-translation';
 import { sampleSearchActions, sampleSearchTopics } from '@/lib/sample/overlays';
 import type { SearchAction, SearchTopic } from '@/types/overlay';
@@ -57,10 +55,12 @@ export function SearchOverlay({
             role="dialog"
             label={t('Buscar tópico')}
             onClose={onClose}
-            className="top-28 left-1/2 w-[calc(100%-2rem)] max-w-160 -translate-x-1/2"
+            className="top-14 left-1/2 w-[calc(100%-2rem)] max-w-160 -translate-x-1/2"
         >
-            <div className="flex h-14 shrink-0 items-center gap-3 border-b border-border px-5">
-                <SearchIcon className="shrink-0 text-muted" />
+            <div className="flex h-12 shrink-0 items-center gap-3 border-b border-border px-4">
+                <span aria-hidden="true" className="font-mono text-accent">
+                    /
+                </span>
                 <input
                     type="text"
                     role="combobox"
@@ -76,12 +76,11 @@ export function SearchOverlay({
                     placeholder={t('buscar tópico…')}
                     onChange={handleQueryChange}
                     onKeyDown={handleKeyDown}
-                    className="min-w-0 flex-1 bg-transparent text-base font-medium text-text outline-none placeholder:text-faint"
+                    className="min-w-0 flex-1 bg-transparent font-mono text-[15px] text-text outline-none placeholder:text-faint"
                 />
-                <span className="shrink-0 rounded-full bg-active px-2.5 py-1 text-xs font-semibold text-muted">
+                <span className="shrink-0 font-mono text-xs text-muted">
                     {t('todos os roadmaps')}
                 </span>
-                <OverlayKbd>esc</OverlayKbd>
             </div>
             <SearchResultList
                 results={results}
@@ -89,9 +88,14 @@ export function SearchOverlay({
                 listboxId={listboxId}
                 onHoverIndex={setActiveIndex}
             />
-            <footer className="border-t border-border px-5 py-3 text-xs font-medium text-faint">
-                {plural(topicCount, 'tópico', 'tópicos')} ·{' '}
-                {plural(actionCount, 'ação', 'ações')}
+            <footer className="flex flex-wrap items-center gap-x-4 gap-y-1 border-t border-border px-4 py-2.5 font-mono text-[11px] text-muted">
+                <span>↑↓ {t('escolher')}</span>
+                <span>↵ {t('abrir')}</span>
+                <span>esc {t('fechar')}</span>
+                <span className="ml-auto">
+                    {plural(topicCount, 'tópico', 'tópicos')} ·{' '}
+                    {plural(actionCount, 'ação', 'ações')}
+                </span>
             </footer>
         </OverlayContainer>
     );

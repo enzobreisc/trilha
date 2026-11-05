@@ -1,16 +1,18 @@
 import { usePage } from '@inertiajs/react';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { DataRow } from '@/components/ui/data-row';
+import { SettingsDetailRow } from '@/components/settings/settings-detail-row';
+import { SettingsSection } from '@/components/settings/settings-section';
 import { useTranslation } from '@/hooks/use-translation';
 
 const DATABASE_SIZE_FRACTION_DIGITS = 1;
 
 export function DataSection({
+    index,
     databasePath,
     databaseSizeMegabytes,
     lastBackupDate,
 }: {
+    index: number;
     databasePath: string;
     databaseSizeMegabytes: number;
     lastBackupDate: string | null;
@@ -22,29 +24,32 @@ export function DataSection({
     });
 
     return (
-        <Card title={t('dados')}>
-            <div className="flex flex-col">
-                <DataRow label={t('banco de dados')} value={databasePath} />
-                <DataRow
+        <SettingsSection title={t('dados')} index={index}>
+            <div className="flex flex-col gap-1.5">
+                <SettingsDetailRow
+                    label={t('banco de dados')}
+                    value={databasePath}
+                />
+                <SettingsDetailRow
                     label={t('tamanho')}
                     value={`${sizeFormatter.format(databaseSizeMegabytes)} MB`}
                 />
-                <DataRow
+                <SettingsDetailRow
                     label={t('último backup')}
                     value={
                         lastBackupDate ? shortDate(lastBackupDate) : t('nunca')
                     }
                 />
             </div>
-            <div className="flex flex-wrap gap-2.5">
-                <Button>{t('Exportar backup')}</Button>
+            <div className="flex flex-wrap gap-2">
+                <Button variant="secondary">{t('Exportar backup')}</Button>
                 <Button variant="secondary">{t('Restaurar backup…')}</Button>
             </div>
-            <p className="text-xs text-faint">
+            <p className="font-mono text-xs text-muted">
                 {t(
                     'O backup é um único arquivo .sqlite com roadmaps, progresso, sessões e anotações.',
                 )}
             </p>
-        </Card>
+        </SettingsSection>
     );
 }

@@ -1,6 +1,5 @@
 import { useId } from 'react';
 import { FieldCaption } from '@/components/session/field-caption';
-import { CheckIcon } from '@/components/session/icons';
 import type {
     SessionActivity,
     SessionActivityOption,
@@ -34,7 +33,7 @@ export function ActivityField({
                     return (
                         <label
                             key={option.id}
-                            className="flex h-11 cursor-pointer items-center gap-3 rounded-sm px-3 hover:bg-active/60 has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-accent"
+                            className="flex h-9 cursor-pointer items-center gap-3 rounded-sm px-1 hover:bg-active/60 has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-accent"
                         >
                             <input
                                 type="checkbox"
@@ -45,20 +44,18 @@ export function ActivityField({
                             <span
                                 aria-hidden="true"
                                 className={cn(
-                                    'flex size-5 shrink-0 items-center justify-center rounded-sm',
-                                    isChecked
-                                        ? 'bg-accent text-bg'
-                                        : 'inset-ring inset-ring-strong',
+                                    'font-mono text-sm',
+                                    isChecked ? 'text-success' : 'text-faint',
                                 )}
                             >
-                                {isChecked && <CheckIcon />}
+                                {isChecked ? '[x]' : '[ ]'}
                             </span>
                             <span
                                 className={cn(
                                     'text-sm',
                                     isChecked
-                                        ? 'font-semibold text-text'
-                                        : 'font-medium text-muted',
+                                        ? 'text-muted line-through'
+                                        : 'text-text',
                                 )}
                             >
                                 {t(option.label)}

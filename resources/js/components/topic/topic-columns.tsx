@@ -8,11 +8,11 @@ export function TopicColumns({
     aside: ReactNode;
 }) {
     return (
-        <div className="grid items-start gap-7 lg:grid-cols-3">
+        <div className="grid items-start gap-9 lg:grid-cols-3">
             <div className="flex min-w-0 flex-col gap-7 lg:col-span-2">
                 {main}
             </div>
-            <aside className="flex min-w-0 flex-col gap-7">{aside}</aside>
+            <aside className="flex min-w-0 flex-col gap-6">{aside}</aside>
         </div>
     );
 }

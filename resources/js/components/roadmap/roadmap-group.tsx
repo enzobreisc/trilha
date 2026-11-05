@@ -25,10 +25,10 @@ export function RoadmapGroup({
     }
 
     return (
-        <div className="flex flex-col gap-1">
-            <div className="flex items-baseline justify-between gap-3 px-3 text-sm font-semibold text-muted">
+        <div className="flex flex-col gap-0.5">
+            <div className="flex items-baseline justify-between gap-3 px-3 pb-1 font-mono text-[11px] tracking-[0.08em] text-muted uppercase">
                 <span>{group.name}</span>
-                <span className="font-mono text-xs text-faint">
+                <span className="text-faint">
                     {countCompleted(group.topics)}/{group.topics.length}
                 </span>
             </div>

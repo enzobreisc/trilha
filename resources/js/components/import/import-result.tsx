@@ -26,17 +26,22 @@ export function ImportResult({
     const readMessage = useMessageText();
 
     return (
-        <Card title={t('conferência')} aside={aside} className={className}>
-            <div className="flex flex-wrap justify-between gap-x-4 gap-y-1 text-xs text-faint">
-                <span className="font-semibold text-text">
-                    {validation.fileName}
-                </span>
-                <span>{readMessage(validation.fileMeta)}</span>
+        <Card title={t('conferência')} className={className}>
+            <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                    <span className="font-mono text-sm font-bold text-text">
+                        {validation.fileName}
+                    </span>
+                    <span className="font-mono text-xs text-muted">
+                        {readMessage(validation.fileMeta)}
+                    </span>
+                </div>
+                <span className="font-mono text-xs text-accent">{aside}</span>
             </div>
             {children}
             <div className="flex flex-wrap gap-2.5">
                 {actions}
-                <Button variant="ghost" onClick={onCancel}>
+                <Button variant="secondary" onClick={onCancel}>
                     {t('Cancelar')}
                 </Button>
             </div>

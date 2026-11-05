@@ -39,10 +39,7 @@ export function OverlayContainer({
                 tabIndex={-1}
                 aria-label={t('Fechar')}
                 onClick={onClose}
-                className={cn(
-                    'fixed inset-0 z-40 cursor-default app-no-drag',
-                    role === 'dialog' && 'bg-black/60',
-                )}
+                className="fixed inset-0 z-40 cursor-default bg-black/60 app-no-drag"
             />
             <div
                 ref={panelRef}
@@ -50,7 +47,7 @@ export function OverlayContainer({
                 aria-label={label}
                 tabIndex={-1}
                 className={cn(
-                    'fixed z-50 box-border flex flex-col overflow-hidden rounded-lg bg-elevated shadow-float outline-none app-no-drag',
+                    'fixed z-50 box-border flex flex-col overflow-hidden rounded-lg bg-bg shadow-float outline-none app-no-drag',
                     className,
                 )}
             >

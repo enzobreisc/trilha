@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { SectionTitle } from '@/components/ui/page-header';
+import { SectionLabel } from '@/components/ui/section-label';
 import { cn } from '@/lib/utils';
 
 export function Card({
@@ -16,19 +16,12 @@ export function Card({
     return (
         <section
             className={cn(
-                'flex min-w-0 flex-col gap-4 rounded-md bg-surface p-6 inset-ring inset-ring-border',
+                'flex min-w-0 flex-col gap-4 rounded-sm bg-surface p-5 inset-ring inset-ring-border',
                 className,
             )}
         >
             {(title || aside) && (
-                <header className="flex items-center justify-between gap-3">
-                    {title && <SectionTitle>{title}</SectionTitle>}
-                    {aside && (
-                        <span className="text-xs font-semibold text-faint">
-                            {aside}
-                        </span>
-                    )}
-                </header>
+                <SectionLabel aside={aside}>{title}</SectionLabel>
             )}
             {children}
         </section>

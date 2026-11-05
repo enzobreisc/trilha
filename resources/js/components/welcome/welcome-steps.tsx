@@ -30,22 +30,22 @@ export function WelcomeSteps() {
     const { t } = useTranslation();
 
     return (
-        <section className="flex flex-col gap-4">
+        <section className="flex flex-col gap-2">
             <SectionTitle>{t('como começar')}</SectionTitle>
-            <ol className="grid gap-4 md:grid-cols-3">
+            <ol className="flex flex-col">
                 {WELCOME_STEPS.map((step) => (
                     <li
                         key={step.number}
-                        className="flex flex-col gap-4 rounded-md bg-surface p-6 inset-ring inset-ring-border"
+                        className="flex items-start gap-4 border-t border-border py-3"
                     >
-                        <span className="flex size-9 items-center justify-center rounded-full bg-active font-mono text-sm font-semibold text-accent">
+                        <span className="font-mono text-sm font-semibold text-accent">
                             {step.number}
                         </span>
-                        <div className="flex flex-col gap-1">
-                            <h3 className="font-display text-lg font-semibold">
+                        <div className="flex flex-col gap-0.5">
+                            <h3 className="font-semibold text-text">
                                 {t(step.title)}
                             </h3>
-                            <p className="text-sm font-medium text-muted">
+                            <p className="text-secondary">
                                 {t(step.description)}
                             </p>
                         </div>

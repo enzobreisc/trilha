@@ -1,7 +1,6 @@
 import { CheckIcon, CopyIcon } from '@/components/topic/topic-icons';
+import { TopicSection } from '@/components/topic/topic-section';
 import { useCopyToClipboard } from '@/components/topic/use-copy-to-clipboard';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
 import { useTranslation } from '@/hooks/use-translation';
 
 export function AiPromptSection({
@@ -15,24 +14,22 @@ export function AiPromptSection({
     const { copied, copy } = useCopyToClipboard();
 
     return (
-        <Card
+        <TopicSection
             title={t('o que pedir para a IA')}
             aside={
-                <Button
-                    variant="ghost"
-                    className="h-9 px-3"
+                <button
+                    type="button"
+                    className="inline-flex items-center gap-1.5 text-muted transition-colors hover:text-accent"
                     onClick={() => void copy(prompt)}
                 >
                     {copied ? <CheckIcon /> : <CopyIcon />}
                     {copied ? t('copiado') : t('copiar')}
-                </Button>
+                </button>
             }
         >
-            <p className="m-0 rounded-md bg-elevated p-4 text-sm leading-6 font-medium text-text">
-                {prompt}
-            </p>
+            <p className="m-0 text-sm leading-7 text-text">{prompt}</p>
             <div className="flex flex-col gap-2">
-                <span className="text-xs font-semibold text-muted">
+                <span className="font-mono text-xs text-muted">
                     {t('ao revisar a resposta, confira:')}
                 </span>
                 <ul className="m-0 flex list-none flex-col gap-2 p-0">
@@ -43,13 +40,15 @@ export function AiPromptSection({
                         >
                             <span
                                 aria-hidden="true"
-                                className="mt-2 size-1.5 shrink-0 rounded-full bg-accent"
-                            />
+                                className="font-mono text-accent"
+                            >
+                                ›
+                            </span>
                             {check}
                         </li>
                     ))}
                 </ul>
             </div>
-        </Card>
+        </TopicSection>
     );
 }

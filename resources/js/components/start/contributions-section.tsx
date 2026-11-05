@@ -1,6 +1,7 @@
 import { ContributionHeatmap } from '@/components/start/contribution-heatmap';
+import { Section } from '@/components/start/section';
 import type { StartStats } from '@/components/start/types';
-import { Card } from '@/components/ui/card';
+import { DataRow } from '@/components/ui/data-row';
 import { useTranslation } from '@/hooks/use-translation';
 import type { HeatLevel } from '@/types/contribution';
 
@@ -14,25 +15,20 @@ export function ContributionsSection({
     const { t } = useTranslation();
 
     return (
-        <Card title={t('contribuições')} aside={t('6 meses')}>
+        <Section title={t('contribuições')} aside={t('6 meses')}>
+            <div className="flex flex-col gap-1.5">
+                <DataRow
+                    label={t('dias seguidos')}
+                    value={
+                        <span className="text-accent">{stats.streakDays}</span>
+                    }
+                />
+                <DataRow label={t('sessões')} value={stats.sessionCount} />
+            </div>
             <ContributionHeatmap
                 levels={levels}
                 label={t('Gráfico de contribuições: dias estudados')}
             />
-            <div className="flex justify-between text-sm font-medium text-muted">
-                <span>
-                    <span className="font-mono font-semibold text-accent">
-                        {stats.streakDays}
-                    </span>{' '}
-                    {t('dias seguidos')}
-                </span>
-                <span>
-                    <span className="font-mono font-semibold text-text">
-                        {stats.sessionCount}
-                    </span>{' '}
-                    {t('sessões')}
-                </span>
-            </div>
-        </Card>
+        </Section>
     );
 }

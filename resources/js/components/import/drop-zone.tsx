@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import type { DragEvent, RefObject } from 'react';
-import { UploadIcon } from '@/components/import/import-icons';
 import { Button } from '@/components/ui/button';
 import { useTranslation } from '@/hooks/use-translation';
 import { cn } from '@/lib/utils';
@@ -32,19 +31,16 @@ export function DropZone({
             onDragLeave={() => setIsDragging(false)}
             onDrop={handleDrop}
             className={cn(
-                'flex flex-col items-center gap-4 rounded-md border border-dashed bg-surface px-6 py-10 text-center text-sm font-medium text-muted transition-colors',
-                isDragging ? 'border-accent bg-active/40' : 'border-strong',
+                'flex flex-wrap items-center justify-center gap-x-3.5 gap-y-2 rounded-sm border border-dashed bg-surface px-5 py-5 font-mono text-sm text-secondary transition-colors',
+                isDragging ? 'border-accent bg-active' : 'border-leader',
             )}
         >
-            <span className="flex size-12 items-center justify-center rounded-full bg-active text-accent">
-                <UploadIcon width={22} height={22} />
-            </span>
             <p>
                 {t('arraste o arquivo')}{' '}
-                <span className="font-semibold text-text">.json</span>{' '}
+                <span className="font-bold text-accent">.json</span>{' '}
                 {t('para cá')}
             </p>
-            <span className="text-xs text-faint">{t('ou')}</span>
+            <span className="text-xs text-muted">{t('ou')}</span>
             <input
                 ref={inputRef}
                 type="file"
@@ -56,7 +52,10 @@ export function DropZone({
                     }
                 }}
             />
-            <Button onClick={() => inputRef.current?.click()}>
+            <Button
+                variant="secondary"
+                onClick={() => inputRef.current?.click()}
+            >
                 {t('Escolher arquivo')}
             </Button>
         </div>

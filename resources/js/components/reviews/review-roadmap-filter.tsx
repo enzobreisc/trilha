@@ -28,8 +28,9 @@ export function ReviewRoadmapFilter({
         <div
             role="group"
             aria-label={t('Filtrar por roadmap')}
-            className="flex flex-wrap gap-2"
+            className="flex flex-wrap items-baseline gap-x-5 gap-y-2 font-mono text-xs"
         >
+            <span className="text-muted">{t('roadmap')}</span>
             {options.map((option) => {
                 const isActive = option.id === activeFilter;
                 return (
@@ -39,16 +40,17 @@ export function ReviewRoadmapFilter({
                         aria-pressed={isActive}
                         onClick={() => onPick(option.id)}
                         className={cn(
-                            'inline-flex h-9 items-center gap-2 rounded-full px-4 text-sm font-semibold transition-colors',
+                            'inline-flex items-center gap-2 transition-colors',
                             isActive
-                                ? 'bg-active text-white'
-                                : 'text-secondary inset-ring inset-ring-border hover:bg-active/60 hover:text-text',
+                                ? 'font-bold text-text'
+                                : 'text-muted hover:text-text',
                         )}
                     >
-                        {option.label}
-                        <span className="font-mono text-xs text-muted">
-                            {option.count}
+                        <span aria-hidden="true">
+                            {isActive ? '(•)' : '( )'}
                         </span>
+                        {option.label}
+                        <span className="text-muted">{option.count}</span>
                     </button>
                 );
             })}

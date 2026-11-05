@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 
-export const FIELD_CAPTION_CLASSES = 'text-xs font-semibold text-muted';
+export const FIELD_CAPTION_CLASSES =
+    'font-mono text-[11px] font-medium tracking-[0.08em] text-muted uppercase';
 
 export function FieldCaption({
     id,

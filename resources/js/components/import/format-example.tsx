@@ -11,7 +11,7 @@ const KEY_TONE_CLASSES: Record<FormatKeyTone, string> = {
 
 export function FormatExample() {
     return (
-        <pre className="overflow-x-auto rounded-md bg-elevated p-4 font-mono text-xs leading-6 text-secondary">
+        <pre className="overflow-x-auto rounded-sm bg-elevated p-4 font-mono text-xs leading-6 text-secondary inset-ring inset-ring-border">
             {sampleFormatExample.map((line, index) => (
                 <FormatExampleRow key={index} line={line} />
             ))}

@@ -30,7 +30,7 @@ export function TopicTabs({
         <div
             role="tablist"
             aria-label={t('Seções do tópico')}
-            className="flex w-fit gap-1 rounded-full bg-surface p-1 inset-ring inset-ring-border"
+            className="flex gap-6 border-b border-border"
         >
             {TABS.map((tab) => {
                 const isActive = tab.id === activeTab;
@@ -42,10 +42,10 @@ export function TopicTabs({
                         aria-selected={isActive}
                         onClick={() => onTabChange(tab.id)}
                         className={cn(
-                            'h-9 rounded-full px-4 text-sm font-semibold transition-colors',
+                            '-mb-px border-b-2 px-1 pb-2 font-mono text-[13px] transition-colors',
                             isActive
-                                ? 'bg-active text-text'
-                                : 'text-muted hover:text-secondary',
+                                ? 'border-accent font-bold text-accent'
+                                : 'border-transparent text-muted hover:text-secondary',
                         )}
                     >
                         {t(tab.label)}

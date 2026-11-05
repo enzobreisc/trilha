@@ -16,10 +16,10 @@ export function StatusOption({
     return (
         <label
             className={cn(
-                'inline-flex h-11 cursor-pointer items-center gap-2.5 rounded-full px-4 text-sm font-semibold transition-colors has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-accent',
+                'inline-flex cursor-pointer items-center gap-2.5 font-mono text-[13px] transition-colors has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-accent',
                 isChecked
-                    ? 'bg-active text-text inset-ring inset-ring-strong'
-                    : 'bg-elevated text-muted inset-ring inset-ring-border hover:text-secondary',
+                    ? 'font-bold text-accent'
+                    : 'text-muted hover:text-secondary',
             )}
         >
             <input
@@ -30,6 +30,7 @@ export function StatusOption({
                 onChange={onSelect}
                 className="sr-only"
             />
+            <span aria-hidden="true">{isChecked ? '(•)' : '( )'}</span>
             <span aria-hidden="true" className="flex">
                 <StatusIcon status={status} />
             </span>

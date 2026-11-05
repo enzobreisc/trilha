@@ -91,7 +91,10 @@ function SessionDialog({
             onMouseDown={handleBackdropMouseDown}
             className={cn(DIALOG_ELEMENT_CLASSES, 'max-w-165')}
         >
-            <form onSubmit={handleSubmit} className={DIALOG_SURFACE_CLASSES}>
+            <form
+                onSubmit={handleSubmit}
+                className={cn(DIALOG_SURFACE_CLASSES, 'rounded-sm')}
+            >
                 <DialogHeader
                     titleId={titleId}
                     title={t('Registrar sessão')}

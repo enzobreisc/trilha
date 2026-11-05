@@ -1,3 +1,4 @@
+import { Link } from '@inertiajs/react';
 import { DropZone } from '@/components/import/drop-zone';
 import { FormatAside } from '@/components/import/format-aside';
 import { ImportTabs } from '@/components/import/import-tabs';
@@ -24,6 +25,12 @@ export default function Import({
 
     return (
         <div className="mx-auto flex w-full max-w-5xl flex-col gap-7">
+            <Link
+                href="/start"
+                className="w-fit font-mono text-xs text-muted hover:text-text"
+            >
+                ‹ {t('Voltar')}
+            </Link>
             <PageHeader
                 title={t('Adicionar ou atualizar roadmap')}
                 description={t(
@@ -31,7 +38,7 @@ export default function Import({
                 )}
             />
             <ImportTabs mode={page.mode} onSelect={page.selectMode} />
-            <div className="flex flex-wrap items-start gap-7">
+            <div className="flex flex-wrap items-start gap-9">
                 <div className="flex min-w-0 flex-[999_1_560px] flex-col gap-7">
                     <DropZone
                         inputRef={page.fileInputRef}

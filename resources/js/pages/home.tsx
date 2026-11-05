@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { ActiveTopicSection } from '@/components/home/active-topic-section';
+import { HomeHeading } from '@/components/home/home-heading';
 import { NoTopicSection } from '@/components/home/no-topic-section';
 import { ReviewsPanel } from '@/components/home/reviews-panel';
 import type { HomeData } from '@/components/home/types';
 import { WeekPanel } from '@/components/home/week-panel';
 import LogSessionDialog from '@/components/log-session-dialog';
-import { PageHeader } from '@/components/ui/page-header';
 import { useTranslation } from '@/hooks/use-translation';
 import { sampleHomeData } from '@/lib/sample/home';
 
@@ -17,7 +17,7 @@ export default function Home(props: Partial<HomeData>) {
 
     return (
         <div className="@container mx-auto flex w-full max-w-6xl flex-col gap-7">
-            <PageHeader
+            <HomeHeading
                 title={t('Boa noite, :name', { name: data.profileName })}
                 description={`${data.dateLabel} · ${t(':done/:total concluídos', { done: data.progress.done, total: data.progress.total })}`}
             />

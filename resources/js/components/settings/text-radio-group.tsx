@@ -6,7 +6,7 @@ export type RadioOption<T extends string> = {
     label: string;
 };
 
-export function PillRadioGroup<T extends string>({
+export function TextRadioGroup<T extends string>({
     label,
     options,
     value,
@@ -23,7 +23,7 @@ export function PillRadioGroup<T extends string>({
         <div
             role="radiogroup"
             aria-label={label}
-            className="flex flex-wrap gap-2"
+            className="flex flex-wrap gap-x-4.5 gap-y-1.5 font-mono text-[13px]"
         >
             {options.map((option) => {
                 const isSelected = option.value === value;
@@ -32,10 +32,10 @@ export function PillRadioGroup<T extends string>({
                     <label
                         key={option.value}
                         className={cn(
-                            'inline-flex h-9 cursor-pointer items-center rounded-full px-4 text-sm font-semibold inset-ring has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-accent',
+                            'inline-flex cursor-pointer items-center gap-2 has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-accent',
                             isSelected
-                                ? 'bg-active text-white inset-ring-strong'
-                                : 'text-muted inset-ring-border hover:bg-active/60 hover:text-text',
+                                ? 'font-bold text-text'
+                                : 'text-muted hover:text-secondary',
                         )}
                     >
                         <input
@@ -46,6 +46,9 @@ export function PillRadioGroup<T extends string>({
                             onChange={() => onChange(option.value)}
                             className="sr-only"
                         />
+                        <span aria-hidden="true">
+                            {isSelected ? '(•)' : '( )'}
+                        </span>
                         {option.label}
                     </label>
                 );

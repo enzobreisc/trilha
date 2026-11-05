@@ -23,7 +23,7 @@ export function SegmentedControl<T extends string | number>({
         <div
             role="radiogroup"
             aria-label={label}
-            className="inline-flex flex-wrap gap-1 self-start rounded-full bg-surface p-1 inset-ring inset-ring-border"
+            className="flex flex-wrap gap-2 self-start"
         >
             {options.map((option) => {
                 const isSelected = option.value === value;
@@ -32,10 +32,10 @@ export function SegmentedControl<T extends string | number>({
                     <label
                         key={option.value}
                         className={cn(
-                            'inline-flex h-8 cursor-pointer items-center rounded-full px-3.5 text-sm font-semibold has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-accent',
+                            'inline-flex h-8 cursor-pointer items-center rounded-sm border px-3.5 font-mono text-[13px] has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-accent',
                             isSelected
-                                ? 'bg-active text-white inset-ring inset-ring-strong'
-                                : 'text-muted hover:text-text',
+                                ? 'border-accent bg-primary/25 text-accent'
+                                : 'border-leader text-text hover:bg-active',
                         )}
                     >
                         <input

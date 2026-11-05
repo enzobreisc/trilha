@@ -13,12 +13,16 @@ export function DataRow({
     return (
         <div
             className={cn(
-                'flex min-h-10 items-center justify-between gap-4 border-b border-border text-sm last:border-b-0',
+                'flex items-baseline gap-2 font-mono text-xs',
                 className,
             )}
         >
-            <span className="font-medium text-secondary">{label}</span>
-            <span className="font-semibold text-text">{value}</span>
+            <span className="text-secondary">{label}</span>
+            <span
+                aria-hidden="true"
+                className="min-w-3 flex-1 -translate-y-0.75 border-b border-dotted border-leader"
+            />
+            <span className="text-text">{value}</span>
         </div>
     );
 }

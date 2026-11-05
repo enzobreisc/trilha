@@ -1,5 +1,6 @@
 import { formatSessionDuration } from '@/components/session/session-draft';
-import { SessionStat } from '@/components/sessions/session-stat';
+import { Card } from '@/components/ui/card';
+import { DataRow } from '@/components/ui/data-row';
 import { useTranslation } from '@/hooks/use-translation';
 
 export function SessionsSummary({
@@ -14,19 +15,13 @@ export function SessionsSummary({
     const { t } = useTranslation();
 
     return (
-        <div className="grid gap-4 sm:grid-cols-3">
-            <SessionStat
+        <Card title={t('resumo')}>
+            <DataRow
+                label={t('esta semana')}
                 value={formatSessionDuration(weekMinutes)}
-                caption={t('esta semana')}
             />
-            <SessionStat
-                value={String(totalSessions)}
-                caption={t('em 6 meses')}
-            />
-            <SessionStat
-                value={String(streakDays)}
-                caption={t('dias seguidos')}
-            />
-        </div>
+            <DataRow label={t('em 6 meses')} value={totalSessions} />
+            <DataRow label={t('dias seguidos')} value={streakDays} />
+        </Card>
     );
 }

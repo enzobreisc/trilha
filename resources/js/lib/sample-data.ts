@@ -223,7 +223,7 @@ export const sampleAppChrome: AppChrome = {
         doneTopics,
         totalTopics,
     })),
-    currentRoadmapId: sampleRoadmaps[0].id,
+    currentRoadmapId: sampleRoadmaps[0]?.id ?? '',
     reviewsDue: 3,
 };
 

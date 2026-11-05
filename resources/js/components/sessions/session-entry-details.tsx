@@ -6,17 +6,17 @@ export function SessionEntryDetails({ session }: { session: SessionEntry }) {
     const { t } = useTranslation();
 
     return (
-        <div className="flex flex-col gap-3 px-3 pt-1 pb-3">
+        <div className="flex flex-col gap-2 px-3 pt-1 pb-3">
             {session.note && (
                 <p className="text-sm leading-6 text-secondary">
                     {session.note}
                 </p>
             )}
-            <div className="flex gap-2">
-                <Button variant="secondary" className="h-9 px-4 text-xs">
+            <div className="flex gap-1">
+                <Button variant="ghost" className="h-7 px-2 font-mono text-xs">
                     {t('editar')}
                 </Button>
-                <Button variant="ghost" className="h-9 px-4 text-xs">
+                <Button variant="ghost" className="h-7 px-2 font-mono text-xs">
                     {t('excluir')}
                 </Button>
             </div>

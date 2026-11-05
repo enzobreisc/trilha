@@ -1,4 +1,4 @@
-import { DataRow } from '@/components/ui/data-row';
+import { SectionLabel } from '@/components/ui/section-label';
 import { useTranslation } from '@/hooks/use-translation';
 import type { RoadmapPreviewSection } from '@/lib/sample/import';
 
@@ -10,28 +10,24 @@ export function RoadmapPreview({
     const { t } = useTranslation();
 
     return (
-        <div className="flex flex-col gap-2">
-            <span className="text-xs font-semibold text-faint">
-                {t('prévia')}
-            </span>
-            <div className="flex flex-col rounded-sm bg-elevated px-4 inset-ring inset-ring-border">
+        <div className="flex flex-col gap-2 border-t border-border pt-4">
+            <SectionLabel>{t('prévia')}</SectionLabel>
+            <div className="flex flex-col">
                 {sections.map((section) => (
-                    <DataRow
+                    <div
                         key={section.number}
-                        label={
-                            <>
-                                <span className="font-mono text-faint">
-                                    {section.number}
-                                </span>{' '}
-                                {section.name}
-                            </>
-                        }
-                        value={
-                            <span className="font-mono">
-                                {section.topicCount}
-                            </span>
-                        }
-                    />
+                        className="flex items-baseline gap-3 py-0.5"
+                    >
+                        <span className="w-6.5 shrink-0 font-mono text-xs text-muted">
+                            {section.number}
+                        </span>
+                        <span className="flex-1 text-sm text-text">
+                            {section.name}
+                        </span>
+                        <span className="font-mono text-xs text-muted">
+                            {section.topicCount}
+                        </span>
+                    </div>
                 ))}
             </div>
         </div>

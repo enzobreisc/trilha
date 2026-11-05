@@ -1,5 +1,5 @@
-import { RoadmapStatusContent } from '@/components/start/roadmap-status-content';
 import type { RoadmapState } from '@/components/start/roadmap-progress';
+import { RoadmapStatusContent } from '@/components/start/roadmap-status-content';
 import type { RoadmapSummary } from '@/types/roadmap';
 
 export function RoadmapStatusLine({
@@ -10,7 +10,7 @@ export function RoadmapStatusLine({
     state: RoadmapState;
 }) {
     return (
-        <p className="text-sm font-medium text-muted">
+        <p className="min-w-0 flex-1 basis-56 font-mono text-xs text-muted">
             <RoadmapStatusContent roadmap={roadmap} state={state} />
         </p>
     );

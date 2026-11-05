@@ -1,5 +1,5 @@
+import { TopicSection } from '@/components/topic/topic-section';
 import { useReviewDateLabel } from '@/components/topic/use-review-date-label';
-import { Card } from '@/components/ui/card';
 import { DataRow } from '@/components/ui/data-row';
 import { useTranslation } from '@/hooks/use-translation';
 import type { TopicSchedule } from '@/lib/sample/topic';
@@ -16,14 +16,13 @@ export function NextReviewsSection({
     const reviewDateLabel = useReviewDateLabel(status);
 
     return (
-        <Card title={t('próximas revisões')}>
+        <TopicSection title={t('próximas revisões')}>
             <DataRow
                 label={
-                    <span className="flex items-center gap-2.5">
-                        <span
-                            aria-hidden="true"
-                            className="size-2 rounded-full bg-accent"
-                        />
+                    <span className="flex items-baseline gap-2">
+                        <span aria-hidden="true" className="text-accent">
+                            ◇
+                        </span>
                         {t('7 dias')}
                     </span>
                 }
@@ -31,16 +30,15 @@ export function NextReviewsSection({
             />
             <DataRow
                 label={
-                    <span className="flex items-center gap-2.5">
-                        <span
-                            aria-hidden="true"
-                            className="size-2 rounded-full bg-active inset-ring inset-ring-strong"
-                        />
+                    <span className="flex items-baseline gap-2">
+                        <span aria-hidden="true" className="text-faint">
+                            ○
+                        </span>
                         {t('30 dias')}
                     </span>
                 }
                 value={reviewDateLabel(schedule.thirty_day_review_on)}
             />
-        </Card>
+        </TopicSection>
     );
 }

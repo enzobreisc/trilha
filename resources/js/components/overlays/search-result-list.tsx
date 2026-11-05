@@ -1,11 +1,12 @@
 import { Link } from '@inertiajs/react';
 import { Fragment } from 'react';
-import { BoltIcon } from '@/components/overlays/overlay-icons';
 import { OverlayMenuCaption } from '@/components/overlays/overlay-menu-row';
 import type { SearchResult } from '@/components/overlays/search-results';
 import { StatusIcon } from '@/components/status-icon';
 import { useTranslation } from '@/hooks/use-translation';
 import { cn } from '@/lib/utils';
+
+const ACTION_MARKER = '+';
 
 export function SearchResultList({
     results,
@@ -33,7 +34,7 @@ export function SearchResultList({
             id={listboxId}
             role="listbox"
             aria-label={t('Buscar tópico')}
-            className="flex max-h-120 flex-col gap-0.5 overflow-y-auto p-2"
+            className="flex max-h-120 flex-col overflow-y-auto py-1.5"
         >
             {results.map((result, index) => {
                 const previous = results[index - 1];
@@ -82,23 +83,32 @@ function SearchResultRow({
             aria-selected={isActive}
             onMouseEnter={onHover}
             className={cn(
-                'flex min-h-10 items-center gap-3 rounded-sm px-3 text-sm font-semibold',
-                isActive ? 'bg-active text-white' : 'text-secondary',
+                'flex min-h-10 items-center gap-3 border-l-3 px-3.5 py-1.5 text-sm font-medium',
+                isActive
+                    ? 'border-accent bg-primary/25 text-text'
+                    : 'border-transparent text-secondary',
             )}
         >
             {result.kind === 'topic' ? (
                 <StatusIcon status={result.status} size={16} />
             ) : (
-                <BoltIcon className="shrink-0 text-accent" />
-            )}
-            <span className="min-w-0 flex-1 truncate">
-                {result.kind === 'topic' ? result.title : t(result.label)}
-            </span>
-            {result.kind === 'topic' && (
-                <span className="truncate text-xs font-medium text-faint">
-                    {result.location}
+                <span
+                    aria-hidden="true"
+                    className="flex w-4 shrink-0 justify-center font-mono text-accent"
+                >
+                    {ACTION_MARKER}
                 </span>
             )}
+            <span className="min-w-0 flex-1">
+                <span className="block truncate">
+                    {result.kind === 'topic' ? result.title : t(result.label)}
+                </span>
+                {result.kind === 'topic' && (
+                    <span className="block truncate font-mono text-[11px] font-normal text-muted">
+                        {result.location}
+                    </span>
+                )}
+            </span>
         </Link>
     );
 }

@@ -2,8 +2,8 @@ import {
     formatDuration,
     getTotalMinutes,
 } from '@/components/topic/session-time';
+import { TopicSection } from '@/components/topic/topic-section';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
 import { DataRow } from '@/components/ui/data-row';
 import { useTranslation } from '@/hooks/use-translation';
 import type { TopicSession } from '@/lib/sample/topic';
@@ -19,11 +19,11 @@ export function SessionSummarySection({
     const [lastSession] = sessions;
 
     return (
-        <Card
+        <TopicSection
             title={t('sessões')}
             aside={plural(sessions.length, 'sessão', 'sessões')}
         >
-            <p className="m-0 font-display text-5xl leading-none font-bold tracking-tighter">
+            <p className="m-0 text-[26px] leading-none font-semibold tracking-tight">
                 {formatDuration(getTotalMinutes(sessions))}
             </p>
             {lastSession && (
@@ -35,9 +35,9 @@ export function SessionSummarySection({
                     })}
                 />
             )}
-            <Button className="w-full" onClick={onRegister}>
+            <Button className="self-start" onClick={onRegister}>
                 {t('Registrar sessão')}
             </Button>
-        </Card>
+        </TopicSection>
     );
 }

@@ -1,6 +1,9 @@
 import { useId, type Ref } from 'react';
+import {
+    FIELD_CONTROL_CLASSES,
+    SECTION_LABEL_CLASSES,
+} from '@/components/manage-roadmap/dialog-styles';
 import type { ManagedRoadmap } from '@/components/manage-roadmap/types';
-import { FIELD_CAPTION_CLASSES } from '@/components/session/field-caption';
 import { useTranslation } from '@/hooks/use-translation';
 
 export function RoadmapIdentityFields({
@@ -20,7 +23,7 @@ export function RoadmapIdentityFields({
     return (
         <div className="flex flex-col gap-5">
             <div className="flex flex-col gap-2">
-                <label htmlFor={nameId} className={FIELD_CAPTION_CLASSES}>
+                <label htmlFor={nameId} className={SECTION_LABEL_CLASSES}>
                     {t('nome')}
                 </label>
                 <input
@@ -28,12 +31,12 @@ export function RoadmapIdentityFields({
                     ref={nameInputRef}
                     value={name}
                     onChange={(event) => onNameChange(event.target.value)}
-                    className="h-11 w-full rounded-full bg-surface px-4 text-sm font-semibold text-text inset-ring inset-ring-border focus:inset-ring-accent"
+                    className={FIELD_CONTROL_CLASSES}
                 />
             </div>
             <div className="flex flex-col gap-2">
-                <span className={FIELD_CAPTION_CLASSES}>{t('chave')}</span>
-                <span className="flex h-11 items-center rounded-full bg-surface px-4 font-mono text-sm text-muted inset-ring inset-ring-border">
+                <span className={SECTION_LABEL_CLASSES}>{t('chave')}</span>
+                <span className="flex h-9 items-center rounded-sm bg-surface px-3 font-mono text-sm text-muted inset-ring inset-ring-border">
                     {roadmap.key}
                 </span>
                 <span className="text-xs text-faint">
@@ -42,7 +45,7 @@ export function RoadmapIdentityFields({
                     )}
                 </span>
             </div>
-            <p className="text-xs leading-5 text-faint">
+            <p className="text-xs leading-5 text-muted">
                 {t(
                     'origem: :file, importado em :date · :done de :total tópicos concluídos · :sessions · :notes',
                     {

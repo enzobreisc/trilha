@@ -26,34 +26,44 @@ export function SessionEntryRow({
     return (
         <div
             className={cn(
-                'flex flex-col rounded-sm',
-                isSelected ? 'bg-active' : 'hover:bg-active/60',
+                'flex flex-col border-l-3',
+                isSelected
+                    ? 'border-l-accent bg-primary/25'
+                    : 'border-l-transparent hover:bg-active',
             )}
         >
             <button
                 type="button"
                 aria-pressed={isSelected}
                 onClick={() => onSelect(session.id)}
-                className="flex w-full items-center gap-4 px-3 py-3 text-left"
+                className="flex w-full items-baseline gap-3 px-3 py-2 text-left"
             >
-                <span className="w-12 shrink-0 font-mono text-xs text-faint">
+                <span
+                    aria-hidden="true"
+                    className="w-3.5 shrink-0 font-mono text-accent"
+                >
+                    {isSelected ? '❯' : ''}
+                </span>
+                <span className="w-11 shrink-0 font-mono text-xs text-muted">
                     {session.startTime}
                 </span>
+                <span className="w-12 shrink-0 font-mono text-[13px] text-text">
+                    {formatSessionDuration(session.durationMinutes)}
+                </span>
                 <span className="flex min-w-0 flex-1 flex-col gap-0.5">
-                    <span className="truncate text-sm font-semibold text-text">
-                        {session.topicTitle}
+                    <span className="flex min-w-0 items-baseline gap-2">
+                        <span className="truncate font-semibold text-text">
+                            {session.topicTitle}
+                        </span>
+                        <span className="shrink-0 font-mono text-[11px] text-muted">
+                            {session.roadmapId}
+                        </span>
                     </span>
                     {summary && (
-                        <span className="truncate text-xs text-muted">
+                        <span className="truncate text-sm text-secondary">
                             {summary}
                         </span>
                     )}
-                </span>
-                <span className="shrink-0 rounded-full px-2.5 py-0.5 text-xs text-muted inset-ring inset-ring-border">
-                    {session.roadmapId}
-                </span>
-                <span className="w-14 shrink-0 text-right font-mono text-sm font-semibold text-text">
-                    {formatSessionDuration(session.durationMinutes)}
                 </span>
             </button>
             {isSelected && <SessionEntryDetails session={session} />}

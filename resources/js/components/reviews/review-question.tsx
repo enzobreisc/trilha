@@ -14,10 +14,8 @@ export function ReviewQuestion({
     const { t } = useTranslation();
 
     return (
-        <div className="flex flex-wrap items-center justify-between gap-x-5 gap-y-3 border-t border-border py-4">
-            <span className="text-base font-semibold text-text">
-                {t(label)}
-            </span>
+        <div className="flex flex-wrap items-center justify-between gap-x-5 gap-y-3 border-t border-border py-3">
+            <span className="text-sm text-text">{t(label)}</span>
             <div role="radiogroup" aria-label={t(label)} className="flex gap-2">
                 <AnswerOption
                     label="sim"

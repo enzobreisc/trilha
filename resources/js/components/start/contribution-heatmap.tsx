@@ -20,12 +20,15 @@ export function ContributionHeatmap({
         <div
             role="img"
             aria-label={label}
-            className="grid auto-cols-fr grid-flow-col grid-rows-7 gap-1"
+            className="grid auto-cols-fr grid-flow-col grid-rows-7 gap-0.75"
         >
             {levels.map((level, index) => (
                 <span
                     key={index}
-                    className={cn('aspect-square rounded', HEAT_CLASSES[level])}
+                    className={cn(
+                        'aspect-square rounded-xs',
+                        HEAT_CLASSES[level],
+                    )}
                 />
             ))}
         </div>

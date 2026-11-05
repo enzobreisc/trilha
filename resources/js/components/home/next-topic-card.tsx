@@ -9,20 +9,20 @@ export function NextTopicCard({ topic }: { topic: TopicSummary }) {
     const { t } = useTranslation();
 
     return (
-        <div className="flex flex-col gap-3 rounded-md bg-surface p-5 inset-ring inset-ring-border">
-            <span className="text-sm font-medium text-faint">
+        <div className="flex flex-col gap-3 rounded-sm border border-dashed border-accent p-4">
+            <span className="font-mono text-xs text-muted">
                 {topic.breadcrumb}
             </span>
             <div className="flex items-center gap-3">
                 <TopicStatusIcon
                     status="todo"
-                    className="size-4 shrink-0 text-faint"
+                    className="size-3.5 shrink-0 text-faint"
                 />
-                <h3 className="font-display text-2xl leading-tight font-bold tracking-tight text-text">
+                <h3 className="font-mono text-base font-bold text-text">
                     {topic.title}
                 </h3>
             </div>
-            <p className="text-base text-secondary">{topic.description}</p>
+            <p className="text-secondary">{topic.description}</p>
             <div className="flex flex-wrap gap-3 pt-1">
                 <ButtonLink href={topic.href}>
                     {t('Começar este tópico')}

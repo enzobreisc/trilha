@@ -1,5 +1,5 @@
-import { Card } from '@/components/ui/card';
 import { StatusOption } from '@/components/topic/status-option';
+import { TopicSection } from '@/components/topic/topic-section';
 import { useTranslation } from '@/hooks/use-translation';
 import type { TranslationKey } from '@/lib/i18n';
 import type { TopicStatus } from '@/types/topic';
@@ -21,8 +21,8 @@ export function StatusSection({
     const { t } = useTranslation();
 
     return (
-        <Card title={t('status')}>
-            <fieldset className="m-0 flex min-w-0 flex-wrap gap-2 border-0 p-0">
+        <TopicSection title={t('status')}>
+            <fieldset className="m-0 flex min-w-0 flex-wrap gap-x-6 gap-y-2 border-0 p-0">
                 <legend className="sr-only">{t('status')}</legend>
                 {STATUS_OPTIONS.map((option) => (
                     <StatusOption
@@ -34,11 +34,11 @@ export function StatusSection({
                     />
                 ))}
             </fieldset>
-            <p className="m-0 text-sm text-faint">
+            <p className="m-0 font-mono text-xs text-muted">
                 {t(
                     'Marque concluído quando conseguir implementar sem consultar. As revisões de 7 e 30 dias são agendadas nesse momento.',
                 )}
             </p>
-        </Card>
+        </TopicSection>
     );
 }

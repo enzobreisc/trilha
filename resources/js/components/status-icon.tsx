@@ -45,11 +45,11 @@ const STATUS_GLYPHS: Record<
         ),
     },
     review: {
-        className: 'text-warn',
+        className: 'text-review',
         shapes: <path d="M8 1.5 14.5 8 8 14.5 1.5 8z" fill="currentColor" />,
     },
     done: {
-        className: 'text-accent',
+        className: 'text-success',
         shapes: (
             <>
                 <circle cx="8" cy="8" r="7" fill="currentColor" />

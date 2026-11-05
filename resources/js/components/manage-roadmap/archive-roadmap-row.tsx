@@ -1,3 +1,7 @@
+import {
+    SECTION_CLASSES,
+    SECTION_LABEL_CLASSES,
+} from '@/components/manage-roadmap/dialog-styles';
 import { Button } from '@/components/ui/button';
 import { useTranslation } from '@/hooks/use-translation';
 
@@ -5,18 +9,16 @@ export function ArchiveRoadmapRow() {
     const { t } = useTranslation();
 
     return (
-        <div className="flex flex-wrap items-center justify-between gap-3 border-t border-border pt-5">
-            <div className="flex flex-col gap-0.5">
-                <span className="text-sm font-semibold text-text">
-                    {t('Arquivar')}
-                </span>
-                <span className="text-xs text-faint">
-                    {t(
-                        'Some da lista de roadmaps e das revisões. Nada é apagado e dá para desarquivar.',
-                    )}
-                </span>
+        <section className={SECTION_CLASSES}>
+            <span className={SECTION_LABEL_CLASSES}>{t('Arquivar')}</span>
+            <p className="text-sm leading-6 text-secondary">
+                {t(
+                    'Some da lista de roadmaps e das revisões. Nada é apagado e dá para desarquivar.',
+                )}
+            </p>
+            <div>
+                <Button variant="secondary">{t('Arquivar')}</Button>
             </div>
-            <Button variant="secondary">{t('Arquivar')}</Button>
-        </div>
+        </section>
     );
 }

@@ -1,4 +1,4 @@
-import { Card } from '@/components/ui/card';
+import { TopicSection } from '@/components/topic/topic-section';
 import { useTranslation } from '@/hooks/use-translation';
 import type { TopicExercise } from '@/lib/sample/topic';
 
@@ -8,7 +8,7 @@ export function ExerciseSection({ exercise }: { exercise: TopicExercise }) {
     const { t } = useTranslation();
 
     return (
-        <Card
+        <TopicSection
             title={t('exercício sem IA')}
             aside={
                 exercise.completed_on ? (
@@ -18,15 +18,12 @@ export function ExerciseSection({ exercise }: { exercise: TopicExercise }) {
                 ) : undefined
             }
         >
-            <p className="m-0 text-sm leading-7 font-medium text-secondary">
+            <p className="m-0 text-sm leading-7 text-secondary">
                 {exercise.text
                     .split(INLINE_CODE_DELIMITER)
                     .map((segment, index) =>
                         index % 2 === 1 ? (
-                            <code
-                                key={index}
-                                className="rounded-full bg-elevated px-2 py-0.5 font-mono text-xs text-text"
-                            >
+                            <code key={index} className="font-mono text-accent">
                                 {segment}
                             </code>
                         ) : (
@@ -34,11 +31,11 @@ export function ExerciseSection({ exercise }: { exercise: TopicExercise }) {
                         ),
                     )}
             </p>
-            <p className="m-0 text-xs text-faint">
+            <p className="m-0 font-mono text-xs text-muted">
                 {t(
                     'Comparar com a versão da IA. Anote as diferenças nas anotações.',
                 )}
             </p>
-        </Card>
+        </TopicSection>
     );
 }

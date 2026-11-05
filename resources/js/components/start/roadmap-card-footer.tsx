@@ -21,14 +21,12 @@ export function RoadmapCardFooter({
     const { t } = useTranslation();
 
     return (
-        <footer className="mt-auto flex flex-wrap items-center justify-between gap-x-4 gap-y-3">
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm font-medium">
-                <RoadmapReviewStatus
-                    reviewsDue={roadmap.reviewsDue}
-                    lastStudiedDaysAgo={roadmap.lastStudiedDaysAgo}
-                />
-            </div>
-            <ButtonLink href={roadmap.currentTopic.href} variant="primary">
+        <footer className="flex shrink-0 flex-wrap items-center gap-x-4 gap-y-2 font-mono text-xs">
+            <RoadmapReviewStatus
+                reviewsDue={roadmap.reviewsDue}
+                lastStudiedDaysAgo={roadmap.lastStudiedDaysAgo}
+            />
+            <ButtonLink href={roadmap.currentTopic.href} variant="secondary">
                 {t(ACTION_LABELS[state])}
             </ButtonLink>
         </footer>
