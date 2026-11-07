@@ -18,6 +18,7 @@ return [
     'date_format' => 'O campo :attribute deve estar no formato :format.',
     'distinct' => 'O campo :attribute tem um valor repetido.',
     'email' => 'O campo :attribute deve ser um e-mail válido.',
+    'extensions' => 'O campo :attribute deve ter uma das extensões: :values.',
     'enum' => 'O valor escolhido para :attribute é inválido.',
     'exists' => 'O valor escolhido para :attribute é inválido.',
     'file' => 'O campo :attribute deve ser um arquivo.',
@@ -91,5 +92,18 @@ return [
 
     'attributes' => [
         'locale' => 'idioma',
+        'file' => 'arquivo',
+        'backup' => 'backup',
+        'title' => 'nome',
+        'confirmation' => 'confirmação',
+        'topicId' => 'tópico',
+        'date' => 'data',
+        'durationMinutes' => 'duração',
+        'activities' => 'atividades',
+        'note' => 'nota',
+        'notes' => 'anotações',
+        'status' => 'status',
+        'checkedItems' => 'itens marcados',
+        'outcome' => 'resultado',
     ],
 ];

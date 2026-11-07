@@ -1,38 +1,38 @@
 <?php
 
 use App\Enums\Locale;
+use App\Models\Setting;
+use App\Services\AppSettings;
 use Inertia\Testing\AssertableInertia as Assert;
 
 it('defaults to Brazilian Portuguese', function () {
-    $this->get('/')->assertInertia(fn (Assert $page) => $page
+    $this->get('/start')->assertInertia(fn (Assert $page) => $page
         ->where('locale', 'pt_BR')
         ->where('language_tag', 'pt-BR'));
 });
 
-it('persists the chosen language in a cookie and applies it to later requests', function () {
-    $response = $this->put(route('locale.update'), ['locale' => 'en'])
-        ->assertRedirect()
-        ->assertCookie(Locale::COOKIE, 'en');
+it('persists the chosen language in the settings and applies it to later requests', function () {
+    $this->put(route('locale.update'), ['locale' => 'en'])->assertRedirect();
 
-    $this->withUnencryptedCookie(Locale::COOKIE, $response->getCookie(Locale::COOKIE, false)->getValue())
-        ->get('/')
-        ->assertInertia(fn (Assert $page) => $page
-            ->where('locale', 'en')
-            ->where('language_tag', 'en-US'));
+    expect(app(AppSettings::class)->locale())->toBe(Locale::En);
+
+    $this->get('/start')->assertInertia(fn (Assert $page) => $page
+        ->where('locale', 'en')
+        ->where('language_tag', 'en-US'));
 });
 
 it('rejects an unsupported language', function () {
     $this->put(route('locale.update'), ['locale' => 'fr'])
-        ->assertSessionHasErrors('locale')
-        ->assertCookieMissing(Locale::COOKIE);
+        ->assertSessionHasErrors('locale');
 
-    expect(session('errors')->first('locale'))->not->toStartWith('validation.');
+    expect(session('errors')->first('locale'))->not->toStartWith('validation.')
+        ->and(app(AppSettings::class)->locale())->toBe(Locale::PtBr);
 });
 
 it('ignores a stored language that is no longer supported', function () {
-    $this->withCookie(Locale::COOKIE, 'fr')
-        ->get('/')
-        ->assertInertia(fn (Assert $page) => $page->where('locale', 'pt_BR'));
+    Setting::query()->create(['key' => 'locale', 'value' => 'fr']);
+
+    $this->get('/start')->assertInertia(fn (Assert $page) => $page->where('locale', 'pt_BR'));
 });
 
 it('has an English translation for every literal key used on the server', function () {

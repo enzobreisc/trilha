@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Services\DatabaseBackup;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Date;
@@ -11,25 +12,18 @@ use Illuminate\Validation\Rules\Password;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
     public function register(): void
     {
-        //
+        $this->app->bind(DatabaseBackup::class, fn () => new DatabaseBackup(
+            (string) config('database.connections.'.config('database.default').'.database'),
+        ));
     }
 
-    /**
-     * Bootstrap any application services.
-     */
     public function boot(): void
     {
         $this->configureDefaults();
     }
 
-    /**
-     * Configure default behaviors for production-ready applications.
-     */
     protected function configureDefaults(): void
     {
         Carbon::setLocale(config('app.locale'));
