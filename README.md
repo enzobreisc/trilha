@@ -23,7 +23,7 @@
 ![Home](docs/screenshots/home.png)
 
 > [!NOTE]
-> **v0.1.0 is a UI prototype.** Every screen is built and navigable, but it renders bundled sample data. The Laravel side (models, actions, import logic) is being written next, so nothing is saved yet.
+> **v0.1.0 is a work in progress.** Roadmaps, progress, sessions, reviews and notes are saved in a local SQLite database, and backups can be exported and restored. The screenshots below were taken from the earlier UI prototype with sample data.
 
 ## Why
 
@@ -116,7 +116,7 @@ Keys must be unique at every level. They are how a newer file will update a road
 
 ## Install
 
-There is no packaged build yet. Until the backend lands, run trilha from source as described below. Builds for macOS will be attached to [Releases](https://github.com/enzobreisc/trilha/releases).
+There is no packaged build yet, so run trilha from source as described below. Builds for macOS will be attached to [Releases](https://github.com/enzobreisc/trilha/releases).
 
 ## Development
 

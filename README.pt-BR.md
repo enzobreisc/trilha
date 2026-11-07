@@ -23,7 +23,7 @@
 ![Início](docs/screenshots/home.png)
 
 > [!NOTE]
-> **A v0.1.0 é um protótipo de interface.** Todas as telas estão prontas e navegáveis, mas mostram dados de exemplo. A parte em Laravel (models, actions, lógica de importação) é a próxima etapa, então nada é salvo ainda.
+> **A v0.1.0 está em desenvolvimento.** Roadmaps, progresso, sessões, revisões e anotações são salvos em um banco SQLite local, e dá para exportar e restaurar backups. As capturas de tela abaixo são do protótipo anterior, com dados de exemplo.
 
 ## Por quê
 
@@ -116,7 +116,7 @@ As chaves (`key`) precisam ser únicas em todos os níveis. É por elas que um a
 
 ## Instalação
 
-Ainda não há build empacotado. Até o backend ficar pronto, rode a trilha a partir do código, como abaixo. Os builds para macOS vão ser anexados em [Releases](https://github.com/enzobreisc/trilha/releases).
+Ainda não há build empacotado, então rode a trilha a partir do código, como abaixo. Os builds para macOS vão ser anexados em [Releases](https://github.com/enzobreisc/trilha/releases).
 
 ## Desenvolvimento
 
