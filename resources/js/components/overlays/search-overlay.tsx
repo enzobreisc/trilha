@@ -6,21 +6,27 @@ import { SearchResultList } from '@/components/overlays/search-result-list';
 import {
     cycleIndex,
     findSearchResults,
+    type SearchResult,
 } from '@/components/overlays/search-results';
 import { useTranslation } from '@/hooks/use-translation';
-import { sampleSearchActions, sampleSearchTopics } from '@/lib/sample/overlays';
-import type { SearchAction, SearchTopic } from '@/types/overlay';
+import { useSessionDialog } from '@/components/session/session-dialog-provider';
+import type { OverlayProps, SearchAction } from '@/types/overlay';
 
-export function SearchOverlay({
-    onClose,
-    topics = sampleSearchTopics,
-    actions = sampleSearchActions,
-}: {
-    onClose: () => void;
-    topics?: SearchTopic[];
-    actions?: SearchAction[];
-}) {
+export function SearchOverlay({ chrome, onClose }: OverlayProps) {
     const { t, plural } = useTranslation();
+    const openSessionDialog = useSessionDialog();
+    const topics = chrome.topics;
+    const actions: SearchAction[] = [
+        {
+            id: 'log-session',
+            label: 'Registrar sessão',
+            onSelect: () => {
+                onClose();
+                openSessionDialog();
+            },
+        },
+        { id: 'add-roadmap', label: 'Adicionar roadmap', href: '/import' },
+    ];
     const listboxId = useId();
     const [query, setQuery] = useState('');
     const [activeIndex, setActiveIndex] = useState(0);
@@ -36,6 +42,16 @@ export function SearchOverlay({
         setActiveIndex(0);
     }
 
+    function openResult(result: SearchResult) {
+        if (result.kind === 'action' && result.onSelect) {
+            result.onSelect();
+            return;
+        }
+        if (result.href) {
+            router.visit(result.href);
+        }
+    }
+
     function handleKeyDown(event: KeyboardEvent<HTMLInputElement>) {
         if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
             event.preventDefault();
@@ -46,7 +62,7 @@ export function SearchOverlay({
 
         if (event.key === 'Enter' && activeResult) {
             event.preventDefault();
-            router.visit(activeResult.href);
+            openResult(activeResult);
         }
     }
 
@@ -87,6 +103,7 @@ export function SearchOverlay({
                 activeIndex={activeIndex}
                 listboxId={listboxId}
                 onHoverIndex={setActiveIndex}
+                onOpen={openResult}
             />
             <footer className="flex flex-wrap items-center gap-x-4 gap-y-1 border-t border-border px-4 py-2.5 font-mono text-[11px] text-muted">
                 <span>↑↓ {t('escolher')}</span>

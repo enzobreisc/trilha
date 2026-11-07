@@ -21,7 +21,7 @@ export type RoadmapSectionData = {
 export type ArchivedTopic = {
     id: string;
     title: string;
-    restoredOn: string;
+    archivedOn: string;
     sessionCount: number;
 };
 
@@ -37,7 +37,6 @@ export type RoadmapData = {
     sourceLabel: string;
     sourceFile: string;
     importedOn: string;
-    today: string;
     importSummary: ImportSummary | null;
     sections: RoadmapSectionData[];
     archivedTopics: ArchivedTopic[];

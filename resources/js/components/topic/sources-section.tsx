@@ -2,7 +2,7 @@ import { ExternalLinkIcon } from '@/components/topic/topic-icons';
 import { TopicSection } from '@/components/topic/topic-section';
 import { DataRow } from '@/components/ui/data-row';
 import { useTranslation } from '@/hooks/use-translation';
-import type { TopicSource } from '@/lib/sample/topic';
+import type { TopicSource } from '@/components/topic/types';
 
 export function SourcesSection({ sources }: { sources: TopicSource[] }) {
     const { t } = useTranslation();

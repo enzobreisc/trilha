@@ -1,6 +1,7 @@
 import { CheckIcon, CopyIcon } from '@/components/topic/topic-icons';
 import { TopicSection } from '@/components/topic/topic-section';
 import { useCopyToClipboard } from '@/components/topic/use-copy-to-clipboard';
+import { useKeyShortcut } from '@/hooks/use-key-shortcut';
 import { useTranslation } from '@/hooks/use-translation';
 
 export function AiPromptSection({
@@ -12,6 +13,8 @@ export function AiPromptSection({
 }) {
     const { t } = useTranslation();
     const { copied, copy } = useCopyToClipboard();
+
+    useKeyShortcut('c', () => void copy(prompt));
 
     return (
         <TopicSection
@@ -28,27 +31,29 @@ export function AiPromptSection({
             }
         >
             <p className="m-0 text-sm leading-7 text-text">{prompt}</p>
-            <div className="flex flex-col gap-2">
-                <span className="font-mono text-xs text-muted">
-                    {t('ao revisar a resposta, confira:')}
-                </span>
-                <ul className="m-0 flex list-none flex-col gap-2 p-0">
-                    {reviewChecks.map((check) => (
-                        <li
-                            key={check}
-                            className="flex items-start gap-3 text-sm text-secondary"
-                        >
-                            <span
-                                aria-hidden="true"
-                                className="font-mono text-accent"
+            {reviewChecks.length > 0 && (
+                <div className="flex flex-col gap-2">
+                    <span className="font-mono text-xs text-muted">
+                        {t('ao revisar a resposta, confira:')}
+                    </span>
+                    <ul className="m-0 flex list-none flex-col gap-2 p-0">
+                        {reviewChecks.map((check) => (
+                            <li
+                                key={check}
+                                className="flex items-start gap-3 text-sm text-secondary"
                             >
-                                ›
-                            </span>
-                            {check}
-                        </li>
-                    ))}
-                </ul>
-            </div>
+                                <span
+                                    aria-hidden="true"
+                                    className="font-mono text-accent"
+                                >
+                                    ›
+                                </span>
+                                {check}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            )}
         </TopicSection>
     );
 }

@@ -1,8 +1,9 @@
+import { SESSION_ACTIVITY_OPTIONS } from '@/components/session/options';
 import { formatSessionDuration } from '@/components/session/session-draft';
 import type { SessionEntry } from '@/components/sessions/types';
 import { SessionEntryDetails } from '@/components/sessions/session-entry-details';
 import { useTranslation } from '@/hooks/use-translation';
-import { sessionActivityOptions } from '@/lib/sample/session';
+
 import { cn } from '@/lib/utils';
 
 const SUMMARY_SEPARATOR = ' · ';
@@ -17,9 +18,9 @@ export function SessionEntryRow({
     onSelect: (sessionId: string) => void;
 }) {
     const { t } = useTranslation();
-    const activityLabels = sessionActivityOptions
-        .filter((option) => session.activities.includes(option.id))
-        .map((option) => t(option.label));
+    const activityLabels = SESSION_ACTIVITY_OPTIONS.filter((option) =>
+        session.activities.includes(option.id),
+    ).map((option) => t(option.label));
     const noteQuote = session.note ? [`“${session.note}”`] : [];
     const summary = [...activityLabels, ...noteQuote].join(SUMMARY_SEPARATOR);
 

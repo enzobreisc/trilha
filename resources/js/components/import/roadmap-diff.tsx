@@ -1,10 +1,9 @@
-import { useMessageText } from '@/components/import/use-message-text';
 import { useTranslation } from '@/hooks/use-translation';
 import type {
     RoadmapDiff,
     RoadmapDiffChange,
     RoadmapDiffEntry,
-} from '@/lib/sample/import';
+} from '@/components/import/types';
 import { cn } from '@/lib/utils';
 
 const CHANGE_GLYPHS: Record<RoadmapDiffChange, string> = {
@@ -21,7 +20,6 @@ const CHANGE_TONES: Record<RoadmapDiffChange, string> = {
 
 export function RoadmapDiffView({ diff }: { diff: RoadmapDiff }) {
     const { t, plural } = useTranslation();
-    const readMessage = useMessageText();
     const countOf = (change: RoadmapDiffChange) =>
         diff.entries.filter((entry) => entry.change === change).length;
 
@@ -51,11 +49,11 @@ export function RoadmapDiffView({ diff }: { diff: RoadmapDiff }) {
                     <DiffRow
                         key={`${entry.change}-${entry.location}-${entry.topicKey}`}
                         entry={entry}
-                        noteText={entry.note && readMessage(entry.note)}
+                        noteText={entry.note}
                     />
                 ))}
             </ul>
-            <p className="text-xs text-faint">{readMessage(diff.note)}</p>
+            <p className="text-xs text-faint">{diff.note}</p>
         </div>
     );
 }

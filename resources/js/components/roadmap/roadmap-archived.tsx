@@ -31,7 +31,7 @@ export function RoadmapArchived({ topics }: { topics: ArchivedTopic[] }) {
                             value={
                                 <span className="text-muted">
                                     {t('saiu do arquivo em :date · :sessions', {
-                                        date: shortDate(topic.restoredOn),
+                                        date: shortDate(topic.archivedOn),
                                         sessions: plural(
                                             topic.sessionCount,
                                             'sessão',

@@ -24,11 +24,7 @@ export function SessionsListPanel({
     return (
         <Card
             title={t('sessões')}
-            aside={plural(
-                sessionCount,
-                'sessão nesta semana',
-                'sessões nesta semana',
-            )}
+            aside={plural(sessionCount, 'sessão', 'sessões')}
             className={cn('min-w-0', className)}
         >
             {groups.map((group) => (

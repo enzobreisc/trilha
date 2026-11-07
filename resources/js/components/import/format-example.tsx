@@ -1,8 +1,8 @@
 import {
-    sampleFormatExample,
+    FORMAT_EXAMPLE,
     type FormatExampleLine,
     type FormatKeyTone,
-} from '@/lib/sample/import';
+} from '@/components/import/format';
 
 const KEY_TONE_CLASSES: Record<FormatKeyTone, string> = {
     required: 'text-accent',
@@ -12,7 +12,7 @@ const KEY_TONE_CLASSES: Record<FormatKeyTone, string> = {
 export function FormatExample() {
     return (
         <pre className="overflow-x-auto rounded-sm bg-elevated p-4 font-mono text-xs leading-6 text-secondary inset-ring inset-ring-border">
-            {sampleFormatExample.map((line, index) => (
+            {FORMAT_EXAMPLE.map((line, index) => (
                 <FormatExampleRow key={index} line={line} />
             ))}
         </pre>

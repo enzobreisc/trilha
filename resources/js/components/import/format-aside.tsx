@@ -8,7 +8,7 @@ export function FormatAside() {
 
     return (
         <aside className="flex w-full max-w-110 min-w-0 flex-[1_1_340px] flex-col gap-7">
-            <section className="flex flex-col gap-3">
+            <section id="format" className="flex scroll-mt-6 flex-col gap-3">
                 <SectionLabel aside="json">
                     {t('formato do arquivo')}
                 </SectionLabel>

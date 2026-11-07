@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { router } from '@inertiajs/react';
 import { SettingsSection } from '@/components/settings/settings-section';
 import { TextRadioGroup } from '@/components/settings/text-radio-group';
 import { useTranslation } from '@/hooks/use-translation';
@@ -11,13 +11,12 @@ const LANGUAGE_OPTIONS: { value: Locale; label: TranslationKey }[] = [
 
 export function LanguageSection({
     index,
-    initialLocale,
+    selectedLocale,
 }: {
     index: number;
-    initialLocale: Locale;
+    selectedLocale: Locale;
 }) {
     const { t } = useTranslation();
-    const [locale, setLocale] = useState<Locale>(initialLocale);
 
     return (
         <SettingsSection title={t('idioma')} index={index}>
@@ -27,8 +26,10 @@ export function LanguageSection({
                     value: option.value,
                     label: t(option.label),
                 }))}
-                value={locale}
-                onChange={setLocale}
+                value={selectedLocale}
+                onChange={(locale) =>
+                    router.put('/locale', { locale }, { preserveScroll: true })
+                }
             />
             <p className="font-mono text-xs text-muted">
                 {t(

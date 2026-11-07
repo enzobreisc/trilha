@@ -9,10 +9,10 @@ import {
 import { RoadmapTree } from '@/components/roadmap/roadmap-tree';
 import type { RoadmapData } from '@/components/roadmap/types';
 import { useRoadmap } from '@/components/roadmap/use-roadmap';
-import { sampleRoadmapData } from '@/lib/sample/roadmap';
+import { useToday } from '@/hooks/use-chrome';
 
-export default function Roadmap(props: Partial<RoadmapData>) {
-    const data = { ...sampleRoadmapData, ...props };
+export default function Roadmap(data: RoadmapData) {
+    const today = useToday();
     const { filter, pickFilter, expandedSectionIds, toggleSection } =
         useRoadmap(data.sections, data.expandedSectionIds);
     const counts = countTopicsByFilter(allTopicsOf(data.sections));
@@ -31,7 +31,7 @@ export default function Roadmap(props: Partial<RoadmapData>) {
             <RoadmapTree
                 sections={data.sections}
                 filter={filter}
-                today={data.today}
+                today={today}
                 expandedSectionIds={expandedSectionIds}
                 onToggleSection={toggleSection}
             />

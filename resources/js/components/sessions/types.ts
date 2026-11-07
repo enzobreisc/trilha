@@ -3,6 +3,7 @@ import type { SessionActivity } from '@/components/session/types';
 export type SessionEntry = {
     id: string;
     roadmapId: string;
+    topicId: string;
     date: string;
     startTime: string;
     durationMinutes: number;

@@ -6,8 +6,9 @@ export type SessionActivity = 'docs' | 'solo' | 'compare' | 'project';
 export type SessionDay = 'today' | 'yesterday' | 'other';
 
 export type SessionDraft = {
-    topicKey: string;
+    topicId: string;
     day: SessionDay;
+    otherDate: string;
     durationMinutes: number;
     activities: SessionActivity[];
     note: string;

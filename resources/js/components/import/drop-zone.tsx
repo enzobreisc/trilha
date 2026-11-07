@@ -6,10 +6,12 @@ import { cn } from '@/lib/utils';
 
 export function DropZone({
     inputRef,
+    errorMessage,
     onFileSelect,
 }: {
     inputRef: RefObject<HTMLInputElement | null>;
-    onFileSelect: () => void;
+    errorMessage: string | undefined;
+    onFileSelect: (file: File) => void;
 }) {
     const { t } = useTranslation();
     const [isDragging, setIsDragging] = useState(false);
@@ -22,42 +24,54 @@ export function DropZone({
     function handleDrop(event: DragEvent<HTMLDivElement>) {
         event.preventDefault();
         setIsDragging(false);
-        onFileSelect();
+        const file = event.dataTransfer.files[0];
+        if (file) {
+            onFileSelect(file);
+        }
     }
 
     return (
-        <div
-            onDragOver={handleDragOver}
-            onDragLeave={() => setIsDragging(false)}
-            onDrop={handleDrop}
-            className={cn(
-                'flex flex-wrap items-center justify-center gap-x-3.5 gap-y-2 rounded-sm border border-dashed bg-surface px-5 py-5 font-mono text-sm text-secondary transition-colors',
-                isDragging ? 'border-accent bg-active' : 'border-leader',
-            )}
-        >
-            <p>
-                {t('arraste o arquivo')}{' '}
-                <span className="font-bold text-accent">.json</span>{' '}
-                {t('para cá')}
-            </p>
-            <span className="text-xs text-muted">{t('ou')}</span>
-            <input
-                ref={inputRef}
-                type="file"
-                accept=".json,application/json"
-                className="hidden"
-                onChange={(event) => {
-                    if (event.currentTarget.files?.length) {
-                        onFileSelect();
-                    }
-                }}
-            />
-            <Button
-                variant="secondary"
-                onClick={() => inputRef.current?.click()}
+        <div className="flex flex-col gap-2">
+            <div
+                onDragOver={handleDragOver}
+                onDragLeave={() => setIsDragging(false)}
+                onDrop={handleDrop}
+                className={cn(
+                    'flex flex-wrap items-center justify-center gap-x-3.5 gap-y-2 rounded-sm border border-dashed bg-surface px-5 py-5 font-mono text-sm text-secondary transition-colors',
+                    isDragging ? 'border-accent bg-active' : 'border-leader',
+                )}
             >
-                {t('Escolher arquivo')}
-            </Button>
+                <p>
+                    {t('arraste o arquivo')}{' '}
+                    <span className="font-bold text-accent">.json</span>{' '}
+                    {t('para cá')}
+                </p>
+                <span className="text-xs text-muted">{t('ou')}</span>
+                <input
+                    ref={inputRef}
+                    type="file"
+                    accept=".json,application/json"
+                    className="hidden"
+                    onChange={(event) => {
+                        const file = event.currentTarget.files?.[0];
+                        event.currentTarget.value = '';
+                        if (file) {
+                            onFileSelect(file);
+                        }
+                    }}
+                />
+                <Button
+                    variant="secondary"
+                    onClick={() => inputRef.current?.click()}
+                >
+                    {t('Escolher arquivo')}
+                </Button>
+            </div>
+            {errorMessage && (
+                <p role="alert" className="font-mono text-xs text-danger">
+                    {errorMessage}
+                </p>
+            )}
         </div>
     );
 }

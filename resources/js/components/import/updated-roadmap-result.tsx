@@ -1,11 +1,11 @@
+import { router } from '@inertiajs/react';
 import { ImportResult } from '@/components/import/import-result';
 import { RoadmapDiffView } from '@/components/import/roadmap-diff';
 import { RoadmapMatchBanner } from '@/components/import/roadmap-match-banner';
-import { useMessageText } from '@/components/import/use-message-text';
+import type { UpdatedRoadmapImport } from '@/components/import/types';
 import { ValidationChecks } from '@/components/import/validation-checks';
-import { ButtonLink } from '@/components/ui/button';
+import { Button } from '@/components/ui/button';
 import { useTranslation } from '@/hooks/use-translation';
-import type { UpdatedRoadmapImport } from '@/lib/sample/import';
 
 export function UpdatedRoadmapResult({
     validation,
@@ -15,7 +15,6 @@ export function UpdatedRoadmapResult({
     onCancel: () => void;
 }) {
     const { plural } = useTranslation();
-    const readMessage = useMessageText();
     const changeCount = validation.diff.entries.length;
 
     return (
@@ -24,9 +23,9 @@ export function UpdatedRoadmapResult({
             aside={plural(changeCount, 'mudança', 'mudanças')}
             onCancel={onCancel}
             actions={
-                <ButtonLink href="/roadmap">
-                    {readMessage(validation.confirmLabel)}
-                </ButtonLink>
+                <Button onClick={() => router.post('/import')}>
+                    {validation.confirmLabel}
+                </Button>
             }
         >
             <RoadmapMatchBanner match={validation.match} />

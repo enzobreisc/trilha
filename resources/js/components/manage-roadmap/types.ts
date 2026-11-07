@@ -1,4 +1,5 @@
 export type ManagedRoadmap = {
+    id: string;
     name: string;
     slug: string;
     key: string;
@@ -8,4 +9,5 @@ export type ManagedRoadmap = {
     totalTopics: number;
     sessionCount: number;
     noteCount: number;
+    isArchived: boolean;
 };

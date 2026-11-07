@@ -22,5 +22,6 @@ export type SearchTopic = {
 export type SearchAction = {
     id: string;
     label: TranslationKey;
-    href: string;
+    href?: string;
+    onSelect?: () => void;
 };

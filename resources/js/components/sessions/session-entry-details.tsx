@@ -1,9 +1,12 @@
+import { router } from '@inertiajs/react';
+import { useSessionDialog } from '@/components/session/session-dialog-provider';
 import type { SessionEntry } from '@/components/sessions/types';
 import { Button } from '@/components/ui/button';
 import { useTranslation } from '@/hooks/use-translation';
 
 export function SessionEntryDetails({ session }: { session: SessionEntry }) {
     const { t } = useTranslation();
+    const openSessionDialog = useSessionDialog();
 
     return (
         <div className="flex flex-col gap-2 px-3 pt-1 pb-3">
@@ -13,10 +16,35 @@ export function SessionEntryDetails({ session }: { session: SessionEntry }) {
                 </p>
             )}
             <div className="flex gap-1">
-                <Button variant="ghost" className="h-7 px-2 font-mono text-xs">
+                <Button
+                    variant="ghost"
+                    className="h-7 px-2 font-mono text-xs"
+                    onClick={() =>
+                        openSessionDialog({
+                            session: {
+                                id: session.id,
+                                topicId: session.topicId,
+                                date: session.date,
+                                durationMinutes: session.durationMinutes,
+                                activities: session.activities,
+                                note: session.note,
+                            },
+                        })
+                    }
+                >
                     {t('editar')}
                 </Button>
-                <Button variant="ghost" className="h-7 px-2 font-mono text-xs">
+                <Button
+                    variant="ghost"
+                    className="h-7 px-2 font-mono text-xs"
+                    onClick={() => {
+                        if (window.confirm(t('Excluir esta sessão?'))) {
+                            router.delete(`/sessions/${session.id}`, {
+                                preserveScroll: true,
+                            });
+                        }
+                    }}
+                >
                     {t('excluir')}
                 </Button>
             </div>

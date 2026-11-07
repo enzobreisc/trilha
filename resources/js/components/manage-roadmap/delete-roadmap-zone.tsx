@@ -1,3 +1,4 @@
+import { router } from '@inertiajs/react';
 import { useState, type KeyboardEvent } from 'react';
 import {
     DANGER_FIELD_CONTROL_CLASSES,
@@ -65,6 +66,11 @@ export function DeleteRoadmapZone({ roadmap }: { roadmap: ManagedRoadmap }) {
                 <Button
                     variant="secondary"
                     disabled={!isConfirmed}
+                    onClick={() =>
+                        router.delete(`/roadmaps/${roadmap.id}`, {
+                            data: { confirmation },
+                        })
+                    }
                     className="disabled:cursor-not-allowed disabled:opacity-50"
                 >
                     {t('Excluir para sempre')}

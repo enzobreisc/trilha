@@ -2,33 +2,34 @@ import { router, usePage } from '@inertiajs/react';
 import { useCallback, useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
 import { OverlayHost } from '@/components/overlays/overlay-host';
+import { SessionDialogProvider } from '@/components/session/session-dialog-provider';
 import { AppStatusBar } from '@/components/ui/app-status-bar';
 import { AppTopBar } from '@/components/ui/app-top-bar';
 import { KeyHint, KeyHintBar } from '@/components/ui/key-hint';
+import { useChrome } from '@/hooks/use-chrome';
 import { useGlobalHotkeys } from '@/hooks/use-global-hotkeys';
 import { useTranslation } from '@/hooks/use-translation';
-import type { TranslationKey } from '@/lib/i18n';
-import { sampleAppChrome } from '@/lib/sample-data';
+import { GLOBAL_SHORTCUTS } from '@/lib/shortcuts';
 import type { OverlayName } from '@/types/overlay';
 
-const FOCUSED_PATHS = ['/welcome', '/start', '/import'];
-
-const GLOBAL_SHORTCUT_HINTS: { keys: string; label: TranslationKey }[] = [
-    { keys: '⌘K', label: 'buscar tópico ou ação' },
-    { keys: '?', label: 'esta ajuda' },
-    { keys: '1–4', label: 'ir para uma seção' },
-    { keys: 'esc', label: 'voltar ou fechar' },
-];
-
 export default function AppLayout({ children }: { children: ReactNode }) {
+    return (
+        <SessionDialogProvider>
+            <AppFrame>{children}</AppFrame>
+        </SessionDialogProvider>
+    );
+}
+
+function AppFrame({ children }: { children: ReactNode }) {
     const { t } = useTranslation();
     const { url } = usePage();
+    const chrome = useChrome();
     const pathname = url.split(/[?#]/)[0];
-    const isFocusedScreen = FOCUSED_PATHS.includes(pathname);
+    const isFocusedScreen = chrome.roadmaps.length === 0;
     const [openOverlay, setOpenOverlay] = useState<OverlayName | null>(null);
     const closeOverlay = useCallback(() => setOpenOverlay(null), []);
-    const currentRoadmap = sampleAppChrome.roadmaps.find(
-        (roadmap) => roadmap.id === sampleAppChrome.currentRoadmapId,
+    const currentRoadmap = chrome.roadmaps.find(
+        (roadmap) => roadmap.id === chrome.currentRoadmapId,
     );
 
     useEffect(() => router.on('navigate', closeOverlay), [closeOverlay]);
@@ -46,7 +47,7 @@ export default function AppLayout({ children }: { children: ReactNode }) {
             ) : (
                 <AppTopBar
                     pathname={pathname}
-                    chrome={sampleAppChrome}
+                    chrome={chrome}
                     onOpenOverlay={setOpenOverlay}
                 />
             )}
@@ -56,7 +57,7 @@ export default function AppLayout({ children }: { children: ReactNode }) {
             {!isFocusedScreen && (
                 <>
                     <KeyHintBar label={t('Atalhos de teclado')}>
-                        {GLOBAL_SHORTCUT_HINTS.map((hint) => (
+                        {GLOBAL_SHORTCUTS.map((hint) => (
                             <KeyHint
                                 key={hint.keys}
                                 keys={hint.keys}
@@ -66,14 +67,14 @@ export default function AppLayout({ children }: { children: ReactNode }) {
                     </KeyHintBar>
                     <AppStatusBar
                         roadmap={currentRoadmap}
-                        reviewsDue={sampleAppChrome.reviewsDue}
+                        reviewsDue={chrome.reviewsDue}
                     />
                 </>
             )}
             {openOverlay !== null && (
                 <OverlayHost
                     overlay={openOverlay}
-                    chrome={sampleAppChrome}
+                    chrome={chrome}
                     onClose={closeOverlay}
                     onOpenOverlay={setOpenOverlay}
                 />

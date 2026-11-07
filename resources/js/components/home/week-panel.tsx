@@ -1,5 +1,6 @@
 import { Link } from '@inertiajs/react';
 import type { HomeStats } from '@/components/home/types';
+import { formatSessionDuration } from '@/components/session/session-draft';
 import { Section } from '@/components/start/section';
 import { DataRow } from '@/components/ui/data-row';
 import { useTranslation } from '@/hooks/use-translation';
@@ -7,14 +8,17 @@ import { useTranslation } from '@/hooks/use-translation';
 const SESSIONS_ROUTE = '/sessions';
 
 export function WeekPanel({ stats }: { stats: HomeStats }) {
-    const { t } = useTranslation();
+    const { t, shortDate } = useTranslation();
 
     return (
-        <Section title={t('esta semana')} aside={stats.weekLabel}>
+        <Section
+            title={t('esta semana')}
+            aside={`${shortDate(stats.weekStart)} – ${shortDate(stats.weekEnd)}`}
+        >
             <div className="flex flex-col gap-1.5">
                 <DataRow
                     label={t('tempo estudado')}
-                    value={stats.weekStudyTime}
+                    value={formatSessionDuration(stats.weekMinutes)}
                 />
                 <DataRow label={t('sessões')} value={stats.weekSessionCount} />
                 <DataRow

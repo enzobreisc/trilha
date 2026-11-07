@@ -22,17 +22,37 @@ type ButtonStyleProps = {
 
 export function ButtonLink({
     href,
+    method = 'get',
     variant = 'primary',
     className,
     children,
-}: ButtonStyleProps & { href: string }) {
+}: ButtonStyleProps & { href: string; method?: 'get' | 'put' | 'post' }) {
     return (
         <Link
             href={href}
+            method={method}
+            as={method === 'get' ? 'a' : 'button'}
             className={cn(BASE_CLASSES, VARIANT_CLASSES[variant], className)}
         >
             {children}
         </Link>
+    );
+}
+
+export function DownloadLink({
+    href,
+    variant = 'secondary',
+    className,
+    children,
+}: ButtonStyleProps & { href: string }) {
+    return (
+        <a
+            href={href}
+            download
+            className={cn(BASE_CLASSES, VARIANT_CLASSES[variant], className)}
+        >
+            {children}
+        </a>
     );
 }
 

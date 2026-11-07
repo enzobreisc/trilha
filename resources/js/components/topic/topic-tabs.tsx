@@ -1,8 +1,8 @@
+import type { TopicDetail } from '@/components/topic/types';
+import type { TopicState } from '@/components/topic/use-topic-state';
 import { useTranslation } from '@/hooks/use-translation';
 import type { TranslationKey } from '@/lib/i18n';
-import type { TopicDetail } from '@/lib/sample/topic';
 import { cn } from '@/lib/utils';
-import type { TopicState } from '@/components/topic/use-topic-state';
 
 export type TopicTab = 'study' | 'history';
 

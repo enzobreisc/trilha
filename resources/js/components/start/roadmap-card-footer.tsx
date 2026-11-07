@@ -26,7 +26,11 @@ export function RoadmapCardFooter({
                 reviewsDue={roadmap.reviewsDue}
                 lastStudiedDaysAgo={roadmap.lastStudiedDaysAgo}
             />
-            <ButtonLink href={roadmap.currentTopic.href} variant="secondary">
+            <ButtonLink
+                href={`/roadmaps/${roadmap.id}/select`}
+                method="put"
+                variant="secondary"
+            >
                 {t(ACTION_LABELS[state])}
             </ButtonLink>
         </footer>

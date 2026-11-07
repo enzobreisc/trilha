@@ -15,17 +15,21 @@ type NavigationItem = {
 };
 
 const MAIN_ITEMS: NavigationItem[] = [
-    { label: 'Início', href: '/' },
+    { label: 'Início', href: '/dashboard' },
     { label: 'Trilha', href: '/roadmap' },
     { label: 'Revisões', href: '/reviews', showsReviewCount: true },
     { label: 'Sessões', href: '/sessions' },
 ];
 
 function isActivePath(pathname: string, href: string): boolean {
-    if (href === '/') {
-        return pathname === '/';
-    }
-    return pathname === href || pathname.startsWith(`${href}/`);
+    const isTopicPageOfTrail =
+        href === '/roadmap' && pathname.startsWith('/roadmaps/');
+
+    return (
+        isTopicPageOfTrail ||
+        pathname === href ||
+        pathname.startsWith(`${href}/`)
+    );
 }
 
 export function AppTopBar({

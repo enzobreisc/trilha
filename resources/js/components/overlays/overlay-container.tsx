@@ -44,6 +44,7 @@ export function OverlayContainer({
             <div
                 ref={panelRef}
                 role={role}
+                data-overlay=""
                 aria-label={label}
                 tabIndex={-1}
                 className={cn(

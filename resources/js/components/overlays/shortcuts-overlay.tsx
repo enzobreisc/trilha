@@ -3,53 +3,7 @@ import { OVERLAY_CAPTION_CLASSES } from '@/components/overlays/overlay-menu-row'
 import { Kbd } from '@/components/ui/kbd';
 import { SectionLabel } from '@/components/ui/section-label';
 import { useTranslation } from '@/hooks/use-translation';
-import type { TranslationKey } from '@/lib/i18n';
-
-type ShortcutSpec = { keys: string; label: TranslationKey };
-type ShortcutGroup = { title: TranslationKey; shortcuts: ShortcutSpec[] };
-
-const SHORTCUT_GROUPS: ShortcutGroup[] = [
-    {
-        title: 'global',
-        shortcuts: [
-            { keys: '⌘K', label: 'buscar tópico ou ação' },
-            { keys: '?', label: 'esta ajuda' },
-            { keys: 'esc', label: 'voltar ou fechar' },
-            { keys: '1–4', label: 'ir para uma seção' },
-        ],
-    },
-    {
-        title: 'listas',
-        shortcuts: [
-            { keys: '↑ ↓', label: 'escolher' },
-            { keys: '↵', label: 'abrir' },
-            { keys: '→ ←', label: 'abrir e fechar seção' },
-            { keys: 'f', label: 'filtrar' },
-            { keys: '/', label: 'buscar na lista' },
-        ],
-    },
-    {
-        title: 'estudar',
-        shortcuts: [
-            { keys: 's', label: 'registrar sessão' },
-            { keys: '␣', label: 'marcar item do checklist' },
-            { keys: 'c', label: 'copiar o prompt' },
-            { keys: 'y n', label: 'responder revisão' },
-            { keys: 'l', label: 'lembrei bem' },
-            { keys: 'p', label: 'preciso rever' },
-        ],
-    },
-    {
-        title: 'roadmaps',
-        shortcuts: [
-            { keys: 'a', label: 'adicionar roadmap' },
-            { keys: 'o', label: 'escolher arquivo' },
-            { keys: 'e', label: 'editar sessão' },
-            { keys: '⌫', label: 'excluir sessão' },
-            { keys: 'u', label: 'desfazer' },
-        ],
-    },
-];
+import { SHORTCUT_GROUPS, type ShortcutGroup } from '@/lib/shortcuts';
 
 export function ShortcutsOverlay({ onClose }: { onClose: () => void }) {
     const { t } = useTranslation();

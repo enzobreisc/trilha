@@ -1,9 +1,9 @@
+import { router } from '@inertiajs/react';
 import { ImportResult } from '@/components/import/import-result';
 import { RoadmapPreview } from '@/components/import/roadmap-preview';
+import type { NewRoadmapImport } from '@/components/import/types';
 import { ValidationChecks } from '@/components/import/validation-checks';
-import { useMessageText } from '@/components/import/use-message-text';
-import { ButtonLink } from '@/components/ui/button';
-import type { NewRoadmapImport } from '@/lib/sample/import';
+import { Button } from '@/components/ui/button';
 
 export function NewRoadmapResult({
     validation,
@@ -12,17 +12,15 @@ export function NewRoadmapResult({
     validation: NewRoadmapImport;
     onCancel: () => void;
 }) {
-    const readMessage = useMessageText();
-
     return (
         <ImportResult
             validation={validation}
             aside="trilha/v1"
             onCancel={onCancel}
             actions={
-                <ButtonLink href="/roadmap">
-                    {readMessage(validation.confirmLabel)}
-                </ButtonLink>
+                <Button onClick={() => router.post('/import')}>
+                    {validation.confirmLabel}
+                </Button>
             }
         >
             <ValidationChecks checks={validation.checks} />

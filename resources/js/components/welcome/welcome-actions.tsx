@@ -1,4 +1,4 @@
-import { Button, ButtonLink } from '@/components/ui/button';
+import { ButtonLink, DownloadLink } from '@/components/ui/button';
 import { useTranslation } from '@/hooks/use-translation';
 
 export function WelcomeActions() {
@@ -9,10 +9,12 @@ export function WelcomeActions() {
             <ButtonLink href="/import" variant="primary">
                 {t('Importar .json')}
             </ButtonLink>
-            <ButtonLink href="/import" variant="secondary">
+            <ButtonLink href="/import#format" variant="secondary">
                 {t('Ver o formato do arquivo')}
             </ButtonLink>
-            <Button variant="secondary">{t('Baixar arquivo modelo')}</Button>
+            <DownloadLink href="/import/template">
+                {t('Baixar arquivo modelo')}
+            </DownloadLink>
         </div>
     );
 }

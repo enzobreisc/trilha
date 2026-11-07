@@ -3,9 +3,11 @@ import { useTranslation } from '@/hooks/use-translation';
 
 export function NotesSection({
     notes,
+    isSaved,
     onNotesChange,
 }: {
     notes: string;
+    isSaved: boolean;
     onNotesChange: (notes: string) => void;
 }) {
     const { t } = useTranslation();
@@ -13,7 +15,11 @@ export function NotesSection({
     return (
         <TopicSection
             title={t('anotações')}
-            aside={<span className="text-accent">{t('salvo agora')}</span>}
+            aside={
+                <span className={isSaved ? 'text-accent' : 'text-muted'}>
+                    {isSaved ? t('salvo') : t('salvando…')}
+                </span>
+            }
         >
             <textarea
                 aria-label={t('anotações')}

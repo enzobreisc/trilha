@@ -9,6 +9,8 @@ import { TopicColumns } from '@/components/topic/topic-columns';
 import type { TopicTabProps } from '@/components/topic/topic-tabs';
 
 export function StudyTab({ topic, state, onRegisterSession }: TopicTabProps) {
+    const hasSignals = topic.signals?.bad || topic.signals?.good;
+
     return (
         <TopicColumns
             main={
@@ -17,20 +19,28 @@ export function StudyTab({ topic, state, onRegisterSession }: TopicTabProps) {
                         status={state.status}
                         onStatusChange={state.setStatus}
                     />
-                    <ChecklistSection
-                        items={topic.checklist}
-                        checkedItems={state.checkedItems}
-                        onToggle={state.toggleItem}
-                    />
-                    <SignalSection
-                        bad={topic.signals.bad}
-                        good={topic.signals.good}
-                    />
-                    <AiPromptSection
-                        prompt={topic.ai_prompt}
-                        reviewChecks={topic.review_checks}
-                    />
-                    <ExerciseSection exercise={topic.exercise} />
+                    {topic.checklist.length > 0 && (
+                        <ChecklistSection
+                            items={topic.checklist}
+                            checkedItems={state.checkedItems}
+                            onToggle={state.toggleItem}
+                        />
+                    )}
+                    {topic.signals && hasSignals && (
+                        <SignalSection signals={topic.signals} />
+                    )}
+                    {topic.aiPrompt && (
+                        <AiPromptSection
+                            prompt={topic.aiPrompt}
+                            reviewChecks={topic.reviewChecks}
+                        />
+                    )}
+                    {topic.exercise && (
+                        <ExerciseSection
+                            exercise={topic.exercise}
+                            onToggleCompleted={state.toggleExercise}
+                        />
+                    )}
                 </>
             }
             aside={
@@ -39,10 +49,7 @@ export function StudyTab({ topic, state, onRegisterSession }: TopicTabProps) {
                         sessions={topic.sessions}
                         onRegister={onRegisterSession}
                     />
-                    <NextReviewsSection
-                        status={state.status}
-                        schedule={topic.schedule}
-                    />
+                    <NextReviewsSection topic={topic} />
                 </>
             }
         />

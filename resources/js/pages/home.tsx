@@ -1,53 +1,47 @@
-import { useState } from 'react';
 import { ActiveTopicSection } from '@/components/home/active-topic-section';
 import { HomeHeading } from '@/components/home/home-heading';
 import { NoTopicSection } from '@/components/home/no-topic-section';
 import { ReviewsPanel } from '@/components/home/reviews-panel';
 import type { HomeData } from '@/components/home/types';
 import { WeekPanel } from '@/components/home/week-panel';
-import LogSessionDialog from '@/components/log-session-dialog';
-import { useTranslation } from '@/hooks/use-translation';
-import { sampleHomeData } from '@/lib/sample/home';
+import { useSessionDialog } from '@/components/session/session-dialog-provider';
 
-export default function Home(props: Partial<HomeData>) {
-    const data = { ...sampleHomeData, ...props };
-    const currentTopic = data.currentTopic ?? null;
-    const { t } = useTranslation();
-    const [isSessionDialogOpen, setIsSessionDialogOpen] = useState(false);
+export default function Home({
+    roadmapName,
+    stats,
+    progress,
+    currentTopic,
+    completedTopicTitle,
+    nextTopic,
+    reviews,
+}: HomeData) {
+    const openSessionDialog = useSessionDialog();
 
     return (
         <div className="@container mx-auto flex w-full max-w-6xl flex-col gap-7">
-            <HomeHeading
-                title={t('Boa noite, :name', { name: data.profileName })}
-                description={`${data.dateLabel} · ${t(':done/:total concluídos', { done: data.progress.done, total: data.progress.total })}`}
-            />
+            <HomeHeading progress={progress} />
             <div className="grid grid-cols-1 items-start gap-7 @4xl:grid-cols-[minmax(0,1fr)_20rem]">
                 <div className="flex min-w-0 flex-col gap-7">
                     {currentTopic ? (
                         <ActiveTopicSection
-                            roadmapName={data.roadmapName}
+                            roadmapName={roadmapName}
                             topic={currentTopic}
                             onRegisterSession={() =>
-                                setIsSessionDialogOpen(true)
+                                openSessionDialog({ topicId: currentTopic.id })
                             }
                         />
                     ) : (
                         <NoTopicSection
-                            completedTopicTitle={data.completedTopicTitle}
-                            nextTopic={data.nextTopic}
+                            completedTopicTitle={completedTopicTitle}
+                            nextTopic={nextTopic}
                         />
                     )}
                 </div>
                 <aside className="flex min-w-0 flex-col gap-7">
-                    <ReviewsPanel reviews={data.reviews} />
-                    <WeekPanel stats={data.stats} />
+                    <ReviewsPanel reviews={reviews} />
+                    <WeekPanel stats={stats} />
                 </aside>
             </div>
-            <LogSessionDialog
-                open={isSessionDialogOpen}
-                onClose={() => setIsSessionDialogOpen(false)}
-                defaultTopicKey={currentTopic?.id}
-            />
         </div>
     );
 }

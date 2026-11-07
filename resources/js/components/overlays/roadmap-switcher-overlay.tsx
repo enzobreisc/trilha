@@ -1,3 +1,4 @@
+import { router } from '@inertiajs/react';
 import { OverlayContainer } from '@/components/overlays/overlay-container';
 import {
     OverlayMenuCaption,
@@ -29,7 +30,9 @@ export function RoadmapSwitcherOverlay({ chrome, onClose }: OverlayProps) {
                     return (
                         <OverlayMenuRow
                             key={roadmap.id}
-                            href="/"
+                            onSelect={() =>
+                                router.put(`/roadmaps/${roadmap.id}/select`)
+                            }
                             label={roadmap.name}
                             marker={
                                 isCurrent ? CURRENT_ROADMAP_MARKER : undefined

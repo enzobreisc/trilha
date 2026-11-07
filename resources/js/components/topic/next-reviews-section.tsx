@@ -1,44 +1,47 @@
 import { TopicSection } from '@/components/topic/topic-section';
-import { useReviewDateLabel } from '@/components/topic/use-review-date-label';
+import type { TopicDetail } from '@/components/topic/types';
 import { DataRow } from '@/components/ui/data-row';
 import { useTranslation } from '@/hooks/use-translation';
-import type { TopicSchedule } from '@/lib/sample/topic';
-import type { TopicStatus } from '@/types/topic';
 
-export function NextReviewsSection({
-    status,
-    schedule,
-}: {
-    status: TopicStatus;
-    schedule: TopicSchedule;
-}) {
-    const { t } = useTranslation();
-    const reviewDateLabel = useReviewDateLabel(status);
+export function NextReviewsSection({ topic }: { topic: TopicDetail }) {
+    const { t, shortDate } = useTranslation();
+    const pendingReviews = topic.reviews.filter(
+        (review) => review.outcome === null,
+    );
+    const rows =
+        pendingReviews.length > 0
+            ? pendingReviews.map((review) => ({
+                  id: review.id,
+                  days: review.intervalDays,
+                  date: shortDate(review.dueOn),
+              }))
+            : topic.reviewIntervals.map((days) => ({
+                  id: String(days),
+                  days,
+                  date: t('ao concluir'),
+              }));
 
     return (
         <TopicSection title={t('próximas revisões')}>
-            <DataRow
-                label={
-                    <span className="flex items-baseline gap-2">
-                        <span aria-hidden="true" className="text-accent">
-                            ◇
+            {rows.map((row, index) => (
+                <DataRow
+                    key={row.id}
+                    label={
+                        <span className="flex items-baseline gap-2">
+                            <span
+                                aria-hidden="true"
+                                className={
+                                    index === 0 ? 'text-accent' : 'text-faint'
+                                }
+                            >
+                                {index === 0 ? '◇' : '○'}
+                            </span>
+                            {t(':count dias', { count: row.days })}
                         </span>
-                        {t('7 dias')}
-                    </span>
-                }
-                value={reviewDateLabel(schedule.seven_day_review_on)}
-            />
-            <DataRow
-                label={
-                    <span className="flex items-baseline gap-2">
-                        <span aria-hidden="true" className="text-faint">
-                            ○
-                        </span>
-                        {t('30 dias')}
-                    </span>
-                }
-                value={reviewDateLabel(schedule.thirty_day_review_on)}
-            />
+                    }
+                    value={row.date}
+                />
+            ))}
         </TopicSection>
     );
 }

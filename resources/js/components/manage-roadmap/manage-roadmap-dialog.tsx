@@ -1,3 +1,4 @@
+import { router } from '@inertiajs/react';
 import {
     useId,
     useRef,
@@ -8,7 +9,6 @@ import {
 import { ArchiveRoadmapRow } from '@/components/manage-roadmap/archive-roadmap-row';
 import { DeleteRoadmapZone } from '@/components/manage-roadmap/delete-roadmap-zone';
 import { RoadmapIdentityFields } from '@/components/manage-roadmap/roadmap-identity-fields';
-import { sampleManagedRoadmap } from '@/components/manage-roadmap/sample-managed-roadmap';
 import type { ManagedRoadmap } from '@/components/manage-roadmap/types';
 import { DIALOG_ELEMENT_CLASSES } from '@/components/session/dialog-classes';
 import { useModalDialog } from '@/components/session/use-modal-dialog';
@@ -18,30 +18,14 @@ import { useTranslation } from '@/hooks/use-translation';
 import { cn } from '@/lib/utils';
 
 export type ManageRoadmapDialogProps = {
-    open: boolean;
+    roadmap: ManagedRoadmap;
     onClose: () => void;
-    roadmap?: ManagedRoadmap;
 };
 
 export default function ManageRoadmapDialog({
-    open,
-    onClose,
-    roadmap = sampleManagedRoadmap,
-}: ManageRoadmapDialogProps) {
-    if (!open) {
-        return null;
-    }
-
-    return <ManageRoadmapModal roadmap={roadmap} onClose={onClose} />;
-}
-
-function ManageRoadmapModal({
     roadmap,
     onClose,
-}: {
-    roadmap: ManagedRoadmap;
-    onClose: () => void;
-}) {
+}: ManageRoadmapDialogProps) {
     const { t } = useTranslation();
     const titleId = useId();
     const nameInputRef = useRef<HTMLInputElement>(null);
@@ -56,7 +40,11 @@ function ManageRoadmapModal({
 
     function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        onClose();
+        router.put(
+            `/roadmaps/${roadmap.id}`,
+            { title: name },
+            { preserveScroll: true, onSuccess: onClose },
+        );
     }
 
     return (
@@ -94,7 +82,7 @@ function ManageRoadmapModal({
                         nameInputRef={nameInputRef}
                         onNameChange={setName}
                     />
-                    <ArchiveRoadmapRow />
+                    <ArchiveRoadmapRow roadmap={roadmap} />
                     <DeleteRoadmapZone roadmap={roadmap} />
                 </div>
                 <footer className="flex flex-wrap items-center justify-between gap-3 border-t border-border bg-chrome px-6 py-4">

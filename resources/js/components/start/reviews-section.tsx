@@ -4,7 +4,13 @@ import { Section } from '@/components/start/section';
 import type { StartReview } from '@/components/start/types';
 import { useTranslation } from '@/hooks/use-translation';
 
-export function ReviewsSection({ reviews }: { reviews: StartReview[] }) {
+export function ReviewsSection({
+    reviews,
+    dueCount,
+}: {
+    reviews: StartReview[];
+    dueCount: number;
+}) {
     const { t } = useTranslation();
 
     return (
@@ -12,7 +18,7 @@ export function ReviewsSection({ reviews }: { reviews: StartReview[] }) {
             title={t('revisões')}
             aside={
                 <span className="text-review">
-                    {reviews.length} {t('hoje')}
+                    {dueCount} {t('hoje')}
                 </span>
             }
         >

@@ -5,11 +5,9 @@ import { LanguageSection } from '@/components/settings/language-section';
 import { RevisionsSection } from '@/components/settings/revisions-section';
 import type { SettingsData } from '@/components/settings/types';
 import { useTranslation } from '@/hooks/use-translation';
-import { sampleSettings } from '@/lib/sample/settings';
 
-export default function Settings(props: Partial<SettingsData>) {
+export default function Settings(data: SettingsData) {
     const { t } = useTranslation();
-    const data = { ...sampleSettings, ...props };
 
     return (
         <div className="mx-auto flex w-full max-w-215 flex-col gap-7">
@@ -27,7 +25,7 @@ export default function Settings(props: Partial<SettingsData>) {
             <div className="flex flex-col gap-6">
                 <LanguageSection
                     index={1}
-                    initialLocale={data.selectedLocale}
+                    selectedLocale={data.selectedLocale}
                 />
                 <DataSection
                     index={2}

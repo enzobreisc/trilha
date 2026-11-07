@@ -1,5 +1,3 @@
-export type ReviewInterval = '7d' | '30d';
-
 export type ReviewOutcome = 'ok' | 'again';
 
 export type ReviewQuestionKey = 'explain' | 'build' | 'solo';
@@ -10,7 +8,8 @@ export type ReviewItem = {
     roadmapId: string;
     path: string;
     summary: string;
-    interval: ReviewInterval;
+    interval: string;
+    topicHref: string;
 };
 
 export type ReviewDay = {
@@ -23,7 +22,8 @@ export type UpcomingReview = {
     date: string;
     title: string;
     roadmapId: string;
-    interval: ReviewInterval;
+    roadmapName: string;
+    interval: string;
 };
 
 export type ReviewAnswer = Partial<Record<ReviewQuestionKey, boolean>>;

@@ -1,7 +1,7 @@
+import type { TopicDetail } from '@/components/topic/types';
 import { Breadcrumb } from '@/components/ui/breadcrumb';
 import { PageHeader } from '@/components/ui/page-header';
 import { useTranslation } from '@/hooks/use-translation';
-import type { TopicDetail } from '@/lib/sample/topic';
 
 export function TopicHeader({ topic }: { topic: TopicDetail }) {
     const { t } = useTranslation();
@@ -15,7 +15,10 @@ export function TopicHeader({ topic }: { topic: TopicDetail }) {
                 label={t('Caminho do tópico')}
                 items={breadcrumbItems}
             />
-            <PageHeader title={topic.title} description={topic.summary} />
+            <PageHeader
+                title={topic.title}
+                description={topic.summary ?? undefined}
+            />
         </div>
     );
 }

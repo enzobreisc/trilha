@@ -1,3 +1,4 @@
+import { router } from '@inertiajs/react';
 import { useState } from 'react';
 import type {
     ReviewAnswer,
@@ -10,8 +11,9 @@ import type {
 
 type ReviewMark = {
     itemId: string;
-    previousOutcome: ReviewOutcome | undefined;
 };
+
+const REFRESHED_PROPS = ['chrome'];
 
 function findNextPendingId(
     items: ReviewItem[],
@@ -67,17 +69,20 @@ export function useReviewSession(items: ReviewItem[]) {
     }
 
     function markReview(outcome: ReviewOutcome) {
-        if (!selectedItem) {
+        if (!selectedItem || results[selectedItem.id]) {
             return;
         }
         const nextResults = withOutcome(results, selectedItem.id, outcome);
-        setMarks([
-            ...marks,
+        router.post(
+            `/reviews/${selectedItem.id}/answer`,
+            { outcome },
             {
-                itemId: selectedItem.id,
-                previousOutcome: results[selectedItem.id],
+                preserveState: true,
+                preserveScroll: true,
+                only: REFRESHED_PROPS,
             },
-        ]);
+        );
+        setMarks([...marks, { itemId: selectedItem.id }]);
         setResults(nextResults);
         setSelectedId(findNextPendingId(items, nextResults, selectedItem.id));
     }
@@ -87,10 +92,13 @@ export function useReviewSession(items: ReviewItem[]) {
         if (!lastMark) {
             return;
         }
+        router.delete(`/reviews/${lastMark.itemId}/answer`, {
+            preserveState: true,
+            preserveScroll: true,
+            only: REFRESHED_PROPS,
+        });
         setMarks(marks.slice(0, -1));
-        setResults(
-            withOutcome(results, lastMark.itemId, lastMark.previousOutcome),
-        );
+        setResults(withOutcome(results, lastMark.itemId, undefined));
         setSelectedId(lastMark.itemId);
     }
 

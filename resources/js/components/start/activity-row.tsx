@@ -1,15 +1,9 @@
-import { daysBetween } from '@/components/start/days-between';
-import type {
-    ActivityTone,
-    StartActivityEntry,
-} from '@/components/start/types';
+import type { StartActivityEntry } from '@/components/start/types';
 import { useTranslation } from '@/hooks/use-translation';
+import { daysBetween } from '@/lib/dates';
 import { cn } from '@/lib/utils';
 
-const TONE_CLASSES: Record<ActivityTone, string> = {
-    bright: 'bg-accent',
-    mid: 'bg-primary',
-};
+const RECENT_DAYS = 1;
 
 export function ActivityRow({
     entry,
@@ -18,10 +12,10 @@ export function ActivityRow({
     entry: StartActivityEntry;
     today: string;
 }) {
-    const { relativeDay, shortDate } = useTranslation();
+    const { t, relativeDay, shortDate } = useTranslation();
     const daysAgo = daysBetween(entry.date, today);
-    const dayLabel =
-        daysAgo <= 1 ? relativeDay(daysAgo) : shortDate(entry.date);
+    const isRecent = daysAgo <= RECENT_DAYS;
+    const dayLabel = isRecent ? relativeDay(daysAgo) : shortDate(entry.date);
     const when = [dayLabel, entry.time].filter(Boolean).join(' ');
 
     return (
@@ -30,7 +24,7 @@ export function ActivityRow({
                 aria-hidden="true"
                 className={cn(
                     'mt-1.5 size-2 shrink-0 rounded-full',
-                    TONE_CLASSES[entry.tone],
+                    isRecent ? 'bg-accent' : 'bg-primary',
                 )}
             />
             <span className="w-20 shrink-0 font-mono text-xs whitespace-nowrap text-muted">
@@ -38,9 +32,12 @@ export function ActivityRow({
             </span>
             <span className="flex min-w-0 flex-1 flex-col gap-0.5">
                 <span className="truncate font-mono text-xs text-accent">
-                    {entry.roadmapSlug}
+                    {entry.roadmapId}
                 </span>
-                <span className="truncate text-secondary">{entry.detail}</span>
+                <span className="truncate text-secondary">
+                    {entry.topicTitle} ·{' '}
+                    {t('sessão :minutes min', { minutes: entry.minutes })}
+                </span>
             </span>
         </li>
     );

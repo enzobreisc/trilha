@@ -1,9 +1,8 @@
 import type { ReactNode } from 'react';
-import { useMessageText } from '@/components/import/use-message-text';
+import type { ImportValidation } from '@/components/import/types';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { useTranslation } from '@/hooks/use-translation';
-import type { ImportValidation } from '@/lib/sample/import';
 
 export function ImportResult({
     validation,
@@ -23,7 +22,6 @@ export function ImportResult({
     children: ReactNode;
 }) {
     const { t } = useTranslation();
-    const readMessage = useMessageText();
 
     return (
         <Card title={t('conferência')} className={className}>
@@ -33,7 +31,7 @@ export function ImportResult({
                         {validation.fileName}
                     </span>
                     <span className="font-mono text-xs text-muted">
-                        {readMessage(validation.fileMeta)}
+                        {validation.fileMeta}
                     </span>
                 </div>
                 <span className="font-mono text-xs text-accent">{aside}</span>

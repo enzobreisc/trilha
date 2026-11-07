@@ -22,13 +22,15 @@ export function ReviewEmpty({ nextReview }: { nextReview?: UpcomingReview }) {
                         {t('A próxima é :title, :day, em :roadmap.', {
                             title: nextReview.title,
                             day: formatDate(nextReview.date),
-                            roadmap: nextReview.roadmapId,
+                            roadmap: nextReview.roadmapName,
                         })}
                     </p>
                 )}
             </div>
             <div className="flex flex-wrap gap-3">
-                <ButtonLink href="/">{t('Ir para o painel')}</ButtonLink>
+                <ButtonLink href="/dashboard">
+                    {t('Ir para o painel')}
+                </ButtonLink>
                 <ButtonLink href="/roadmap" variant="secondary">
                     {t('Ver a trilha')}
                 </ButtonLink>

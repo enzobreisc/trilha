@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { Button } from '@/components/ui/button';
+import { FORMAT_INSTRUCTIONS } from '@/components/import/format';
+import { Button, DownloadLink } from '@/components/ui/button';
 import { SectionLabel } from '@/components/ui/section-label';
 import { useTranslation } from '@/hooks/use-translation';
-import { ROADMAP_FORMAT_INSTRUCTIONS } from '@/lib/sample/import';
 
 export function AiGenerationSection() {
     const { t } = useTranslation();
@@ -10,7 +10,7 @@ export function AiGenerationSection() {
 
     async function copyFormatInstructions() {
         try {
-            await navigator.clipboard.writeText(ROADMAP_FORMAT_INSTRUCTIONS);
+            await navigator.clipboard.writeText(FORMAT_INSTRUCTIONS);
             setIsCopied(true);
         } catch {
             setIsCopied(false);
@@ -29,9 +29,9 @@ export function AiGenerationSection() {
                 <Button variant="secondary" onClick={copyFormatInstructions}>
                     {t(isCopied ? 'Instruções copiadas' : 'Copiar instruções')}
                 </Button>
-                <Button variant="secondary">
+                <DownloadLink href="/import/template">
                     {t('Baixar arquivo modelo')}
-                </Button>
+                </DownloadLink>
             </div>
         </section>
     );

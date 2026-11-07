@@ -1,6 +1,9 @@
+import type { SessionActivity } from '@/components/session/types';
+
 export type HomeStats = {
-    weekLabel: string;
-    weekStudyTime: string;
+    weekStart: string;
+    weekEnd: string;
+    weekMinutes: number;
     weekSessionCount: number;
     weekCompletedTopics: number;
     streakDays: number;
@@ -23,18 +26,18 @@ export type TopicChecklistItem = {
     isDone: boolean;
 };
 
-export type TopicLogKind = 'session' | 'exercise' | 'comparison';
-
 export type TopicLogEntry = {
-    when: string;
-    kind: TopicLogKind;
-    detail: string;
+    date: string;
+    time: string;
+    minutes: number;
+    activities: SessionActivity[];
+    note: string | null;
 };
 
 export type CurrentTopic = TopicSummary & {
     id: string;
-    startedOn: string;
-    timeSpent: string;
+    startedOn: string | null;
+    minutesSpent: number;
     sessionCount: number;
     checklist: TopicChecklistItem[];
     history: TopicLogEntry[];
@@ -48,13 +51,11 @@ export type ReviewItem = {
 };
 
 export type HomeData = {
-    profileName: string;
-    dateLabel: string;
     roadmapName: string;
     stats: HomeStats;
     progress: HomeProgress;
     currentTopic: CurrentTopic | null;
-    completedTopicTitle: string;
-    nextTopic: TopicSummary;
+    completedTopicTitle: string | null;
+    nextTopic: TopicSummary | null;
     reviews: ReviewItem[];
 };

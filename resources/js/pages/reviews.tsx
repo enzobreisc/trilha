@@ -3,6 +3,10 @@ import {
     REVIEW_CLOSED_SUBTITLE,
     REVIEW_DUE_SUBTITLE,
 } from '@/components/reviews/copy';
+import {
+    ALL_ROADMAPS_FILTER,
+    findReviewRoadmaps,
+} from '@/components/reviews/find-review-roadmaps';
 import { ReviewCalendar } from '@/components/reviews/review-calendar';
 import { ReviewEmpty } from '@/components/reviews/review-empty';
 import { ReviewPanel } from '@/components/reviews/review-panel';
@@ -11,11 +15,6 @@ import { ReviewRoadmapFilter } from '@/components/reviews/review-roadmap-filter'
 import { ReviewStats } from '@/components/reviews/review-stats';
 import { ReviewSummary } from '@/components/reviews/review-summary';
 import { ReviewUpcoming } from '@/components/reviews/review-upcoming';
-import {
-    ALL_ROADMAPS_FILTER,
-    findReviewRoadmaps,
-} from '@/components/reviews/find-review-roadmaps';
-import { useReviewSession } from '@/components/reviews/use-review-session';
 import {
     countOutcome,
     countPending,
@@ -26,27 +25,20 @@ import type {
     ReviewItem,
     UpcomingReview,
 } from '@/components/reviews/types';
+import { useReviewHotkeys } from '@/components/reviews/use-review-hotkeys';
+import { useReviewSession } from '@/components/reviews/use-review-session';
 import { PageHeader } from '@/components/ui/page-header';
 import { useTranslation } from '@/hooks/use-translation';
-import {
-    sampleReviewDays,
-    sampleReviewItems,
-    sampleUpcomingReviews,
-} from '@/lib/sample/reviews';
 
 const NEXT_WEEK_DAY_RANGE = { start: 1, end: 7 };
 
 type ReviewsPageProps = {
-    items?: ReviewItem[];
-    days?: ReviewDay[];
-    upcoming?: UpcomingReview[];
+    items: ReviewItem[];
+    days: ReviewDay[];
+    upcoming: UpcomingReview[];
 };
 
-export default function Reviews({
-    items = sampleReviewItems,
-    days = sampleReviewDays,
-    upcoming = sampleUpcomingReviews,
-}: ReviewsPageProps) {
+export default function Reviews({ items, days, upcoming }: ReviewsPageProps) {
     const { t } = useTranslation();
     const [roadmapFilter, setRoadmapFilter] =
         useState<string>(ALL_ROADMAPS_FILTER);
@@ -56,13 +48,20 @@ export default function Reviews({
             ? items
             : items.filter((item) => item.roadmapId === roadmapFilter);
     const session = useReviewSession(visibleItems);
-    const view = deriveReviewView(items, session.results);
-    const pendingCount = countPending(items, session.results);
-    const answeredCount = items.length - pendingCount;
+    const view = deriveReviewView(visibleItems, session.results);
+    const pendingCount = countPending(visibleItems, session.results);
+    const answeredCount = visibleItems.length - pendingCount;
     const dueNextWeek = days
         .slice(NEXT_WEEK_DAY_RANGE.start, NEXT_WEEK_DAY_RANGE.end)
         .reduce((total, day) => total + day.count, 0);
     const todayDate = days.find((day) => day.isToday)?.date;
+
+    useReviewHotkeys({
+        isEnabled: view === 'due',
+        answer: session.selectedAnswer,
+        onAnswer: session.answerQuestion,
+        onMark: session.markReview,
+    });
 
     return (
         <div className="mx-auto flex w-full max-w-5xl flex-col gap-7">
@@ -88,7 +87,7 @@ export default function Reviews({
             {view === 'due' && (
                 <>
                     <ReviewStats
-                        totalCount={items.length}
+                        totalCount={visibleItems.length}
                         answeredCount={answeredCount}
                         pendingCount={pendingCount}
                         dueNextWeek={dueNextWeek}
@@ -115,8 +114,12 @@ export default function Reviews({
             {view === 'finished' && (
                 <ReviewSummary
                     answeredCount={answeredCount}
-                    okCount={countOutcome(items, session.results, 'ok')}
-                    againCount={countOutcome(items, session.results, 'again')}
+                    okCount={countOutcome(visibleItems, session.results, 'ok')}
+                    againCount={countOutcome(
+                        visibleItems,
+                        session.results,
+                        'again',
+                    )}
                     todayDate={todayDate}
                     onUndo={session.undoLastMark}
                 />

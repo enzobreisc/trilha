@@ -1,3 +1,7 @@
+import type { ManagedRoadmap } from '@/components/manage-roadmap/types';
+import type { ContributionDay } from '@/types/contribution';
+import type { RoadmapSummary } from '@/types/roadmap';
+
 export type StartReview = {
     id: string;
     title: string;
@@ -5,18 +9,25 @@ export type StartReview = {
     intervalLabel: string;
 };
 
-export type ActivityTone = 'bright' | 'mid';
-
 export type StartActivityEntry = {
     id: string;
     date: string;
     time: string | null;
-    roadmapSlug: string;
-    detail: string;
-    tone: ActivityTone;
+    topicTitle: string;
+    roadmapId: string;
+    minutes: number;
 };
 
 export type StartStats = {
     streakDays: number;
     sessionCount: number;
+};
+
+export type StartPageData = {
+    roadmaps: RoadmapSummary[];
+    archivedRoadmaps: ManagedRoadmap[];
+    reviews: StartReview[];
+    activity: StartActivityEntry[];
+    contributionDays: ContributionDay[];
+    stats: StartStats;
 };

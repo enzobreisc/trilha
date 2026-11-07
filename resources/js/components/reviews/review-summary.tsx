@@ -59,7 +59,9 @@ export function ReviewSummary({
                 />
             </div>
             <div className="flex flex-wrap gap-3">
-                <ButtonLink href="/">{t('Ir para o painel')}</ButtonLink>
+                <ButtonLink href="/dashboard">
+                    {t('Ir para o painel')}
+                </ButtonLink>
                 <Button variant="secondary" onClick={onUndo}>
                     {t('Desfazer a última')}
                 </Button>

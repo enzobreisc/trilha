@@ -4,9 +4,10 @@ import {
     getTotalMinutes,
 } from '@/components/topic/session-time';
 import { TopicSection } from '@/components/topic/topic-section';
+import type { TopicSession } from '@/components/topic/types';
+import { useSessionDescription } from '@/components/topic/use-session-description';
 import { Button } from '@/components/ui/button';
 import { useTranslation } from '@/hooks/use-translation';
-import type { TopicSession } from '@/lib/sample/topic';
 
 const SESSIONS_ROUTE = '/sessions';
 
@@ -17,7 +18,8 @@ export function SessionHistorySection({
     sessions: TopicSession[];
     onRegister: () => void;
 }) {
-    const { t, plural } = useTranslation();
+    const { t, plural, shortDate } = useTranslation();
+    const describe = useSessionDescription();
 
     return (
         <TopicSection
@@ -32,16 +34,13 @@ export function SessionHistorySection({
                             className="flex flex-wrap items-baseline gap-x-3.5 gap-y-1 py-2 transition-colors hover:bg-active/60"
                         >
                             <span className="w-28 shrink-0 font-mono text-xs text-muted">
-                                {session.day} {session.time}
+                                {shortDate(session.date)} {session.time}
                             </span>
                             <span className="w-10 shrink-0 font-mono text-[13px] text-text">
                                 {formatDuration(session.minutes)}
                             </span>
                             <span className="min-w-0 flex-1 truncate text-sm text-secondary">
-                                {session.title}
-                            </span>
-                            <span className="font-mono text-[11px] text-muted">
-                                {session.activity}
+                                {describe(session)}
                             </span>
                         </Link>
                     </li>

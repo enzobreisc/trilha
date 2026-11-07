@@ -13,11 +13,13 @@ export function SearchResultList({
     activeIndex,
     listboxId,
     onHoverIndex,
+    onOpen,
 }: {
     results: SearchResult[];
     activeIndex: number;
     listboxId: string;
     onHoverIndex: (index: number) => void;
+    onOpen: (result: SearchResult) => void;
 }) {
     const { t } = useTranslation();
 
@@ -54,6 +56,7 @@ export function SearchResultList({
                             optionId={`${listboxId}-option-${index}`}
                             isActive={index === activeIndex}
                             onHover={() => onHoverIndex(index)}
+                            onOpen={() => onOpen(result)}
                         />
                     </Fragment>
                 );
@@ -67,28 +70,23 @@ function SearchResultRow({
     optionId,
     isActive,
     onHover,
+    onOpen,
 }: {
     result: SearchResult;
     optionId: string;
     isActive: boolean;
     onHover: () => void;
+    onOpen: () => void;
 }) {
     const { t } = useTranslation();
-
-    return (
-        <Link
-            id={optionId}
-            href={result.href}
-            role="option"
-            aria-selected={isActive}
-            onMouseEnter={onHover}
-            className={cn(
-                'flex min-h-10 items-center gap-3 border-l-3 px-3.5 py-1.5 text-sm font-medium',
-                isActive
-                    ? 'border-accent bg-primary/25 text-text'
-                    : 'border-transparent text-secondary',
-            )}
-        >
+    const className = cn(
+        'flex min-h-10 w-full items-center gap-3 border-l-3 px-3.5 py-1.5 text-left text-sm font-medium',
+        isActive
+            ? 'border-accent bg-primary/25 text-text'
+            : 'border-transparent text-secondary',
+    );
+    const content = (
+        <>
             {result.kind === 'topic' ? (
                 <StatusIcon status={result.status} size={16} />
             ) : (
@@ -109,6 +107,35 @@ function SearchResultRow({
                     </span>
                 )}
             </span>
-        </Link>
+        </>
+    );
+
+    if (result.href) {
+        return (
+            <Link
+                id={optionId}
+                href={result.href}
+                role="option"
+                aria-selected={isActive}
+                onMouseEnter={onHover}
+                className={className}
+            >
+                {content}
+            </Link>
+        );
+    }
+
+    return (
+        <button
+            id={optionId}
+            type="button"
+            role="option"
+            aria-selected={isActive}
+            onMouseEnter={onHover}
+            onClick={onOpen}
+            className={className}
+        >
+            {content}
+        </button>
     );
 }

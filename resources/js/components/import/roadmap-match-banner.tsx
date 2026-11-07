@@ -1,5 +1,5 @@
 import { useTranslation } from '@/hooks/use-translation';
-import type { RoadmapMatch } from '@/lib/sample/import';
+import type { RoadmapMatch } from '@/components/import/types';
 
 export function RoadmapMatchBanner({ match }: { match: RoadmapMatch }) {
     const { t } = useTranslation();

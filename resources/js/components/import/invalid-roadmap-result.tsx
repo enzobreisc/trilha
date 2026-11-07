@@ -1,24 +1,21 @@
 import { ImportResult } from '@/components/import/import-result';
+import type {
+    CheckStatus,
+    InvalidRoadmapImport,
+    ValidationCheck,
+} from '@/components/import/types';
 import { ValidationChecks } from '@/components/import/validation-checks';
 import { Button } from '@/components/ui/button';
 import { useTranslation } from '@/hooks/use-translation';
-import type {
-    CheckStatus,
-    ImportMode,
-    InvalidRoadmapImport,
-    ValidationCheck,
-} from '@/lib/sample/import';
 
 export function InvalidRoadmapResult({
     validation,
     onCancel,
     onChooseFile,
-    onSelectMode,
 }: {
     validation: InvalidRoadmapImport;
     onCancel: () => void;
     onChooseFile: () => void;
-    onSelectMode: (mode: ImportMode) => void;
 }) {
     const { t, plural } = useTranslation();
     const errorCount = countChecksWithStatus(validation.checks, 'error');
@@ -31,25 +28,9 @@ export function InvalidRoadmapResult({
             className="inset-ring-danger-line"
             onCancel={onCancel}
             actions={
-                <>
-                    {validation.updateTargetName && (
-                        <Button onClick={() => onSelectMode('update')}>
-                            {t('Atualizar :name', {
-                                name: validation.updateTargetName,
-                            })}
-                        </Button>
-                    )}
-                    <Button
-                        variant={
-                            validation.updateTargetName
-                                ? 'secondary'
-                                : 'primary'
-                        }
-                        onClick={onChooseFile}
-                    >
-                        {t('Escolher outro arquivo')}
-                    </Button>
-                </>
+                <Button onClick={onChooseFile}>
+                    {t('Escolher outro arquivo')}
+                </Button>
             }
             footnote={t('Nada foi salvo. Corrija o arquivo e escolha de novo.')}
         >

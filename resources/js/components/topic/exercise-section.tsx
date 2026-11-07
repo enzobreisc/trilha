@@ -1,19 +1,28 @@
 import { TopicSection } from '@/components/topic/topic-section';
+import type { TopicExercise } from '@/components/topic/types';
+import { Button } from '@/components/ui/button';
 import { useTranslation } from '@/hooks/use-translation';
-import type { TopicExercise } from '@/lib/sample/topic';
 
 const INLINE_CODE_DELIMITER = '`';
 
-export function ExerciseSection({ exercise }: { exercise: TopicExercise }) {
-    const { t } = useTranslation();
+export function ExerciseSection({
+    exercise,
+    onToggleCompleted,
+}: {
+    exercise: TopicExercise;
+    onToggleCompleted: () => void;
+}) {
+    const { t, shortDate } = useTranslation();
 
     return (
         <TopicSection
             title={t('exercício sem IA')}
             aside={
-                exercise.completed_on ? (
+                exercise.completedOn ? (
                     <span className="text-accent">
-                        {t('feito em :date', { date: exercise.completed_on })}
+                        {t('feito em :date', {
+                            date: shortDate(exercise.completedOn),
+                        })}
                     </span>
                 ) : undefined
             }
@@ -36,6 +45,15 @@ export function ExerciseSection({ exercise }: { exercise: TopicExercise }) {
                     'Comparar com a versão da IA. Anote as diferenças nas anotações.',
                 )}
             </p>
+            <Button
+                variant="secondary"
+                className="self-start"
+                onClick={onToggleCompleted}
+            >
+                {exercise.completedOn
+                    ? t('Desmarcar como feito')
+                    : t('Marcar como feito')}
+            </Button>
         </TopicSection>
     );
 }

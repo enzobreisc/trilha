@@ -1,3 +1,4 @@
+import { router } from '@inertiajs/react';
 import {
     useId,
     useRef,
@@ -14,59 +15,53 @@ import {
 } from '@/components/session/dialog-classes';
 import { DurationField } from '@/components/session/duration-field';
 import { NoteField } from '@/components/session/note-field';
+import {
+    SESSION_ACTIVITY_OPTIONS,
+    SESSION_DURATION_OPTIONS,
+} from '@/components/session/options';
 import { SessionDialogFooter } from '@/components/session/session-dialog-footer';
 import {
-    flattenTopics,
-    resolveInitialTopicId,
+    buildInitialDraft,
+    resolveSessionDate,
+    toTopicEntries,
     toggleActivity,
+    type SessionToEdit,
 } from '@/components/session/session-draft';
 import type { SessionDraft } from '@/components/session/types';
 import { TopicField } from '@/components/session/topic-field';
 import { useModalDialog } from '@/components/session/use-modal-dialog';
+import { useChrome, useToday } from '@/hooks/use-chrome';
 import { useTranslation } from '@/hooks/use-translation';
-import {
-    sampleSessionDraft,
-    sampleWeekSessionMinutes,
-    sessionActivityOptions,
-    sessionDurationOptions,
-} from '@/lib/sample/session';
-import { sampleTopicTree } from '@/lib/sample-data';
 import { cn } from '@/lib/utils';
 
 export type LogSessionDialogProps = {
-    open: boolean;
     onClose: () => void;
-    defaultTopicKey?: string;
+    defaultTopicId?: string;
+    session?: SessionToEdit;
 };
 
-const TOPICS = flattenTopics(sampleTopicTree);
-
 export default function LogSessionDialog({
-    open,
     onClose,
-    defaultTopicKey,
+    defaultTopicId,
+    session,
 }: LogSessionDialogProps) {
-    if (!open) {
-        return null;
-    }
-
-    return (
-        <SessionDialog onClose={onClose} defaultTopicKey={defaultTopicKey} />
-    );
-}
-
-function SessionDialog({
-    onClose,
-    defaultTopicKey,
-}: Omit<LogSessionDialogProps, 'open'>) {
     const { t } = useTranslation();
+    const { topics, weekMinutes } = useChrome();
+    const today = useToday();
     const titleId = useId();
     const topicRef = useRef<HTMLSelectElement>(null);
     const dialogRef = useModalDialog(topicRef);
-    const [draft, setDraft] = useState<SessionDraft>(() => ({
-        ...sampleSessionDraft,
-        topicKey: resolveInitialTopicId(TOPICS, defaultTopicKey),
-    }));
+    const topicEntries = toTopicEntries(topics);
+    const [draft, setDraft] = useState<SessionDraft>(() =>
+        buildInitialDraft({
+            topics: topicEntries,
+            today,
+            requestedTopicId: defaultTopicId,
+            session,
+        }),
+    );
+    const [errorMessage, setErrorMessage] = useState<string>();
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     function updateDraft(changes: Partial<SessionDraft>) {
         setDraft((current) => ({ ...current, ...changes }));
@@ -80,7 +75,27 @@ function SessionDialog({
 
     function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        onClose();
+        const payload = {
+            topicId: Number(draft.topicId),
+            date: resolveSessionDate(draft, today),
+            durationMinutes: draft.durationMinutes,
+            activities: draft.activities,
+            note: draft.note,
+        };
+        const options = {
+            preserveScroll: true,
+            onStart: () => setIsSubmitting(true),
+            onFinish: () => setIsSubmitting(false),
+            onSuccess: onClose,
+            onError: (errors: Record<string, string>) =>
+                setErrorMessage(Object.values(errors)[0]),
+        };
+
+        if (session) {
+            router.put(`/sessions/${session.id}`, payload, options);
+            return;
+        }
+        router.post('/sessions', payload, options);
     }
 
     return (
@@ -97,29 +112,34 @@ function SessionDialog({
             >
                 <DialogHeader
                     titleId={titleId}
-                    title={t('Registrar sessão')}
+                    title={session ? t('Editar sessão') : t('Registrar sessão')}
                     onClose={onClose}
                 />
                 <div className="flex flex-col gap-5 px-6 py-4">
                     <TopicField
                         ref={topicRef}
-                        topics={TOPICS}
-                        value={draft.topicKey}
-                        onChange={(topicKey) => updateDraft({ topicKey })}
+                        topics={topicEntries}
+                        value={draft.topicId}
+                        onChange={(topicId) => updateDraft({ topicId })}
                     />
                     <DayField
                         value={draft.day}
+                        otherDate={draft.otherDate}
+                        maxDate={today}
                         onChange={(day) => updateDraft({ day })}
+                        onOtherDateChange={(otherDate) =>
+                            updateDraft({ otherDate })
+                        }
                     />
                     <DurationField
-                        options={sessionDurationOptions}
+                        options={SESSION_DURATION_OPTIONS}
                         value={draft.durationMinutes}
                         onChange={(durationMinutes) =>
                             updateDraft({ durationMinutes })
                         }
                     />
                     <ActivityField
-                        options={sessionActivityOptions}
+                        options={SESSION_ACTIVITY_OPTIONS}
                         value={draft.activities}
                         onToggle={(activity) =>
                             updateDraft({
@@ -136,8 +156,10 @@ function SessionDialog({
                     />
                 </div>
                 <SessionDialogFooter
-                    weekMinutes={sampleWeekSessionMinutes}
-                    sessionMinutes={draft.durationMinutes}
+                    weekMinutes={weekMinutes}
+                    sessionMinutes={session ? 0 : draft.durationMinutes}
+                    errorMessage={errorMessage}
+                    isSubmitting={isSubmitting}
                     onCancel={onClose}
                 />
             </form>

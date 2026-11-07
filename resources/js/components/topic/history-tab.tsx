@@ -10,10 +10,7 @@ export function HistoryTab({ topic, state, onRegisterSession }: TopicTabProps) {
         <TopicColumns
             main={
                 <>
-                    <ReviewHistorySection
-                        status={state.status}
-                        schedule={topic.schedule}
-                    />
+                    <ReviewHistorySection topic={topic} />
                     <SessionHistorySection
                         sessions={topic.sessions}
                         onRegister={onRegisterSession}
@@ -24,9 +21,12 @@ export function HistoryTab({ topic, state, onRegisterSession }: TopicTabProps) {
                 <>
                     <NotesSection
                         notes={state.notes}
+                        isSaved={state.isNotesSaved}
                         onNotesChange={state.setNotes}
                     />
-                    <SourcesSection sources={topic.sources} />
+                    {topic.sources.length > 0 && (
+                        <SourcesSection sources={topic.sources} />
+                    )}
                 </>
             }
         />

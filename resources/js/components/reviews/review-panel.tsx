@@ -51,7 +51,7 @@ export function ReviewPanel({
                     {t('Preciso rever')}
                 </Button>
                 <ButtonLink
-                    href={`/topics/${item.id}`}
+                    href={item.topicHref}
                     variant="ghost"
                     className="ml-auto"
                 >

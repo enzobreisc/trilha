@@ -1,5 +1,4 @@
-import { useMessageText } from '@/components/import/use-message-text';
-import type { CheckStatus, ValidationCheck } from '@/lib/sample/import';
+import type { CheckStatus, ValidationCheck } from '@/components/import/types';
 import { cn } from '@/lib/utils';
 
 const CHECK_GLYPHS: Record<CheckStatus, string> = {
@@ -15,15 +14,10 @@ const CHECK_TONES: Record<CheckStatus, string> = {
 };
 
 export function ValidationChecks({ checks }: { checks: ValidationCheck[] }) {
-    const readMessage = useMessageText();
-
     return (
         <ul className="flex flex-col gap-1.5">
             {checks.map((check) => (
-                <li
-                    key={check.message.key}
-                    className="flex items-start gap-2.5"
-                >
+                <li key={check.message} className="flex items-start gap-2.5">
                     <span
                         aria-hidden="true"
                         className={cn(
@@ -34,21 +28,19 @@ export function ValidationChecks({ checks }: { checks: ValidationCheck[] }) {
                         {CHECK_GLYPHS[check.status]}
                     </span>
                     <div className="flex min-w-0 flex-col">
-                        <span className="text-text">
-                            {readMessage(check.message)}
-                        </span>
+                        <span className="text-text">{check.message}</span>
                         {check.details?.map((detail) => (
                             <span
-                                key={detail.location}
+                                key={`${detail.location}-${detail.note ?? ''}`}
                                 className="font-mono text-xs text-muted"
                             >
                                 {detail.location}
-                                {detail.note && `: ${readMessage(detail.note)}`}
+                                {detail.note && `: ${detail.note}`}
                             </span>
                         ))}
                         {check.hint && (
                             <span className="text-xs text-muted">
-                                {readMessage(check.hint)}
+                                {check.hint}
                             </span>
                         )}
                     </div>

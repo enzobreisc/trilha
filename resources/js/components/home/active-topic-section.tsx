@@ -3,6 +3,7 @@ import { TopicHistory } from '@/components/home/topic-history';
 import type { CurrentTopic } from '@/components/home/types';
 import { Button, ButtonLink } from '@/components/ui/button';
 import { SectionLabel } from '@/components/ui/section-label';
+import { formatSessionDuration } from '@/components/session/session-draft';
 import { useTranslation } from '@/hooks/use-translation';
 
 export function ActiveTopicSection({
@@ -14,7 +15,7 @@ export function ActiveTopicSection({
     topic: CurrentTopic;
     onRegisterSession: () => void;
 }) {
-    const { t, plural } = useTranslation();
+    const { t, plural, shortDate } = useTranslation();
 
     return (
         <section className="flex flex-col gap-4 rounded-sm border border-strong bg-surface p-5">
@@ -29,8 +30,10 @@ export function ActiveTopicSection({
                 <p className="font-mono text-xs text-accent">
                     {t('estudando')} ·{' '}
                     {t('desde :date · :time em :sessions', {
-                        date: topic.startedOn,
-                        time: topic.timeSpent,
+                        date: topic.startedOn
+                            ? shortDate(topic.startedOn)
+                            : '—',
+                        time: formatSessionDuration(topic.minutesSpent),
                         sessions: plural(
                             topic.sessionCount,
                             'sessão',

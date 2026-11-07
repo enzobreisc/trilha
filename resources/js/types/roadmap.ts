@@ -1,3 +1,5 @@
+import type { ManagedRoadmap } from '@/components/manage-roadmap/types';
+
 export type RoadmapCurrentTopic = {
     title: string;
     section: string;
@@ -13,6 +15,7 @@ export type RoadmapSummary = {
     currentTopic: RoadmapCurrentTopic;
     reviewsDue: number;
     lastStudiedDaysAgo: number | null;
+    management: ManagedRoadmap;
 };
 
 export type RoadmapOption = Pick<

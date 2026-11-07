@@ -1,34 +1,55 @@
-import type { TopicLogEntry, TopicLogKind } from '@/components/home/types';
+import type { TopicLogEntry } from '@/components/home/types';
+import { SESSION_ACTIVITY_OPTIONS } from '@/components/session/options';
+import { formatSessionDuration } from '@/components/session/session-draft';
 import { Section } from '@/components/start/section';
+import { useToday } from '@/hooks/use-chrome';
 import { useTranslation } from '@/hooks/use-translation';
-import type { TranslationKey } from '@/lib/i18n';
+import { daysBetween } from '@/lib/dates';
 
-const KIND_LABEL_KEYS: Record<TopicLogKind, TranslationKey> = {
-    session: 'sessão',
-    exercise: 'exercício',
-    comparison: 'comparação',
-};
+const RELATIVE_DAYS_LIMIT = 1;
+const DETAIL_SEPARATOR = ' · ';
 
 export function TopicHistory({ entries }: { entries: TopicLogEntry[] }) {
-    const { t } = useTranslation();
+    const { t, relativeDay, shortDate } = useTranslation();
+    const today = useToday();
+
+    function describe(entry: TopicLogEntry): string {
+        const activityLabels = SESSION_ACTIVITY_OPTIONS.filter((option) =>
+            entry.activities.includes(option.id),
+        ).map((option) => t(option.label));
+        const note = entry.note ? [entry.note] : [];
+
+        return [
+            formatSessionDuration(entry.minutes),
+            ...activityLabels,
+            ...note,
+        ].join(DETAIL_SEPARATOR);
+    }
+
+    function dayLabel(date: string): string {
+        const daysAgo = daysBetween(date, today);
+        return daysAgo <= RELATIVE_DAYS_LIMIT
+            ? relativeDay(daysAgo)
+            : shortDate(date);
+    }
 
     return (
         <Section title={t('histórico do tópico')}>
             <ol className="flex flex-col">
                 {entries.map((entry, index) => (
                     <li
-                        key={`${entry.when}-${index}`}
+                        key={`${entry.date}-${entry.time}-${index}`}
                         className="flex items-baseline gap-4 border-b border-border py-2.5 text-sm last:border-b-0"
                     >
-                        <span className="w-20 shrink-0 font-mono text-xs text-muted">
-                            {entry.when}
+                        <span className="w-24 shrink-0 font-mono text-xs text-muted">
+                            {dayLabel(entry.date)} {entry.time}
                         </span>
                         <span className="flex min-w-0 items-baseline gap-3">
                             <span className="font-semibold text-accent">
-                                {t(KIND_LABEL_KEYS[entry.kind])}
+                                {t('sessão')}
                             </span>
                             <span className="truncate text-secondary">
-                                {entry.detail}
+                                {describe(entry)}
                             </span>
                         </span>
                     </li>

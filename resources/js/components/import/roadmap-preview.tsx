@@ -1,6 +1,6 @@
 import { SectionLabel } from '@/components/ui/section-label';
 import { useTranslation } from '@/hooks/use-translation';
-import type { RoadmapPreviewSection } from '@/lib/sample/import';
+import type { RoadmapPreviewSection } from '@/components/import/types';
 
 export function RoadmapPreview({
     sections,

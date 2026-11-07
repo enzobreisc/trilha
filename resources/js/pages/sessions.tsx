@@ -12,30 +12,41 @@ import type {
     SessionPeriod,
     SessionStats,
 } from '@/components/sessions/types';
+import { filterSessions } from '@/components/sessions/filter-sessions';
 import { PageHeader } from '@/components/ui/page-header';
+import { useToday } from '@/hooks/use-chrome';
 import { useTranslation } from '@/hooks/use-translation';
-import { sampleRoadmaps } from '@/lib/sample/start';
-import { sampleSessionStats, sampleSessions } from '@/lib/sample/sessions';
-import { sampleContributionDays } from '@/lib/sample-data';
 import type { ContributionDay } from '@/types/contribution';
 
 type SessionsPageProps = {
-    sessions?: SessionEntry[];
-    stats?: SessionStats;
-    contributionDays?: ContributionDay[];
-    roadmaps?: { id: string; name: string }[];
+    sessions: SessionEntry[];
+    stats: SessionStats;
+    contributionDays: ContributionDay[];
+    roadmaps: { id: string; name: string }[];
 };
 
 export default function Sessions({
-    sessions = sampleSessions,
-    stats = sampleSessionStats,
-    contributionDays = sampleContributionDays,
-    roadmaps = sampleRoadmaps,
+    sessions,
+    stats,
+    contributionDays,
+    roadmaps,
 }: SessionsPageProps) {
     const { t } = useTranslation();
+    const today = useToday();
     const [roadmapFilter, setRoadmapFilter] = useState(ALL_ROADMAPS_FILTER);
     const [period, setPeriod] = useState<SessionPeriod>('7d');
-    const [selectedSessionId, setSelectedSessionId] = useState(sessions[0]?.id);
+    const visibleSessions = filterSessions({
+        sessions,
+        roadmapFilter,
+        period,
+        today,
+    });
+    const [pickedSessionId, setSelectedSessionId] = useState<string>();
+    const selectedSessionId = visibleSessions.some(
+        (session) => session.id === pickedSessionId,
+    )
+        ? pickedSessionId
+        : visibleSessions[0]?.id;
 
     return (
         <div className="mx-auto flex w-full max-w-5xl flex-col gap-7">
@@ -55,7 +66,7 @@ export default function Sessions({
             <div className="grid items-start gap-6 lg:grid-cols-3">
                 <SessionsListPanel
                     className="lg:col-span-2"
-                    groups={groupSessionsByDay(sessions)}
+                    groups={groupSessionsByDay(visibleSessions)}
                     selectedId={selectedSessionId}
                     onSelect={setSelectedSessionId}
                 />
