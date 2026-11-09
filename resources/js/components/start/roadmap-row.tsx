@@ -32,7 +32,11 @@ export function RoadmapRow({
             <RoadmapTitleLine roadmap={roadmap} isLastStudied={isLastStudied} />
             <RoadmapProgressBar roadmap={roadmap} />
             <RoadmapStatusLine roadmap={roadmap} state={state} />
-            <RoadmapCardFooter roadmap={roadmap} state={state} />
+            <RoadmapCardFooter
+                roadmap={roadmap}
+                state={state}
+                isLastStudied={isLastStudied}
+            />
             <button
                 type="button"
                 aria-label={t('Gerenciar roadmap')}

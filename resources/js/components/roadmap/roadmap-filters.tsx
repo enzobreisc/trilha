@@ -26,7 +26,7 @@ export function RoadmapFilters({
         <div
             role="group"
             aria-label={t('Filtrar tópicos')}
-            className="flex flex-wrap gap-x-6 gap-y-2 font-mono text-[13px]"
+            className="flex flex-wrap gap-x-6 gap-y-2 border-b border-border font-mono text-[13px]"
         >
             {FILTER_OPTIONS.map(({ value, label }) => {
                 const isActive = value === activeFilter;
@@ -37,15 +37,12 @@ export function RoadmapFilters({
                         aria-pressed={isActive}
                         onClick={() => onPick(value)}
                         className={cn(
-                            'inline-flex items-baseline gap-2 transition-colors',
+                            '-mb-px inline-flex items-baseline gap-2 border-b-2 px-0.5 pb-2 transition-colors',
                             isActive
-                                ? 'font-bold text-text'
-                                : 'text-muted hover:text-secondary',
+                                ? 'border-accent font-bold text-text'
+                                : 'border-transparent text-muted hover:text-secondary',
                         )}
                     >
-                        <span aria-hidden="true">
-                            {isActive ? '(•)' : '( )'}
-                        </span>
                         {t(label)}
                         <span className="text-xs text-muted">
                             {counts[value]}

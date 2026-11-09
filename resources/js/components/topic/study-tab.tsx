@@ -15,10 +15,6 @@ export function StudyTab({ topic, state, onRegisterSession }: TopicTabProps) {
         <TopicColumns
             main={
                 <>
-                    <StatusSection
-                        status={state.status}
-                        onStatusChange={state.setStatus}
-                    />
                     {topic.checklist.length > 0 && (
                         <ChecklistSection
                             items={topic.checklist}
@@ -45,6 +41,10 @@ export function StudyTab({ topic, state, onRegisterSession }: TopicTabProps) {
             }
             aside={
                 <>
+                    <StatusSection
+                        status={state.status}
+                        onStatusChange={state.setStatus}
+                    />
                     <SessionSummarySection
                         sessions={topic.sessions}
                         onRegister={onRegisterSession}

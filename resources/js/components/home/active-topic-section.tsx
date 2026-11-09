@@ -1,28 +1,26 @@
-import { TopicChecklist } from '@/components/home/topic-checklist';
-import { TopicHistory } from '@/components/home/topic-history';
+import { HomeStep } from '@/components/home/home-step';
 import type { CurrentTopic } from '@/components/home/types';
-import { Button, ButtonLink } from '@/components/ui/button';
-import { SectionLabel } from '@/components/ui/section-label';
 import { formatSessionDuration } from '@/components/session/session-draft';
+import { SegmentedProgress } from '@/components/segmented-progress';
+import { Button, ButtonLink } from '@/components/ui/button';
 import { useTranslation } from '@/hooks/use-translation';
 
 export function ActiveTopicSection({
-    roadmapName,
     topic,
     onRegisterSession,
 }: {
-    roadmapName: string;
     topic: CurrentTopic;
     onRegisterSession: () => void;
 }) {
     const { t, plural, shortDate } = useTranslation();
+    const doneCount = topic.checklist.filter((item) => item.isDone).length;
+    const nextItem = topic.checklist.find((item) => !item.isDone);
 
     return (
-        <section className="flex flex-col gap-4 rounded-sm border border-strong bg-surface p-5">
-            <SectionLabel>{t('tópico atual')}</SectionLabel>
-            <div className="flex flex-col gap-2">
+        <HomeStep number={2} title={t('continuar estudando')}>
+            <div className="flex flex-col gap-1.5">
                 <p className="font-mono text-xs text-muted">
-                    {roadmapName} / {topic.breadcrumb}
+                    {topic.breadcrumb}
                 </p>
                 <h2 className="text-2xl leading-tight font-semibold tracking-tight text-text">
                     {topic.title}
@@ -41,10 +39,35 @@ export function ActiveTopicSection({
                         ),
                     })}
                 </p>
-                <p className="max-w-prose pt-1 text-secondary">
-                    {topic.description}
-                </p>
             </div>
+            {topic.checklist.length > 0 && (
+                <div className="flex flex-col gap-2 rounded-sm border border-border bg-bg p-3.5">
+                    <div className="flex items-center gap-3">
+                        <SegmentedProgress
+                            className="w-30"
+                            filled={doneCount}
+                            total={topic.checklist.length}
+                        />
+                        <span className="font-mono text-[11px] text-muted">
+                            {t(':done/:total itens dominados', {
+                                done: doneCount,
+                                total: topic.checklist.length,
+                            })}
+                        </span>
+                    </div>
+                    {nextItem && (
+                        <p className="text-sm text-text">
+                            <span
+                                aria-hidden="true"
+                                className="mr-2.5 font-mono text-faint"
+                            >
+                                [ ]
+                            </span>
+                            {nextItem.label}
+                        </p>
+                    )}
+                </div>
+            )}
             <div className="flex flex-wrap gap-3">
                 <Button onClick={onRegisterSession}>
                     {t('Registrar sessão')}
@@ -53,8 +76,6 @@ export function ActiveTopicSection({
                     {t('Abrir tópico')}
                 </ButtonLink>
             </div>
-            <TopicChecklist items={topic.checklist} />
-            <TopicHistory entries={topic.history} />
-        </section>
+        </HomeStep>
     );
 }

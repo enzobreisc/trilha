@@ -1,5 +1,3 @@
-import type { SessionActivity } from '@/components/session/types';
-
 export type HomeStats = {
     weekStart: string;
     weekEnd: string;
@@ -26,21 +24,12 @@ export type TopicChecklistItem = {
     isDone: boolean;
 };
 
-export type TopicLogEntry = {
-    date: string;
-    time: string;
-    minutes: number;
-    activities: SessionActivity[];
-    note: string | null;
-};
-
 export type CurrentTopic = TopicSummary & {
     id: string;
     startedOn: string | null;
     minutesSpent: number;
     sessionCount: number;
     checklist: TopicChecklistItem[];
-    history: TopicLogEntry[];
 };
 
 export type ReviewItem = {
@@ -58,4 +47,5 @@ export type HomeData = {
     completedTopicTitle: string | null;
     nextTopic: TopicSummary | null;
     reviews: ReviewItem[];
+    reviewsDueCount: number;
 };

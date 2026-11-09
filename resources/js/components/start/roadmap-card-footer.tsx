@@ -14,9 +14,11 @@ const ACTION_LABELS: Record<RoadmapState, TranslationKey> = {
 export function RoadmapCardFooter({
     roadmap,
     state,
+    isLastStudied,
 }: {
     roadmap: RoadmapSummary;
     state: RoadmapState;
+    isLastStudied: boolean;
 }) {
     const { t } = useTranslation();
 
@@ -29,7 +31,7 @@ export function RoadmapCardFooter({
             <ButtonLink
                 href={`/roadmaps/${roadmap.id}/select`}
                 method="put"
-                variant="secondary"
+                variant={isLastStudied ? 'primary' : 'secondary'}
             >
                 {t(ACTION_LABELS[state])}
             </ButtonLink>

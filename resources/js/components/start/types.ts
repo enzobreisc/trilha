@@ -2,13 +2,6 @@ import type { ManagedRoadmap } from '@/components/manage-roadmap/types';
 import type { ContributionDay } from '@/types/contribution';
 import type { RoadmapSummary } from '@/types/roadmap';
 
-export type StartReview = {
-    id: string;
-    title: string;
-    roadmapTag: string;
-    intervalLabel: string;
-};
-
 export type StartActivityEntry = {
     id: string;
     date: string;
@@ -26,7 +19,6 @@ export type StartStats = {
 export type StartPageData = {
     roadmaps: RoadmapSummary[];
     archivedRoadmaps: ManagedRoadmap[];
-    reviews: StartReview[];
     activity: StartActivityEntry[];
     contributionDays: ContributionDay[];
     stats: StartStats;

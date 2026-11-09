@@ -1,41 +1,49 @@
 import {
     allTopicsOf,
     countCompleted,
-    countTopicsByFilter,
 } from '@/components/roadmap/roadmap-progress';
 import type { RoadmapData } from '@/components/roadmap/types';
-import { ButtonLink } from '@/components/ui/button';
+import { SegmentedProgress } from '@/components/segmented-progress';
 import { PageHeader } from '@/components/ui/page-header';
+import { useChrome } from '@/hooks/use-chrome';
 import { useTranslation } from '@/hooks/use-translation';
 
+const PERCENT = 100;
+
 export function RoadmapHeader({ data }: { data: RoadmapData }) {
-    const { t, shortDate } = useTranslation();
+    const { t } = useTranslation();
+    const { roadmaps, currentRoadmapId } = useChrome();
+    const roadmapName =
+        roadmaps.find((roadmap) => roadmap.id === currentRoadmapId)?.name ??
+        data.title;
     const topics = allTopicsOf(data.sections);
     const completedCount = countCompleted(topics);
-    const reviewCount = countTopicsByFilter(topics).review;
-    const progressLabel = t(':completed/:total concluídos', {
-        completed: completedCount,
-        total: topics.length,
-    });
-    const reviewLabel = t(':count para revisar', { count: reviewCount });
+    const percentDone =
+        topics.length === 0
+            ? 0
+            : Math.round((completedCount / topics.length) * PERCENT);
 
     return (
-        <div className="flex flex-col gap-3">
-            <PageHeader
-                title={data.title}
-                description={`${progressLabel} · ${reviewLabel}`}
-                actions={
-                    <ButtonLink variant="secondary" href="/import">
-                        {t('Reimportar')}
-                    </ButtonLink>
-                }
-            />
-            <p className="font-mono text-xs text-muted">
-                {data.sourceLabel} · {data.sourceFile} ·{' '}
-                {t('importado em :date', {
-                    date: shortDate(data.importedOn),
-                })}
-            </p>
-        </div>
+        <PageHeader
+            title={t('Trilha')}
+            description={roadmapName}
+            actions={
+                <div className="flex w-full max-w-90 flex-col gap-1.5">
+                    <div className="flex justify-between font-mono text-xs text-secondary">
+                        <span>
+                            {t(':done/:total concluídos', {
+                                done: completedCount,
+                                total: topics.length,
+                            })}
+                        </span>
+                        <span>{percentDone}%</span>
+                    </div>
+                    <SegmentedProgress
+                        filled={completedCount}
+                        total={topics.length}
+                    />
+                </div>
+            }
+        />
     );
 }

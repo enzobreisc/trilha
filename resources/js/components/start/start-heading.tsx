@@ -1,29 +1,20 @@
 import { Head } from '@inertiajs/react';
 import { useTranslation } from '@/hooks/use-translation';
 import { weekdayIndexOf } from '@/lib/dates';
-import { greetingKeyFor } from '@/lib/greeting';
 
-export function StartHeading({
-    today,
-    profileName,
-}: {
-    today: string;
-    profileName: string;
-}) {
+export function StartHeading({ today }: { today: string }) {
     const { t, shortDate, weekdayShort } = useTranslation();
-    const greeting = t(greetingKeyFor(new Date().getHours()), {
-        name: profileName,
-    });
+    const title = t('Roadmaps');
 
     return (
         <header className="flex flex-col gap-1.5">
-            <Head title={greeting} />
+            <Head title={title} />
             <p className="font-mono text-xs text-muted">
-                {greeting} · {weekdayShort(weekdayIndexOf(today))},{' '}
-                {shortDate(today)}
+                {weekdayShort(weekdayIndexOf(today))}, {shortDate(today)} ·{' '}
+                {t('escolha um para abrir o Início dele')}
             </p>
             <h1 className="text-[28px] leading-9 font-semibold tracking-tight text-text">
-                {t('O que você vai estudar agora?')}
+                {title}
             </h1>
         </header>
     );

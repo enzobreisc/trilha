@@ -19,7 +19,7 @@ function TopicView({ topic }: { topic: TopicDetail }) {
 
     return (
         <div className="mx-auto flex w-full max-w-6xl flex-col gap-7">
-            <TopicHeader topic={topic} />
+            <TopicHeader topic={topic} onRegisterSession={registerSession} />
             <TopicTabs activeTab={activeTab} onTabChange={setActiveTab} />
             {activeTab === 'study' ? (
                 <StudyTab

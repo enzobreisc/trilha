@@ -31,6 +31,13 @@ export function RoadmapTopicRow({
             : shortDate(topic.statusDate);
     }
 
+    function describeStatus(): string {
+        if (topic.status === 'studying' || topic.status === 'review') {
+            return t(TOPIC_STATUS_LABEL_KEYS[topic.status]);
+        }
+        return formatStatusDate();
+    }
+
     return (
         <Link
             href={topic.href}
@@ -50,11 +57,13 @@ export function RoadmapTopicRow({
             >
                 {topic.title}
             </span>
-            <span className="w-24 shrink-0 text-xs text-muted">
-                {t(TOPIC_STATUS_LABEL_KEYS[topic.status])}
-            </span>
-            <span className="w-16 shrink-0 text-right text-[11px] text-faint">
-                {formatStatusDate()}
+            <span
+                className={cn(
+                    'w-28 shrink-0 text-right text-xs',
+                    topic.status === 'review' ? 'text-review' : 'text-muted',
+                )}
+            >
+                {describeStatus()}
             </span>
         </Link>
     );

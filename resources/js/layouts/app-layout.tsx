@@ -65,10 +65,9 @@ function AppFrame({ children }: { children: ReactNode }) {
                             />
                         ))}
                     </KeyHintBar>
-                    <AppStatusBar
-                        roadmap={currentRoadmap}
-                        reviewsDue={chrome.reviewsDue}
-                    />
+                    {currentRoadmap && (
+                        <AppStatusBar roadmap={currentRoadmap} />
+                    )}
                 </>
             )}
             {openOverlay !== null && (

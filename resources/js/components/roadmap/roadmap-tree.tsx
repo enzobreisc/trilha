@@ -36,7 +36,7 @@ export function RoadmapTree({
     return (
         <section className="flex flex-col gap-4">
             <header className="flex items-center justify-between gap-3">
-                <SectionTitle>{t('trilha')}</SectionTitle>
+                <SectionTitle>{t('seções')}</SectionTitle>
                 <span className="font-mono text-xs text-muted">{aside}</span>
             </header>
             {visibleSections.map((section) => (
