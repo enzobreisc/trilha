@@ -125,6 +125,12 @@ describe('reviews', function () {
         $this->get(route('start'))->assertInertia(fn (Assert $page) => $page->where('roadmaps.0.reviewsDue', 1));
     });
 
+    it('counts the due reviews of the current roadmap on the dashboard', function () {
+        $this->get(route('dashboard'))->assertInertia(fn (Assert $page) => $page
+            ->where('reviewsDueCount', 1)
+            ->has('reviews', 1));
+    });
+
     it('keeps the topic done when a review is remembered well', function () {
         $review = $this->topic->reviews()->where('interval_days', 7)->firstOrFail();
 

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Enums\TopicStatus;
 use App\Models\Roadmap;
 use App\Models\Section;
-use App\Models\StudySession;
 use App\Models\Topic;
 use App\Queries\ReviewAgenda;
 use App\Queries\RoadmapOverview;
@@ -18,8 +17,6 @@ use Inertia\Response;
 
 class DashboardController extends Controller
 {
-    private const HISTORY_LIMIT = 5;
-
     private const REVIEW_LIMIT = 4;
 
     public function show(
@@ -56,6 +53,7 @@ class DashboardController extends Controller
                 'area' => $review['roadmapTag'],
                 'dueIn' => $review['intervalLabel'],
             ], $reviews->dueSummaries(self::REVIEW_LIMIT, $roadmap)),
+            'reviewsDueCount' => $reviews->dueCount($roadmap),
         ]);
     }
 
@@ -93,13 +91,6 @@ class DashboardController extends Controller
                 'label' => $label,
                 'isDone' => in_array($index, $topic->checked_items, true),
             ])->all(),
-            'history' => $sessions->take(self::HISTORY_LIMIT)->map(fn (StudySession $session) => [
-                'date' => $session->studied_on->toDateString(),
-                'time' => $session->started_at,
-                'minutes' => $session->duration_minutes,
-                'activities' => $session->activities,
-                'note' => $session->note,
-            ])->values()->all(),
         ];
     }
 }

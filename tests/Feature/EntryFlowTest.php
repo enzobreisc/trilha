@@ -3,8 +3,13 @@
 use App\Models\Roadmap;
 use Inertia\Testing\AssertableInertia as Assert;
 
-it('redirects the root to the start screen', function () {
-    $this->get('/')->assertRedirect(route('start'));
+it('redirects the root to the dashboard', function () {
+    $this->get('/')->assertRedirect(route('dashboard'));
+});
+
+it('lands on the start screen from the root while no roadmap exists', function () {
+    $this->followingRedirects()->get('/')
+        ->assertInertia(fn (Assert $page) => $page->component('start'));
 });
 
 it('shows the empty state on the start screen while no roadmap exists', function () {

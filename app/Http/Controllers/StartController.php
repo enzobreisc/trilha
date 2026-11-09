@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Roadmap;
 use App\Models\StudySession;
-use App\Queries\ReviewAgenda;
 use App\Queries\RoadmapOverview;
 use App\Queries\StudyActivity;
 use Inertia\Inertia;
@@ -14,9 +13,7 @@ class StartController extends Controller
 {
     private const RECENT_ACTIVITY_LIMIT = 5;
 
-    private const REVIEW_PREVIEW_LIMIT = 4;
-
-    public function index(RoadmapOverview $overview, ReviewAgenda $reviews, StudyActivity $activity): Response
+    public function index(RoadmapOverview $overview, StudyActivity $activity): Response
     {
         $roadmaps = Roadmap::query()->active()->orderBy('id')->get();
         $archived = Roadmap::query()->whereNotNull('archived_at')->orderBy('id')->get();
@@ -24,7 +21,6 @@ class StartController extends Controller
         return Inertia::render('start', [
             'roadmaps' => $roadmaps->map(fn (Roadmap $roadmap) => $overview->summary($roadmap))->all(),
             'archivedRoadmaps' => $archived->map(fn (Roadmap $roadmap) => $overview->managed($roadmap))->all(),
-            'reviews' => $reviews->dueSummaries(self::REVIEW_PREVIEW_LIMIT),
             'activity' => $this->recentActivity(),
             'contributionDays' => $activity->contributionDays(),
             'stats' => [

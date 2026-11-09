@@ -12,9 +12,9 @@ class ReviewAgenda
 
     private const UPCOMING_LIMIT = 8;
 
-    public function dueCount(): int
+    public function dueCount(?Roadmap $roadmap = null): int
     {
-        return $this->visible(Review::query()->due())->count();
+        return $this->due($roadmap)->count();
     }
 
     /**
@@ -83,8 +83,7 @@ class ReviewAgenda
      */
     public function dueSummaries(int $limit, ?Roadmap $roadmap = null): array
     {
-        return $this->visible(Review::query()->due())
-            ->when($roadmap, fn (Builder $query) => $query->whereHas('topic', fn (Builder $topics) => $topics->where('roadmap_id', $roadmap?->id)))
+        return $this->due($roadmap)
             ->with('topic.roadmap')
             ->orderBy('due_on')
             ->orderBy('id')
@@ -102,6 +101,15 @@ class ReviewAgenda
     public function intervalLabel(Review $review): string
     {
         return $review->interval_days.'d';
+    }
+
+    /**
+     * @return Builder<Review>
+     */
+    private function due(?Roadmap $roadmap): Builder
+    {
+        return $this->visible(Review::query()->due())
+            ->when($roadmap, fn (Builder $query) => $query->whereHas('topic', fn (Builder $topics) => $topics->where('roadmap_id', $roadmap?->id)));
     }
 
     /**

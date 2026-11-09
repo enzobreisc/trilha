@@ -10,7 +10,7 @@ class NativeAppServiceProvider implements ProvidesPhpIni
     public function boot(): void
     {
         Window::open()
-            ->route('start')
+            ->route('home')
             ->title('trilha')
             ->width(1280)
             ->height(820)

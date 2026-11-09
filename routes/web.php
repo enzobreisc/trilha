@@ -17,7 +17,7 @@ use App\Http\Controllers\TrailController;
 use Illuminate\Support\Facades\Route;
 
 Route::put('/locale', [LocaleController::class, 'update'])->name('locale.update');
-Route::get('/', fn () => to_route('start'))->name('home');
+Route::get('/', fn () => to_route('dashboard'))->name('home');
 Route::get('/start', [StartController::class, 'index'])->name('start');
 
 Route::get('/import', [ImportController::class, 'create'])->name('import');
