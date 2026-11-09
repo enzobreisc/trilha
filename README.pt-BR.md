@@ -23,7 +23,7 @@
 ![Início](docs/screenshots/home.png)
 
 > [!NOTE]
-> **A v0.1.0 está em desenvolvimento.** Roadmaps, progresso, sessões, revisões e anotações são salvos em um banco SQLite local, e dá para exportar e restaurar backups. As capturas de tela abaixo são do protótipo anterior, com dados de exemplo.
+> **A v0.3.0 está em desenvolvimento.** Roadmaps, progresso, sessões, revisões e anotações são salvos em um banco SQLite local, e dá para exportar e restaurar backups. As capturas de tela abaixo são do protótipo anterior, com dados de exemplo.
 
 ## Por quê
 
@@ -33,7 +33,8 @@ Estudar por um roadmap com uma IA do lado faz você se sentir produtivo sem apre
 
 - **Roadmaps a partir de um arquivo.** Um roadmap é um `.json` com seções, grupos e tópicos ([formato](#o-arquivo-de-roadmap)). O app confere o arquivo antes de salvar qualquer coisa e consegue atualizar um roadmap existente com um arquivo mais novo, mostrando o que foi adicionado, alterado e arquivado.
 - **Vários roadmaps ao mesmo tempo.** Troque entre eles pela barra do topo e acompanhe o progresso de cada um.
-- **Visão da trilha.** Todos os tópicos com seu status (a fazer, estudando, revisar, concluído), filtros por status e tópicos arquivados à parte.
+- **Um início que diz o que fazer hoje.** As revisões de hoje primeiro, depois o tópico em estudo com o próximo item do checklist, mais os totais da semana. O app abre direto nele.
+- **Visão da trilha.** Todos os tópicos com seu status (a fazer, estudando, revisar, concluído), um atalho "você está aqui" para o tópico em andamento, filtros por status e tópicos arquivados à parte.
 - **Página do tópico.** O que dominar, sinais no código, um prompt para a IA com o que conferir, um exercício sem IA, anotações em Markdown, fontes e uma aba de histórico.
 - **Revisões espaçadas.** Concluir um tópico agenda revisões em 7 e 30 dias, reunidas numa única fila de todos os roadmaps, com um calendário de 14 dias.
 - **Sessões de estudo.** Registre tempo, atividade e anotações de um tópico, e veja o histórico agrupado por dia.
@@ -116,7 +117,7 @@ As chaves (`key`) precisam ser únicas em todos os níveis. É por elas que um a
 
 ## Instalação
 
-Ainda não há build empacotado, então rode a trilha a partir do código, como abaixo. Os builds para macOS vão ser anexados em [Releases](https://github.com/enzobreisc/trilha/releases).
+Os builds para macOS (Apple silicon) ficam anexados em [Releases](https://github.com/enzobreisc/trilha/releases). Abra o `.dmg` e arraste a trilha para Aplicativos. Para gerar o build você mesmo, rode `php artisan native:build mac`; os instaladores ficam em `nativephp/electron/dist`.
 
 ## Desenvolvimento
 

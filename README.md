@@ -23,7 +23,7 @@
 ![Home](docs/screenshots/home.png)
 
 > [!NOTE]
-> **v0.1.0 is a work in progress.** Roadmaps, progress, sessions, reviews and notes are saved in a local SQLite database, and backups can be exported and restored. The screenshots below were taken from the earlier UI prototype with sample data.
+> **v0.3.0 is a work in progress.** Roadmaps, progress, sessions, reviews and notes are saved in a local SQLite database, and backups can be exported and restored. The screenshots below were taken from the earlier UI prototype with sample data.
 
 ## Why
 
@@ -32,8 +32,9 @@ Studying from a roadmap with AI at your side makes it easy to feel productive wi
 ## Features
 
 - **Roadmaps from a file.** A roadmap is a `.json` with sections, groups and topics ([format](#the-roadmap-file)). The app checks the file before saving anything, and can update an existing roadmap from a newer file, showing what was added, changed and archived.
-- **Several roadmaps at once.** Switch between them from the top bar and follow the progress of each one.
-- **Trail view.** Every topic with its status (to do, studying, to review, done), filters by status and archived topics kept apart.
+- **Several roadmaps at once.** Switch between them from the top bar, or open the roadmaps list from the logo, and follow the progress of each one.
+- **A home that says what to do today.** Today's reviews first, then the topic you are studying with its next checklist item, plus your weekly totals. The app opens straight on it.
+- **Trail view.** Every topic with its status (to do, studying, to review, done), a "you are here" shortcut to the topic in progress, filters by status and archived topics kept apart.
 - **Topic page.** What to master, code signals, a prompt for the AI with review checks, an exercise without AI, Markdown notes, sources and a history tab.
 - **Spaced reviews.** Finishing a topic schedules reviews at 7 and 30 days, gathered in a single queue across all roadmaps with a 14-day calendar.
 - **Study sessions.** Log time, activity and notes for a topic, and browse the history grouped by day.
@@ -116,7 +117,7 @@ Keys must be unique at every level. They are how a newer file will update a road
 
 ## Install
 
-There is no packaged build yet, so run trilha from source as described below. Builds for macOS will be attached to [Releases](https://github.com/enzobreisc/trilha/releases).
+Builds for macOS (Apple silicon) are attached to [Releases](https://github.com/enzobreisc/trilha/releases). Open the `.dmg` and drag trilha to Applications. To build it yourself, run `php artisan native:build mac`; the installers land in `nativephp/electron/dist`.
 
 ## Development
 
